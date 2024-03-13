@@ -5,3 +5,6 @@ from django.urls import reverse
 # Create your views here.
 def renderIndex(request):
     return render(request,'index.html')
+
+def renderDashBoard(request):
+    return render(request,'dashBoard.html')
