@@ -6,5 +6,11 @@ from django.urls import reverse
 def renderIndex(request):
     return render(request,'index.html')
 
-def renderDashBoard(request):
-    return render(request,'dashBoard.html')
+def renderDashBoardAdmin(request):
+    return render(request,'dashBoardAdmin.html')
+
+def renderDashBoardEnseignantt(request):
+    return render(request,'dashBoardEnseignant.html')
+
+def renderDashBoardLeader(request):
+    return render(request,'dashBoardLeader.html')
