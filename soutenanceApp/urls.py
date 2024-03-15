@@ -11,4 +11,9 @@ urlpatterns=[
     path('configuration/',views.renderConfiguration,name="configuration"),
     path('planning/',views.renderPlanning,name="planning"),
     path('themes/',views.renderThemes,name="themes"),
+    path('infoPersonnel/',views.renderInfoPersonnel,name="infoPersonnel"),
+    path('demandes/',views.renderDemandes,name="demandes"),
+    path('evaluation/',views.renderEvaluation,name="evaluation"),
+    path('demanderthemes/',views.renderDemanderThemes,name="demanderthemes"),
+    path('deposerMemoire/',views.renderDeposerMemoire,name="deposerMemoire"),
 ]

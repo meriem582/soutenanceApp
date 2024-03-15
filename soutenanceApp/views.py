@@ -30,3 +30,22 @@ def renderPlanning(request):
 
 def renderThemes(request):
     return render(request,'themes.html')
+
+def renderInfoPersonnel(request):
+    return render(request,'infoPersonnel.html')
+
+
+def renderDemandes(request):
+    return render(request,'demandes.html')
+
+
+def renderEvaluation(request):
+    return render(request,'evaluation.html')
+
+
+def renderDemanderThemes(request):
+    return render(request,'demanderthemes.html')
+
+
+def renderDeposerMemoire(request):
+    return render(request,'deposerMemoire.html')
