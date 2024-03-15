@@ -2,12 +2,13 @@
     <div class="bg-secondary text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Recent Salse</h6>
-            
+
         </div>
         <div style="text-align: right;">
-            <form action="rechercheFormation/" method="post" >
+            <form action="rechercheFormation/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="recherche selon l'id" class="bg-dark border-0" name="idr" style="color: white;">
+                <input type="text" placeholder="recherche selon l'id" class="bg-dark border-0" name="idr"
+                    style="color: white;">
                 <button type="submit" class="bg-dark border-0"><i class="fa fa-search text-primary"></i></button>
             </form>
         </div>
@@ -46,6 +47,34 @@
                 </tbody> -->
             </table>
         </div>
-        
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModaleEvaluation" tabindex="-1" aria-labelledby="ModaleEvaluationLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-secondary text-center rounded p-4">
+                    <form action="ajoutFormation/" method="post">
+                        {%csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModaleEvaluationLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Remarque</label>
+                                <input type="textarea" class="form-control" name="remarque">
+                            </div>
+                            
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
