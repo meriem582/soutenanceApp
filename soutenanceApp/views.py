@@ -14,3 +14,19 @@ def renderDashBoardEnseignantt(request):
 
 def renderDashBoardLeader(request):
     return render(request,'dashBoardLeader.html')
+
+def renderComptes(request):
+    return render(request,'comptes.html')
+
+def renderSalles(request):
+    return render(request,'salles.html')
+
+def renderConfiguration(request):
+    return render(request,'configuration.html')
+
+def renderPlanning(request):
+    return render(request,'planning.html')
+
+
+def renderThemes(request):
+    return render(request,'themes.html')
