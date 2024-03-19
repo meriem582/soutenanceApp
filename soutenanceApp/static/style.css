@@ -1,15 +1,17 @@
 /********** Template CSS **********/
 :root {
-    --primary: #44cc8a;
+    --primary: #003366;
     --primary: #011c0f;
     --primary: #04301b;
     --primary: #08532f;
     --primary: #0f663c;
     --primary: #119555;
-    --primary: #44cc8a;
-    --secondary: #191C24;
+    --primary: #87ceeb;
+    --blue: #87ceeb;
+    --secondary: #003366;
     --light: #6C7293;
-    --dark: #000000;
+    --dark: #c0c0c0;
+    --white: #fdfdfd;
 }
 
 .back-to-top {
@@ -22,12 +24,12 @@
 
 .btn-primary {
     color: #fff;
-    background-color: #44cc8a;
-    border-color: #44cc8a;
+    background-color: #003366;
+    border-color: #003366;
 }
 
 .text-primary {
-    color: #44cc8a !important;
+    color: #87ceeb !important;
 }
 
 /*** Spinner ***/
@@ -136,7 +138,7 @@
 /*** Navbar ***/
 .sidebar .navbar .navbar-nav .nav-link {
     padding: 7px 20px;
-    color: var(--light);
+    color: var(--white);
     font-weight: 500;
     border-left: 3px solid var(--primary);
     border-radius: 0 30px 30px 0;
@@ -145,8 +147,8 @@
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
 .sidebar .navbar .navbar-nav .nav-link.active {
-    color: var(--primary);
-    background: var(--dark);
+    color: var(--secondary);
+    background: var(--white);
     border-color: var(--primary);
 }
 
@@ -162,7 +164,7 @@
 
 .sidebar .navbar .navbar-nav .nav-link:hover i,
 .sidebar .navbar .navbar-nav .nav-link.active i {
-    background: var(--secondary);
+    background: var(--blue);
 }
 
 .sidebar .navbar .dropdown-toggle::after {
@@ -194,7 +196,7 @@
 .content .navbar .navbar-nav .nav-link {
     margin-left: 25px;
     padding: 12px 0;
-    color: var(--light);
+    color: #003366;
     outline: none;
 }
 
