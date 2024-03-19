@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard</title>
+    <title>Comptes utilisateurs</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -41,33 +41,25 @@
 
 
         <!-- Sidebar Start -->
-        {%include 'fragments/sideBareAdmin.html'%}
+        {%include 'fragments/sideBareLeader.html'%}
         <!-- Sidebar End -->
 
 
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
-
             {%include 'fragments/navBare.html'%}
-
             <!-- Navbar End -->
 
-
+            
             <!-- Analytics Start-->
-            {%include 'fragments/analyticsAdmin.html'%}
             <!-- Analytics End -->
 
 
             <!-- Table Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-secondary rounded p-4">
-                    <h1>Acceuil</h1>
-                    copyright &copy;2023 ,tous droits réserver
-                    {%lorem 3 p%}
-                </div>
-            </div>
-            
+
+            {%include 'fragments/tableDemanderThemes.html'%}
+
             <!-- Table End -->
 
 

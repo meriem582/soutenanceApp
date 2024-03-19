@@ -13,18 +13,18 @@
             </div>
             <div class="ms-3">
                 <h6 class="mb-0">Nom admin</h6>
-                <span>Admin</span>
+                <span>Enseignant</span>
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{%url 'dashBoardAdmin'%}" class="nav-item nav-link active"><i
-                    class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-
-            <a href="#" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Formations</a>
-            <a href="#" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Stagiaires</a>
-            <a href="#" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Les utilisateurs</a>
-            <a href="#" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Les statistiques</a>
-            <a href="#" class="nav-item nav-link"><i class="far fa-file-alt me-2"></i>Login out</a>
+            <a href="{%url 'dashBoardEnseignant'%}" class="nav-item nav-link active"><i
+                    class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
+                    
+            <a href="{%url 'themes'%}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Thèmes</a>
+            <a href="{%url 'infoPersonnel'%}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Info personnelles</a>
+            <a href="{%url 'demandes'%}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Les demandes</a>
+            <a href="{%url 'evaluation'%}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Mémoires</a>
+            <a href="{%url 'index'%}" class="nav-item nav-link"><i class="far fa-file-alt me-2"></i>Déconnecter</a>
         </div>
     </nav>
 </div>

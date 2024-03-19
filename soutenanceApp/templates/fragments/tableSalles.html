@@ -1,0 +1,79 @@
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Recent Salse</h6>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleSalle">
+                Ajouter
+            </button>
+        </div>
+        <div style="text-align: right;">
+            <form action="rechercheFormation/" method="post" >
+                {%csrf_token%}
+                <input type="text" placeholder="recherche selon l'id" class="bg-dark border-0" name="idr" style="color: white;">
+                <button type="submit" class="bg-dark border-0"><i class="fa fa-search text-primary"></i></button>
+            </form>
+        </div>
+        <br>
+        <div class="table-responsive">
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-white">
+                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Bloc</th>
+                        <th scope="col">N° salle</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <!-- <tbody>
+                    {%for i in listeFormation%}
+                    <tr>
+                        <td scope="col"><input class="form-check-input" type="checkbox"></td>
+                        <td>{{i.id}}</td>
+                        <td>{{i.intitule}}</td>
+                        <td>{{i.duree}}</td>
+                        <td>{{i.cout}}</td>
+                        <td>
+                            <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
+                            &nbsp;
+                            &nbsp;
+                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody> -->
+            </table>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="ModaleSalle" tabindex="-1" aria-labelledby="ModaleSalleLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-secondary text-center rounded p-4">
+                    <form action="ajoutFormation/" method="post">
+                        {%csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModaleSalleLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Bloc</label>
+                                <input type="text" class="form-control" name="bloc">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Salle</label>
+                                <input type="text" class="form-control" name="salle">
+                            </div>
+                            
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
