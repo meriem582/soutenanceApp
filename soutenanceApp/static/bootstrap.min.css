@@ -84,7 +84,7 @@ h6,
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     line-height: 1.2;
-    color: #fff
+    color: #000
 }
 
 h1,
@@ -232,13 +232,13 @@ sup {
 }
 
 a {
-    color: #2eaa9d;
+    color: #003366;
     ;
     text-decoration: none
 }
 
 a:hover {
-    color: #44cc8a;
+    color: #87ceeb;
 }
 
 a:not([href]):not([class]),
@@ -3073,22 +3073,22 @@ fieldset:disabled .btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #44cc8a;
-    border-color: #44cc8a
+    background-color: #003366;
+    border-color: #003366
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #44cc8a;
-    border-color: #44cc8a
+    background-color: #87ceeb;
+    border-color: #87ceeb
 }
 
 .btn-check:focus+.btn-primary,
 .btn-primary:focus {
     color: #fff;
-    background-color: #44cc8a;
-    border-color: #44cc8a;
-    box-shadow: 0 0 0 .25rem #44cc8a
+    background-color: #003366;
+    border-color: #003366;
+    box-shadow: 0 0 0 .25rem #003366
 }
 
 .btn-check:checked+.btn-primary,
@@ -3097,8 +3097,8 @@ fieldset:disabled .btn {
 .btn-primary.active,
 .show>.btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #44cc8a;
-    border-color: #44cc8a
+    background-color: #003366;
+    border-color: #87ceeb
 }
 
 .btn-check:checked+.btn-primary:focus,
@@ -3106,7 +3106,7 @@ fieldset:disabled .btn {
 .btn-primary:active:focus,
 .btn-primary.active:focus,
 .show>.btn-primary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 .25rem #44cc8a
+    box-shadow: 0 0 0 .25rem #87ceeb
 }
 
 .btn-primary:disabled,
@@ -3885,7 +3885,8 @@ fieldset:disabled .btn {
 
 @media (min-width: 576px) {
     .dropdown-menu-sm-start {
-        --bs-position: start
+        --bs-position: start;
+        color: #003366
     }
 
     .dropdown-menu-sm-start[data-bs-popper] {
@@ -7773,7 +7774,8 @@ fieldset:disabled .btn {
 }
 
 .mb-0 {
-    margin-bottom: 0 !important
+    margin-bottom: 0 !important;
+    color: #000
 }
 
 .mb-1 {
@@ -7813,7 +7815,14 @@ fieldset:disabled .btn {
 }
 
 .ms-3 {
-    margin-left: 1rem !important
+    margin-left: 1rem !important;
+    color:#000
+}
+#E-span {
+    color: #87ceeb !important
+}
+#admin-span{
+    color: #fdfdfd !important
 }
 
 .ms-4 {
@@ -8034,7 +8043,8 @@ fieldset:disabled .btn {
 
 .py-0 {
     padding-top: 0 !important;
-    padding-bottom: 0 !important
+    padding-bottom: 0 !important;
+    background-color: #fdfdfd
 }
 
 .py-1 {
@@ -8312,7 +8322,7 @@ fieldset:disabled .btn {
 }
 
 .text-white {
-    color: #fff !important
+    color: #000 !important
 }
 
 .text-body {
@@ -8339,9 +8349,9 @@ fieldset:disabled .btn {
     background-color: #EB1616 !important
 }
 
-.bg-secondary {
+/* .bg-secondary {
     background-color: #191C24 !important
-}
+} */
 
 .bg-success {
     background-color: #198754 !important
@@ -8364,7 +8374,9 @@ fieldset:disabled .btn {
 }
 
 .bg-dark {
-    background-color: #000 !important
+    background-color: #c0c0c0 !important;
+    color:#6C7293  !important;
+    border-radius: 5px
 }
 
 .bg-body {
@@ -8404,7 +8416,8 @@ fieldset:disabled .btn {
 }
 
 .rounded {
-    border-radius: 5px !important
+    border-radius: 5px !important;
+    background-color: #fdfdfd;
 }
 
 .rounded-0 {
@@ -8433,7 +8446,8 @@ fieldset:disabled .btn {
 
 .rounded-top {
     border-top-left-radius: 5px !important;
-    border-top-right-radius: 5px !important
+    border-top-right-radius: 5px !important;
+    background-color: #fdfdfd
 }
 
 .rounded-end {
