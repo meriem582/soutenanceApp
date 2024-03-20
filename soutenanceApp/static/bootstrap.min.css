@@ -2484,7 +2484,7 @@ textarea.form-control-lg {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 88, 71, 0.25);
     appearance: none;
     color-adjust: exact
 }
@@ -2502,9 +2502,9 @@ textarea.form-control-lg {
 }
 
 .form-check-input:focus {
-    border-color: #f58b8b;
+    border-color: #C0C0C0;
     outline: 0;
-    box-shadow: 0 0 0 .25rem rgba(235, 22, 22, 0.25)
+    box-shadow: 0 0 0 .02rem #323232
 }
 
 .form-check-input:checked {
@@ -3013,7 +3013,7 @@ textarea.form-control.is-invalid {
 
 .was-validated .form-check-input:invalid:focus,
 .form-check-input.is-invalid:focus {
-    box-shadow: 0 0 0 .25rem rgba(220, 53, 69, 0.25)
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, 0.25)
 }
 
 .was-validated .form-check-input:invalid~.form-check-label,
