@@ -29,7 +29,7 @@
 }
 
 .text-primary {
-    color: #87ceeb !important;
+    color: black !important;
 }
 
 /*** Spinner ***/
@@ -303,4 +303,15 @@
 .testimonial-carousel .owl-dot.active {
     background: var(--dark);
     border-color: var(--primary);
+}
+
+.form-control:focus {
+    background-color: #C0C0C0; 
+    border-color: #003366; /* Ou n'importe quelle nuance de bleu que vous préférez */
+    box-shadow: 0 0 0 0.05rem #003366; /* Optionnel: ajoute une ombre pour un effet plus prononcé */
+}
+
+
+.form-check-input{
+    background-color: #C0C0C0;
 }
