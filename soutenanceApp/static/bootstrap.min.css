@@ -634,7 +634,7 @@ progress {
     padding-right: var(--bs-gutter-x, .75rem);
     padding-left: var(--bs-gutter-x, .75rem);
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
 }
 
 @media (min-width: 576px) {
@@ -2227,7 +2227,7 @@ progress {
     font-weight: 400;
     line-height: 1.5;
     color: #6C7293;
-    background-color: #C0C0C0;
+    background-color: white;
     background-clip: padding-box;
     border: 1px solid #000;
     appearance: none;
@@ -4424,7 +4424,7 @@ fieldset:disabled .btn {
     align-items: center;
     justify-content: space-between;
     padding-top: .5rem;
-    padding-bottom: .5rem
+    padding-bottom: .5rem;
 }
 
 .navbar>.container,
@@ -4684,7 +4684,8 @@ fieldset:disabled .btn {
 
 .navbar-expand {
     flex-wrap: nowrap;
-    justify-content: flex-start
+    justify-content: flex-start;
+    box-shadow: 0 4px 6px 0 rgba(0,0,0,0.2);
 }
 
 .navbar-expand .navbar-nav {
@@ -7776,7 +7777,7 @@ fieldset:disabled .btn {
 
 .mb-0 {
     margin-bottom: 0 !important;
-    color: #000
+    color: #000;
 }
 
 .mb-1 {
@@ -7784,7 +7785,8 @@ fieldset:disabled .btn {
 }
 
 .mb-2 {
-    margin-bottom: .5rem !important
+    margin-bottom: .5rem ; /*!important*/
+    font-family: Apple Chancery, cursive;
 }
 
 .mb-3 {
@@ -8380,6 +8382,13 @@ fieldset:disabled .btn {
     border-radius: 5px
 }
 
+.bgg-dark {
+    background-image: url('/static/img/recherche.jpg') !important;
+    background-size: cover; /* Ajustez selon vos besoins */
+    background-position: center; /* Ajustez selon vos besoins */
+    border-radius: 5px
+}
+
 .bg-body {
     background-color: #000 !important
 }
@@ -8424,6 +8433,10 @@ fieldset:disabled .btn {
     background-color: rgba(255, 255, 255, 0.6); 
     /* Application d'un filtre flou */
     backdrop-filter: blur(10px);
+}
+
+.coll{
+    background-color: black;
 }
 
 .rounded-0 {
@@ -12548,3 +12561,58 @@ fieldset:disabled .btn {
         display: none !important
     }
 }
+
+/* Ajouté  */
+
+.bg-secondary1 {
+    background-color: #87CEEB ; /*!important*/
+}
+
+.bg-secondary2 {
+    background-color: #323232 !important
+}
+
+.bg-secondary3 {
+    background-color: #C0C0C0 !important
+}
+
+.bg-secondary4 {
+    background-color: #fdfdfd; /*!important */
+    border : 1px solid #C0C0C0;
+}
+
+
+.container-fluid-back-content{
+    width: 100%;
+    padding-right: var(--bs-gutter-x, .75rem);
+    padding-left: var(--bs-gutter-x, .75rem);
+    margin-right: auto;
+    margin-left: auto;
+    background-color : white;
+}
+
+
+.mb-22 {       /*Style du text du deux ème bloc */
+   /* margin-bottom: .5rem ; /*!important*/
+    color : #fdfdfd;
+    font-family : Apple Chancery, cursive;
+    font-weight: bold;
+    font-size : 20px;
+}
+
+.mb-00 {                     /*Chiffre des blocs */
+    margin-bottom: 0 !important;
+    color: #000;
+    font-size: 30px;
+    font-family: cursive;
+}
+
+.mb-21 {        /*Style du text des blocs */
+    font-weight: bold ;
+    font-size : 20px;
+}
+
+.roundedd {                                /*Style du bloc 4 */
+    border-radius: 10px !important;
+}
+
