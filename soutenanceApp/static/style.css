@@ -100,7 +100,7 @@
 .content {
     margin-left: 250px;
     min-height: 100vh;
-    background: var(--dark);
+    background: #fdfdfd;
     transition: 0.5s;
 }
 
@@ -321,3 +321,7 @@
 .form-check-input{
     background-color: #C0C0C0;
 }
+
+
+/* Ajoutés  */
+

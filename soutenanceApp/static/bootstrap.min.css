@@ -2227,7 +2227,7 @@ progress {
     font-weight: 400;
     line-height: 1.5;
     color: #6C7293;
-    background-color: white;
+    background-color: #fdfdfd;
     background-clip: padding-box;
     border: 1px solid #000;
     appearance: none;
@@ -12564,6 +12564,10 @@ fieldset:disabled .btn {
 
 /* Ajouté  */
 
+ /* Couleur des blocs  */
+
+ /* Début  */
+
 .bg-secondary1 {
     background-color: #87CEEB ; /*!important*/
 }
@@ -12581,6 +12585,7 @@ fieldset:disabled .btn {
     border : 1px solid #C0C0C0;
 }
 
+/* Fin  */
 
 .container-fluid-back-content{
     width: 100%;
@@ -12616,3 +12621,10 @@ fieldset:disabled .btn {
     border-radius: 10px !important;
 }
 
+.bg-secondary5 {        /*Tableau des comptes */
+     /* Ajout d'une couleur de fond blanche semi-transparente */
+     background-color: rgba(192, 192, 192, 0.3); 
+     /* Application d'un filtre flou */
+     backdrop-filter: blur(10px);
+
+}
