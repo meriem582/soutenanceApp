@@ -8379,7 +8379,7 @@ fieldset:disabled .btn {
 .bg-dark {
     background-color: #c0c0c0 !important;
     color:#6C7293  !important;
-    border-radius: 5px
+    border-radius: 5px;
 }
 
 .bgg-dark {
@@ -12626,5 +12626,17 @@ fieldset:disabled .btn {
      background-color: rgba(192, 192, 192, 0.3); 
      /* Application d'un filtre flou */
      backdrop-filter: blur(10px);
+}
 
+.bg-dark2 {
+    background-color: #fdfdfd;
+    border-radius: 7px;
+}
+
+
+
+.hii{         /*Loupe dans le fichier tableComptes.html */
+    background-color: rgba(255, 255, 255, 0.5); 
+     /* Application d'un filtre flou */
+     backdrop-filter: blur(10px);
 }
