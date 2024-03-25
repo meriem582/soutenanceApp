@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from soutenanceApp.models import Utilisateur,Administrateur,Salle,Occupation_salle,Enseignant,Occupation_Enseignant,Domain_expertise,Theme,Leader,Demande,Evaluation
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
