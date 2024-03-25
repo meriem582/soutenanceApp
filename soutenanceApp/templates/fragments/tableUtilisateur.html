@@ -2,15 +2,17 @@
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Comptes enregistrés</h6>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleCompte">
                 Ajouter
             </button>
         </div>
         <div style="text-align: right;">
-            <form action="rechercheFormation/" method="post" >
+            <form action="rechercheFormation/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr" style="color: white;">
-                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i class="fa fa-search text-primary"></i></button>
+                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr"
+                    style="color: white;">
+                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
+                        class="fa fa-search text-primary"></i></button>
             </form>
         </div>
         <br>
@@ -19,43 +21,42 @@
                 <thead>
                     <tr class="text-white">
                         <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nom d'utilisateur</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Mot de passe</th>
+                        <th scope="col">Type</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Prénom</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Type</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
-                    {%for i in listeFormation%}
+                <tbody>
+                    {%for i in listeUtilisateur%}
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
-                        <td>{{i.id}}</td>
-                        <td>{{i.intitule}}</td>
-                        <td>{{i.duree}}</td>
-                        <td>{{i.cout}}</td>
+                        <td>{{i.email}}</td>
+                        <td>{{i.password}}</td>
+                        <td>{{i.type_User}}</td>
+                        <td>{{i.nom}}</td>
+                        <td>{{i.prenom}}</td>
                         <td>
-                            <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
+                            <!-- <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a> -->
                         </td>
                     </tr>
                     {%endfor%}
-                </tbody> -->
+                </tbody>
             </table>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="ModaleCompte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="ModaleCompte" tabindex="-1" aria-labelledby="ModaleCompteLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content bg-secondary text-center rounded p-4">
                     <form action="ajoutFormation/" method="post">
                         {%csrf_token %}
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="ModaleCompteLabel">Modal title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" style="text-align: left;">

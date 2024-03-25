@@ -16,8 +16,12 @@ def renderDashBoardEnseignantt(request):
 def renderDashBoardLeader(request):
     return render(request,'dashBoardLeader.html')
 
-def renderComptes(request):
-    return render(request,'comptes.html')
+
+def renderUtilisateur(request):
+    recuperation={
+        'listeUtilisateur':Utilisateur.objects.all(),
+    }
+    return render(request,'utilisateur.html',recuperation)    
 
 def renderSalles(request):
     return render(request,'salles.html')
