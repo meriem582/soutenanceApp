@@ -7,21 +7,12 @@ from django.urls import reverse
 def renderIndex(request):
     return render(request,'index.html')
 
-def renderDashBoardAdmin(request):
-    return render(request,'dashBoardAdmin.html')
-
-def renderDashBoardEnseignantt(request):
-    return render(request,'dashBoardEnseignant.html')
-
-def renderDashBoardLeader(request):
-    return render(request,'dashBoardLeader.html')
-
 
 def renderUtilisateur(request):
     recuperation={
         'listeUtilisateur':Utilisateur.objects.all(),
     }
-    return render(request,'utilisateur.html',recuperation)    
+    return render(request,'utilisateur.html',recuperation)  
 
 def renderSalles(request):
     recuperation={
@@ -61,6 +52,7 @@ def renderDemanderThemes(request):
 def renderDeposerMemoire(request):
     return render(request,'deposerMemoire.html')
 
+
 def login(request):
     email1 = request.POST.get("email")
     password1 = request.POST.get("password")
@@ -68,6 +60,7 @@ def login(request):
     nuser = Utilisateur.objects.filter(email=email1).first()
     
     if nuser is not None and nuser.password == password1 and nuser.type_User == type1:
+        request.session['user_email'] = email1  # Stocker l'e-mail dans la session
         if type1 == "Administrateur":
             return render(request, 'dashBoardAdmin.html')
         elif type1 == "Leader":
@@ -76,4 +69,5 @@ def login(request):
             return render(request, 'dashBoardEnseignant.html')
     else:
         return HttpResponseRedirect("/")
+
    

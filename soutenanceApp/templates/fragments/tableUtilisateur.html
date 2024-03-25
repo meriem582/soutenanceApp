@@ -1,15 +1,15 @@
 <div class="container-fluid-back-content pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Comptes enregistrés</h6>
+            <h6 class="mb-0">Utilisateurs</h6>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleCompte">
                 Ajouter
             </button>
         </div>
         <div style="text-align: right;">
-            <form action="rechercheFormation/" method="post">
+            <form action="rechercheUtilisateur/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr"
+                <input type="text" placeholder="Recherche selon l'email" class="bg-dark2 border-0 p-2" name="idr"
                     style="color: white;">
                 <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
                         class="fa fa-search text-primary"></i></button>
@@ -39,10 +39,10 @@
                         <td>{{i.nom}}</td>
                         <td>{{i.prenom}}</td>
                         <td>
-                            <!-- <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="#"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a> -->
+                            <a href="#"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {%endfor%}
@@ -56,7 +56,7 @@
                     <form action="ajoutFormation/" method="post">
                         {%csrf_token %}
                         <div class="modal-header">
-                            <h5 class="modal-title" id="ModaleCompteLabel">Modal title</h5>
+                            <h5 class="modal-title" id="ModaleCompteLabel">Fiche utilisateur</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" style="text-align: left;">
