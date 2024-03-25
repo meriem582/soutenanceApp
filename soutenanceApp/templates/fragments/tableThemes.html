@@ -22,27 +22,25 @@
                         <th scope="col">ID</th>
                         <th scope="col">Intitulé</th>
                         <th scope="col">Domaine</th>
-                        <th scope="col">Déscription</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
-                    {%for i in listeFormation%}
+                <tbody>
+                    {%for i in listeTheme%}
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
                         <td>{{i.id}}</td>
                         <td>{{i.intitule}}</td>
-                        <td>{{i.duree}}</td>
-                        <td>{{i.cout}}</td>
+                        <td>{{i.domaine}}</td>
                         <td>
-                            <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
+                            <!-- <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a> -->
                         </td>
                     </tr>
                     {%endfor%}
-                </tbody> -->
+                </tbody>
             </table>
         </div>
         <!-- Modal -->

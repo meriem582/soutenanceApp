@@ -24,7 +24,10 @@ def renderUtilisateur(request):
     return render(request,'utilisateur.html',recuperation)    
 
 def renderSalles(request):
-    return render(request,'salles.html')
+    recuperation={
+        'listeSalle':Salle.objects.all(),
+    }
+    return render(request,'salles.html',recuperation)     
 
 def renderConfiguration(request):
     return render(request,'configuration.html')
@@ -34,7 +37,10 @@ def renderPlanning(request):
 
 
 def renderThemes(request):
-    return render(request,'themes.html')
+    recuperation={
+        'listeTheme':Theme.objects.all(),
+    }
+    return render(request,'themes.html',recuperation)     
 
 def renderInfoPersonnel(request):
     return render(request,'infoPersonnel.html')
