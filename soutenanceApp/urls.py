@@ -3,9 +3,7 @@ from soutenanceApp import views
 # de views c'est la fonctions ,
 urlpatterns=[
     path('',views.renderIndex,name="index"),
-    path('dashBoardAdmin/',views.renderDashBoardAdmin,name="dashBoardAdmin"),
-    path('dashBoardEnseignant/',views.renderDashBoardEnseignantt,name="dashBoardEnseignant"),
-    path('dashBoardLeader/',views.renderDashBoardLeader,name="dashBoardLeader"),
+    path('login/',views.login,name="dashBoard"),
     path('utilisateur/',views.renderUtilisateur,name="utilisateur"),
     path('salles/',views.renderSalles,name="salles"),
     path('configuration/',views.renderConfiguration,name="configuration"),

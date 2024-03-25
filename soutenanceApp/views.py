@@ -60,3 +60,20 @@ def renderDemanderThemes(request):
 
 def renderDeposerMemoire(request):
     return render(request,'deposerMemoire.html')
+
+def login(request):
+    email1 = request.POST.get("email")
+    password1 = request.POST.get("password")
+    type1 = request.POST.get("type_User")
+    nuser = Utilisateur.objects.filter(email=email1).first()
+    
+    if nuser is not None and nuser.password == password1 and nuser.type_User == type1:
+        if type1 == "Administrateur":
+            return render(request, 'dashBoardAdmin.html')
+        elif type1 == "Leader":
+            return render(request, 'dashBoardLeader.html')
+        elif type1 == "Enseignant":
+            return render(request, 'dashBoardEnseignant.html')
+    else:
+        return HttpResponseRedirect("/")
+   
