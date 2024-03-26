@@ -1,3 +1,69 @@
+ <!-- Modal Domaine-->
+ <div class="modal fade" id="ModaleDomaineExpertise" tabindex="-1" aria-labelledby="ModaleDomaineExpertiseLabel"
+ aria-hidden="true">
+ <div class="modal-dialog">
+     <div class="modal-content bg-secondary text-center rounded p-4">
+         <form action="ajoutFormation/" method="post">
+             {%csrf_token %}
+             <div class="modal-header">
+                 <h5 class="modal-title" id="ModaleDomaineExpertiseLabel">Domaine d'expertise</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body" style="text-align: left;">
+                 <div class="mb-3">
+                     <label for="dure" class="form-label" class="form-control">Domaine d'expertise</label>
+                     <select name="duree" id="duree" class="form-control" style="background-color: black;">
+                         <option value="Domaine 1">Domaine 1</option>
+                         <option value="Domaine 2">Domaine 2</option>
+                         <option value="Domaine 3">Domaine 3</option>
+                     </select>
+                 </div>
+
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                 <button type="submit" class="btn btn-primary">Ajouter</button>
+             </div>
+         </form>
+     </div>
+ </div>
+</div>
+<!-- Modal Occupation-->
+<div class="modal fade" id="ModaleOccupation" tabindex="-1" aria-labelledby="ModaleOccupationLabel"
+aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content bg-secondary text-center rounded p-4">
+        <form action="ajoutFormation/" method="post">
+            {%csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModaleOccupationLabel">Domaine d'expertise</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Date occupation</label>
+                    <input type="date" class="form-control" name="dateOccupation">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Heure début</label>
+                    <input type="time" class="form-control" name="heureDeb">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Heure fin</label>
+                    <input type="time" class="form-control" name="heurefin">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -101,72 +167,9 @@
         </div>
         <!-- end table occupations -->
 
-        <!-- Modal Domaine-->
-        <div class="modal fade" id="ModaleDomaineExpertise" tabindex="-1" aria-labelledby="ModaleDomaineExpertiseLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary text-center rounded p-4">
-                    <form action="ajoutFormation/" method="post">
-                        {%csrf_token %}
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="ModaleDomaineExpertiseLabel">Domaine d'expertise</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="text-align: left;">
-                            <div class="mb-3">
-                                <label for="dure" class="form-label" class="form-control">Domaine d'expertise</label>
-                                <select name="duree" id="duree" class="form-control" style="background-color: black;">
-                                    <option value="Domaine 1">Domaine 1</option>
-                                    <option value="Domaine 2">Domaine 2</option>
-                                    <option value="Domaine 3">Domaine 3</option>
-                                </select>
-                            </div>
+       
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Occupation-->
-        <div class="modal fade" id="ModaleOccupation" tabindex="-1" aria-labelledby="ModaleOccupationLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary text-center rounded p-4">
-                    <form action="ajoutFormation/" method="post">
-                        {%csrf_token %}
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="ModaleOccupationLabel">Domaine d'expertise</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="text-align: left;">
-
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Date occupation</label>
-                                <input type="date" class="form-control" name="dateOccupation">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Heure début</label>
-                                <input type="time" class="form-control" name="heureDeb">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Heure fin</label>
-                                <input type="time" class="form-control" name="heurefin">
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        
 
 
     </div>
