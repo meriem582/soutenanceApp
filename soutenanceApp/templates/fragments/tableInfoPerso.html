@@ -64,10 +64,21 @@ aria-hidden="true">
 </div>
 </div>
 
+
+
+
+
+
+
+
+<!-- Les containers  -->
+
+
+<!-- 1 er container  -->
 <div class="container-fluid pt-4 px-4">
-    <div class="bg-secondary text-center rounded p-4">
+    <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Recent Salse</h6>
+            <h6 class="mb-0">Les domaines</h6>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                 data-bs-target="#ModaleDomaineExpertise">
                 Ajouter domaine
@@ -76,13 +87,12 @@ aria-hidden="true">
         <div style="text-align: right;">
             <form action="rechercheFormation/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="bg-dark border-0" name="idr"
-                    style="color: #003366;">
-                <button type="submit" class="bg-dark border-0"><i class="fa fa-search text-primary"></i></button>
+                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr"
+                    style="color: white;">
+                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i class="fa fa-search text-primary"></i></button>
             </form>
         </div>
         <br>
-        <h2>Table domaine</h2>
         <!-- table domaine -->
         <div class="table-responsive">
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -113,26 +123,33 @@ aria-hidden="true">
                 </tbody> -->
             </table>
         </div>
-        <!-- end table domaine -->
+        <!-- end table domaine --> 
+    </div>
+</div>
 
+
+
+<!-- Deux ème container  -->
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Recent Salse</h6>
+            <h6 class="mb-0">Les occupations</h6>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                 data-bs-target="#ModaleOccupation">
-                Ajouter occupation
+                Ajouter une occupation
             </button>
         </div>
         <div style="text-align: right;">
             <form action="rechercheFormation/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="bg-dark border-0" name="idr"
+                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr"
                     style="color: white;">
-                <button type="submit" class="bg-dark border-0"><i class="fa fa-search text-primary"></i></button>
+                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i class="fa fa-search text-primary"></i></button>
             </form>
         </div>
         <br>
 
-        <h2>Table des occupations</h2>
         <!-- table occupations -->
         <div class="table-responsive">
             <table class="table text-start align-middle table-bordered table-hover mb-0">

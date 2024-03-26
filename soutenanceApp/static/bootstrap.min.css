@@ -12642,8 +12642,7 @@ fieldset:disabled .btn {
      backdrop-filter: blur(10px);
 }
 
-
-
-.hi {
-    height : 80px;
+.mb-01 {
+    margin-bottom: 0 !important;
+    color: #fdfdfd;
 }

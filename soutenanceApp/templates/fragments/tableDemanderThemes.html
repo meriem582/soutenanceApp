@@ -27,9 +27,9 @@
     </div>
 </div>
 <div class="container-fluid pt-4 px-4">
-    <div class="bg-secondary text-center rounded p-4">
+    <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Recent Salse</h6>
+            <h6 class="mb-0">Mes demandes</h6>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalDemanderThemes">
                 Ajouter
             </button>
@@ -37,8 +37,8 @@
         <div style="text-align: right;">
             <form action="rechercheFormation/" method="post" >
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="bg-dark border-0" name="idr" style="color: white;">
-                <button type="submit" class="bg-dark border-0"><i class="fa fa-search text-primary"></i></button>
+                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr" style="color: white;">
+                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i class="fa fa-search text-primary"></i></button>
             </form>
         </div>
         <br>
