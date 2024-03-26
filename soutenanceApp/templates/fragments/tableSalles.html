@@ -1,11 +1,46 @@
+<!-- Modal -->
+<div class="modal fade" id="ModaleSalle" tabindex="-1" aria-labelledby="ModaleSalleLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary text-center rounded p-4">
+            <form action="ajoutFormation/" method="post">
+                {%csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModaleSalleLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Bloc</label>
+                        <input type="text" class="form-control" name="bloc">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Salle</label>
+                        <input type="text" class="form-control" name="salle">
+                    </div>
+                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="container-fluid pt-4 px-4 hi">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Recent Salse</h6>
+            
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleSalle">
                 Ajouter
             </button>
         </div>
+
+        
+        
         <div style="text-align: right;">
             <form action="rechercheFormation/" method="post" >
                 {%csrf_token%}
@@ -43,36 +78,6 @@
                 </tbody>
             </table>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="ModaleSalle" tabindex="-1" aria-labelledby="ModaleSalleLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary text-center rounded p-4">
-                    <form action="ajoutFormation/" method="post">
-                        {%csrf_token %}
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="ModaleSalleLabel">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="text-align: left;">
-
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Bloc</label>
-                                <input type="text" class="form-control" name="bloc">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Salle</label>
-                                <input type="text" class="form-control" name="salle">
-                            </div>
-                            
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
