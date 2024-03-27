@@ -8,11 +8,58 @@ def renderIndex(request):
     return render(request,'index.html')
 
 
+
 def renderUtilisateur(request):
-    recuperation={
-        'listeUtilisateur':Utilisateur.objects.all(),
+    if request.method == 'POST':
+        email_recherche = request.POST.get('emailr')
+        search_results = Utilisateur.objects.filter(email=email_recherche)
+        return render(request, 'utilisateur.html', {'search_results': search_results})
+    else:
+        listeUtilisateur = Utilisateur.objects.all()  
+        return render(request, 'utilisateur.html', {'listeUtilisateur': listeUtilisateur})    
+
+def ajoutUtilisateur(request):
+    e=request.POST["email"]
+    p=request.POST["password"]
+    t=request.POST["typeUser"]
+    n=request.POST["nom"]
+    p=request.POST["prenom"]
+    nu=Utilisateur(email=e,password=p,type_User=t,nom=n,prenom=p)
+    nu.save()
+    return HttpResponseRedirect(reverse("utilisateur"))
+
+def suprimerUtilisateur(request,email):
+    usup=Utilisateur.objects.get(email=email)
+    usup.delete()
+    return HttpResponseRedirect(reverse("utilisateur"))
+
+
+def rendermodifierUtilisateur(request,email):
+    urech=Utilisateur.objects.get(email=email)
+    setinfo={
+        'urechercher':urech,
     }
-    return render(request,'utilisateur.html',recuperation)  
+    return render(request,'modifierUtilisateur.html',setinfo)
+
+def MAJUtilisateur(request,email):
+    newEmail=request.POST["email"]
+    oldu=Utilisateur.objects.get(email=newEmail)
+    ps=request.POST["password"]
+    n=request.POST["nom"]
+    p=request.POST["prenom"]
+    oldu.password=ps
+    oldu.nom=n
+    oldu.prenom=p
+    oldu.save()
+    return HttpResponseRedirect(reverse("utilisateur"))
+
+def rechercheUtilisateur(request):
+    email=request.POST["emailr"]
+    urech=Utilisateur.objects.get(email=email)
+    setinfo={
+        'urechercher':urech,
+    }
+    return render(request,'modifierUtilisateur.html',setinfo)
 
 def renderSalles(request):
     recuperation={
