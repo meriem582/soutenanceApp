@@ -7,8 +7,6 @@ from django.urls import reverse
 def renderIndex(request):
     return render(request,'index.html')
 
-
-
 def renderUtilisateur(request):
     if request.method == 'POST':
         email_recherche = request.POST.get('emailr')
@@ -32,7 +30,6 @@ def suprimerUtilisateur(request,email):
     usup=Utilisateur.objects.get(email=email)
     usup.delete()
     return HttpResponseRedirect(reverse("utilisateur"))
-
 
 def rendermodifierUtilisateur(request,email):
     urech=Utilisateur.objects.get(email=email)
@@ -65,14 +62,27 @@ def renderSalles(request):
     recuperation={
         'listeSalle':Salle.objects.all(),
     }
-    return render(request,'salles.html',recuperation)     
+    return render(request,'salles.html',recuperation)  
+
+def ajoutSalle(request):
+    b=request.POST["bloc"]
+    s=request.POST["salle"]
+    eAdmin=request.session['user_email']
+    admin = Administrateur.objects.get(email=eAdmin)
+    ns=Salle(num_bloc=b,num_salle=s,idAdministrateur=admin)
+    ns.save()
+    return HttpResponseRedirect(reverse("salles"))
+
+def suprimerSalle(request,id):
+    ssup=Salle.objects.get(id=id)
+    ssup.delete()
+    return HttpResponseRedirect(reverse("salles"))
 
 def renderConfiguration(request):
     return render(request,'configuration.html')
 
 def renderPlanning(request):
     return render(request,'planning.html')
-
 
 def renderThemes(request):
     recuperation={
@@ -83,22 +93,17 @@ def renderThemes(request):
 def renderInfoPersonnel(request):
     return render(request,'infoPersonnel.html')
 
-
 def renderDemandes(request):
     return render(request,'demandes.html')
-
 
 def renderEvaluation(request):
     return render(request,'evaluation.html')
 
-
 def renderDemanderThemes(request):
     return render(request,'demanderthemes.html')
 
-
 def renderDeposerMemoire(request):
     return render(request,'deposerMemoire.html')
-
 
 def login(request):
     email1 = request.POST.get("email")

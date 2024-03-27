@@ -2,10 +2,10 @@
 <div class="modal fade" id="ModaleSalle" tabindex="-1" aria-labelledby="ModaleSalleLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-secondary text-center rounded p-4">
-            <form action="ajoutFormation/" method="post">
+            <form action="ajoutSalle/" method="post">
                 {%csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModaleSalleLabel">Modal title</h5>
+                    <h5 class="modal-title" id="ModaleSalleLabel">Fiche Salle</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: left;">
@@ -68,7 +68,7 @@
                         <td>{{i.num_bloc}}</td>
                         <td>{{i.num_salle}}</td>
                         <td>
-                            <a href="#"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerSalle/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
                             <a href="#"><i class="fa fa-edit text-primary"></i></a>
