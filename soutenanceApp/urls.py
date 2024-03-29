@@ -25,6 +25,7 @@ urlpatterns=[
     path('salles/occupationSalle/<int:id>/',views.renderOccupationSalles,name="occupationSalle"),
     path('salles/occupationSalle/<int:id>/ajoutOccupationSalle/',views.ajoutOccupationSalle,name="ajoutOccupationSalle"),
     path('salles/occupationSalle/<int:id>/suprimerOccupationSalle/<int:ids>/',views.suprimerOccupationSalle,name="suprimerOccupationSalle"),
+    path('salles/occupationSalle/<int:id>/modifierOccupationSalle/<int:ids>/',views.rendermodifierOccupationSalle,name="affichmodifOccupationSalle"),
     path('configuration/',views.renderConfiguration,name="configuration"),
     path('planning/',views.renderPlanning,name="planning"),
     path('themes/',views.renderThemes,name="themes"),

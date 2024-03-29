@@ -69,14 +69,6 @@ def renderSalles(request):
         return render(request, 'salles.html', {'listeSalle': listeSalle}) 
 
 
-def ajoutSalle(request):
-    b=request.POST["bloc"]
-    s=request.POST["salle"]
-    eAdmin=request.session['user_email']
-    admin = Administrateur.objects.get(email=eAdmin)
-    ns=Salle(num_bloc=b,num_salle=s,idAdministrateur=admin)
-    ns.save()
-    return HttpResponseRedirect(reverse("salles"))
 
     
 def ajoutSalle(request):
@@ -151,6 +143,14 @@ def suprimerOccupationSalle(request,id,ids):
     sosup=Occupation_salle.objects.get(ids=ids)
     sosup.delete()
     return HttpResponseRedirect(reverse("occupationSalle", args=[id]))
+
+
+def rendermodifierOccupationSalle(request,ids,id):
+    osrech=Occupation_salle.objects.get(ids=ids)
+    setinfo={
+        'osrechercher':osrech,
+    }
+    return render(request,'modifierOccupationSalle.html',setinfo)    
 
      
 def renderConfiguration(request):
