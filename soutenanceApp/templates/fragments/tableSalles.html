@@ -18,7 +18,7 @@
                         <label for="exampleInputEmail1" class="form-label">Salle</label>
                         <input type="text" class="form-control" name="salle">
                     </div>
-                    
+
 
                 </div>
                 <div class="modal-footer">
@@ -33,19 +33,21 @@
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Salles</h6>
-            
+
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleSalle">
                 Ajouter
             </button>
         </div>
 
-        
-        
+
+
         <div style="text-align: right;">
-            <form action="rechercheFormation/" method="post" >
+            <form action="rechercheSalle/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr" style="color: white;">
-                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i class="fa fa-search text-primary"></i></button>
+                <input type="text" placeholder="Recherche selon le bloc" class="bg-dark2 border-0 p-2" name="bloc"
+                    style="color: dark;">
+                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
+                        class="fa fa-search text-primary"></i></button>
             </form>
         </div>
         <br>
@@ -61,7 +63,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {%for i in listeSalle%}
+                    <!-- Si des résultats de recherche existent, affichez-les -->
+                    {% if search_results %}
+                    {% for i in search_results %}
+
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
                         <td>{{i.id}}</td>
@@ -71,13 +76,30 @@
                             <a href="suprimerSalle/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="#"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierSalle/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
-                    {%endfor%}
+                    {% endfor %}
+                    <!-- Sinon, affichez la liste complète des utilisateurs -->
+                    {% else %}
+                    {% for i in listeSalle%}
+                    <tr>
+                        <td scope="col"><input class="form-check-input" type="checkbox"></td>
+                        <td>{{i.id}}</td>
+                        <td>{{i.num_bloc}}</td>
+                        <td>{{i.num_salle}}</td>
+                        <td>
+                            <a href="suprimerSalle/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            &nbsp;
+                            &nbsp;
+                            <a href="modifierSalle/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </div>
-        
+
     </div>
 </div>

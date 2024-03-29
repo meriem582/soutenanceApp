@@ -58,11 +58,16 @@ def rechercheUtilisateur(request):
     }
     return render(request,'modifierUtilisateur.html',setinfo)
 
+
 def renderSalles(request):
-    recuperation={
-        'listeSalle':Salle.objects.all(),
-    }
-    return render(request,'salles.html',recuperation)  
+    if request.method == 'POST':
+        bloc_recherche = request.POST.get('bloc')
+        search_results = Salle.objects.filter(num_bloc=bloc_recherche)
+        return render(request, 'salles.html', {'search_results': search_results})
+    else:
+        listeSalle = Salle.objects.all()  
+        return render(request, 'salles.html', {'listeSalle': listeSalle}) 
+
 
 def ajoutSalle(request):
     b=request.POST["bloc"]
@@ -78,6 +83,31 @@ def suprimerSalle(request,id):
     ssup.delete()
     return HttpResponseRedirect(reverse("salles"))
 
+def rendermodifierSalle(request,id):
+    srech=Salle.objects.get(id=id)
+    setinfo={
+        'srechercher':srech,
+    }
+    return render(request,'modifierSalle.html',setinfo)
+
+def MAJSalle(request,id):
+    newId=request.POST["id"]
+    olds=Salle.objects.get(id=newId)
+    numb=request.POST["bloc"]
+    nums=request.POST["salle"]
+    olds.num_bloc=numb
+    olds.num_salle=nums
+    olds.save()
+    return HttpResponseRedirect(reverse("salles"))
+
+def rechercheSalle(request):
+    bloc1=request.POST["bloc"]
+    srech=Salle.objects.get(bloc=bloc1)
+    setinfo={
+        'srechercher':srech,
+    }
+    return render(request,'modifierSalle.html',setinfo)
+     
 def renderConfiguration(request):
     return render(request,'configuration.html')
 
