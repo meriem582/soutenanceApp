@@ -37,6 +37,7 @@ class Meta:
 
 
 class Occupation_salle(models.Model):
+    ids = models.AutoField(primary_key=True)
     date_occupation=models.DateField()
     heure_debut=models.TimeField()
     heure_fin=models.TimeField()
@@ -57,6 +58,7 @@ class Meta:
 
 
 class Occupation_Enseignant(models.Model):
+    ide = models.AutoField(primary_key=True)
     date_occupation=models.DateField()
     heure_debut=models.TimeField()
     heure_fin=models.TimeField()

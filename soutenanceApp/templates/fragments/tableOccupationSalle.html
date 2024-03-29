@@ -1,24 +1,30 @@
 <!-- Modal -->
-<div class="modal fade" id="ModaleSalle" tabindex="-1" aria-labelledby="ModaleSalleLabel" aria-hidden="true">
+<div class="modal fade" id="ModaleSalleOccupation" tabindex="-1" aria-labelledby="ModaleSalleOccupationLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-secondary text-center rounded p-4">
-            <form action="ajoutSalle/" method="post">
+            <form action="ajoutOccupationSalle/" method="post">
                 {%csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModaleSalleLabel">Fiche Salle</h5>
+                    <h5 class="modal-title" id="ModaleSalleOccupationLabel">Fiche occupation Salle</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: left;">
 
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Bloc</label>
-                        <input type="text" class="form-control" name="bloc">
+                        <label for="exampleInputEmail1" class="form-label">Date</label>
+                        <input type="date" class="form-control" name="date">
                     </div>
+                    
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Salle</label>
-                        <input type="text" class="form-control" name="salle">
+                        <label for="exampleInputEmail1" class="form-label">Heure début</label>
+                        <input type="time" class="form-control" name="heure_deb">
                     </div>
-
+                    
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Heure fin</label>
+                        <input type="time" class="form-control" name="heure_fin">
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -32,19 +38,17 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Salles</h6>
+            <h6 class="mb-0">Occupations Salle</h6>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleSalle">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleSalleOccupation">
                 Ajouter
             </button>
         </div>
 
-
-
         <div style="text-align: right;">
-            <form action="rechercheSalle/" method="post">
+            <form action="rechercheOccupationSalle/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon le bloc" class="bg-dark2 border-0 p-2" name="bloc"
+                <input type="text" placeholder="Recherche selon la date" class="bg-dark2 border-0 p-2" name="date"
                     style="color: dark;">
                 <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
                         class="fa fa-search text-primary"></i></button>
@@ -57,8 +61,9 @@
                     <tr class="text-white">
                         <th scope="col"><input class="form-check-input" type="checkbox"></th>
                         <th scope="col">ID</th>
-                        <th scope="col">N° Bloc</th>
-                        <th scope="col">N° Salle</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Heure début</th>
+                        <th scope="col">Heure fin</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -69,33 +74,32 @@
 
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
-                        <td>{{i.id}}</td>
-                        <td>{{i.num_bloc}}</td>
-                        <td>{{i.num_salle}}</td>
+                        <td>{{i.ids}}</td>
+                        <td>{{i.date_occupation}}</td>
+                        <td>{{i.heure_debut}}</td>
+                        <td>{{i.heure_fin}}</td>
                         <td>
-                            <a href="suprimerSalle/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerOccupationSalle/{{ i.ids }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierSalle/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
                     <!-- Sinon, affichez la liste complète des utilisateurs -->
                     {% else %}
-                    {% for i in listeSalle%}
+                    {% for i in listeOccupationSalle%}
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
-                        <td>{{i.id}}</td>
-                        <td>{{i.num_bloc}}</td>
-                        <td>{{i.num_salle}}</td>
+                        <td>{{i.ids}}</td>
+                        <td>{{i.date_occupation}}</td>
+                        <td>{{i.heure_debut}}</td>
+                        <td>{{i.heure_fin}}</td>
                         <td>
-                            <a href="suprimerSalle/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerOccupationSalle/{{ i.ids }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierSalle/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
-                            &nbsp;
-                            &nbsp;
-                            <a href="occupationSalle/{{i.id}}"><i class="fa fa-file text-primary"></i></a>
+                            <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

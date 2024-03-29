@@ -78,6 +78,16 @@ def ajoutSalle(request):
     ns.save()
     return HttpResponseRedirect(reverse("salles"))
 
+    
+def ajoutSalle(request):
+    b=request.POST["bloc"]
+    s=request.POST["salle"]
+    eAdmin=request.session['user_email']
+    admin = Administrateur.objects.get(email=eAdmin)
+    ns=Salle(num_bloc=b,num_salle=s,idAdministrateur=admin)
+    ns.save()
+    return HttpResponseRedirect(reverse("salles"))
+
 def suprimerSalle(request,id):
     ssup=Salle.objects.get(id=id)
     ssup.delete()
@@ -107,6 +117,41 @@ def rechercheSalle(request):
         'srechercher':srech,
     }
     return render(request,'modifierSalle.html',setinfo)
+
+
+
+def renderOccupationSalles(request,id):
+    if request.method == 'POST':
+        date_recherche = request.POST.get('date')
+        search_results = Occupation_salle.objects.filter(date_occupation=date_recherche)
+        return render(request, 'occupationSalle.html', {'search_results': search_results})
+    else:
+        salle1=Salle.objects.get(id=id)
+        srech=Occupation_salle.objects.filter(idSalle=salle1)
+        setinfo={
+        'listeOccupationSalle':srech,
+        }
+        return render(request,'occupationSalle.html',setinfo)
+
+
+
+def ajoutOccupationSalle(request, id):
+    d = request.POST["date"]
+    hd = request.POST["heure_deb"]
+    hf = request.POST["heure_fin"]
+    eAdmin = request.session['user_email']
+    admin = Administrateur.objects.get(email=eAdmin)
+    salle1 = Salle.objects.get(id=id)
+    nos = Occupation_salle(date_occupation=d, heure_debut=hd, heure_fin=hf, idSalle=salle1, idAdministrateur=admin)
+    nos.save()
+    return HttpResponseRedirect(reverse("occupationSalle", args=[id]))
+
+
+def suprimerOccupationSalle(request,id,ids):
+    sosup=Occupation_salle.objects.get(ids=ids)
+    sosup.delete()
+    return HttpResponseRedirect(reverse("occupationSalle", args=[id]))
+
      
 def renderConfiguration(request):
     return render(request,'configuration.html')
