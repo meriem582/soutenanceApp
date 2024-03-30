@@ -3055,13 +3055,13 @@ textarea.form-control.is-invalid {
     }
 }
 
-.btn:hover {
+/* .btn:hover {
     color: #6C7293
-}
+} */
 
 .btn-check:focus+.btn,
 .btn:focus {
-    outline: 0;
+    outline: 0; 
     box-shadow: 0 0 0 .25rem rgba(235, 22, 22, 0.25)
 }
 
@@ -3078,11 +3078,11 @@ fieldset:disabled .btn {
     border-color: #003366
 }
 
-.btn-primary:hover {
+/* .btn-primary:hover {
     color: #fff;
     background-color: #87ceeb;
     border-color: #87ceeb
-}
+} */
 
 .btn-check:focus+.btn-primary,
 .btn-primary:focus {
@@ -12646,3 +12646,109 @@ fieldset:disabled .btn {
     margin-bottom: 0 !important;
     color: #fdfdfd;
 }
+
+/* Button connexion page Index  */
+
+/* Début */
+
+.button1  {
+    /* height: 50px;
+    width: 200px; */
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    border: 3px solid #003366;
+    overflow: hidden;
+    color: #003366;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.btnText {  
+    /* z-index: 1; */
+    font-weight: 800;
+    letter-spacing: 3px;
+    font-family: Snell Roundhand, cursive;
+                                                
+}
+
+.btnPrimary::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.3s ease-in-out;
+    background-color: #003366;
+    border-radius: 30px;
+    visibility: hidden;
+    height: 10px;
+    width: 10px;
+    z-index: -1;
+}
+    
+.button1:hover {
+    box-shadow: 1px 1px 200px #252525;    
+    color: #fff;
+}
+    
+.btnPrimary:hover::after {
+    visibility: visible;    
+    transform: scale(100) translateX(2px);
+}
+    
+
+
+/* Fin  */
+
+.text-primaryy2  {             /*Index --> Text (Connexion) en haut*/
+    font-family: Snell Roundhand, cursive;
+    color : black;
+}
+
+
+/* Bouton Ajouter  */
+
+/* Début  */
+
+.button2  {
+    /* height: 50px;
+    width: 200px; */
+    position: relative;
+    background-color: #003366;
+    cursor: pointer;
+    border: 3px solid #003366;
+    overflow: hidden;
+    color: white;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btnPrimary2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.3s ease-in-out;
+    /* background-color: #fdfdfd; */
+    border-radius: 30px;
+    visibility: hidden;
+    height: 10px;
+    width: 10px;
+    z-index: -1;
+}
+    
+.button2:hover {
+    box-shadow: 1px 1px 200px #252525;    
+    color: #323232;
+    background-color: transparent;
+    border: 3px solid #003366;
+}
+    
+.btnPrimary2:hover::after {
+    visibility: visible;    
+    transform: scale(100) translateX(2px);
+}
+    
+
+
