@@ -71,7 +71,13 @@ class Meta:
 
 class Domain_expertise(models.Model):
     intitule=models.CharField(max_length=50)
+    idAdministrateur=models.ForeignKey(Administrateur,on_delete=models.CASCADE)
+
+class EnseignantDomaineExpertise(models.Model):
     idEnseignant=models.ForeignKey(Enseignant,on_delete=models.CASCADE)
+    idDomaineExpertise=models.ForeignKey(Domain_expertise,on_delete=models.CASCADE)
+    
+
 
 class Meta:
     db_table="domaine_expertise"

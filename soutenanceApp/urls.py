@@ -3,7 +3,7 @@ from soutenanceApp import views
 # de views c'est la fonctions ,
 urlpatterns=[
     path('',views.renderIndex,name="index"),
-    path('login/',views.login,name="dashBoard"),
+    path('login/',views.login,name="dashBoard"), 
     path('utilisateur/',views.renderUtilisateur,name="utilisateur"),
     path('utilisateur/ajoutUtilisateur/',views.ajoutUtilisateur,name="ajoutUtilisateur"),
     path('utilisateur/suprimerUtilisateur/<str:email>/',views.suprimerUtilisateur,name="suprimerUtilisateur"),
@@ -26,12 +26,41 @@ urlpatterns=[
     path('salles/occupationSalle/<int:id>/ajoutOccupationSalle/',views.ajoutOccupationSalle,name="ajoutOccupationSalle"),
     path('salles/occupationSalle/<int:id>/suprimerOccupationSalle/<int:ids>/',views.suprimerOccupationSalle,name="suprimerOccupationSalle"),
     path('salles/occupationSalle/<int:id>/modifierOccupationSalle/<int:ids>/',views.rendermodifierOccupationSalle,name="affichmodifOccupationSalle"),
+    path('salles/occupationSalle/<int:id>/modifierOccupationSalle/<int:ids>/MAJOccupationSalle/',views.MAJOccupationSalle,name="MAJOccupationSalle"),
+    path('salles/occupationSalle/<int:id>/rechercheOccupationSalle/',views.renderOccupationSalles,name="rechercheOccupationSalle"),
+    path('salles/occupationSalle/<int:id>/rechercheOccupationSalle/suprimerOccupationSalle/<int:ids>/',views.suprimerOccupationSalle,name="suprimerOccupationSalle1"),
+    path('salles/occupationSalle/<int:id>/rechercheOccupationSalle/modifierOccupationSalle/<int:ids>/',views.rendermodifierOccupationSalle,name="affichmodifOccupationSalle1"),
+    path('salles/occupationSalle/<int:id>/rechercheOccupationSalle/modifierOccupationSalle/<int:ids>/MAJOccupationSalle/',views.MAJOccupationSalle,name="MAJOccupationSalle1"),
+    path('domaineAdmin/',views.renderDomaineAdmin,name="domaineAdmin"),
+    path('domaineAdmin/ajoutDomaineAdmin/',views.ajoutDomaineAdmin,name="ajoutDomaineAdmin"),
+    path('domaineAdmin/suprimerDomaineAdmin/<int:id>/',views.suprimerDomaineAdmin,name="suprimerDomaineAdmin"),
+    path('domaineAdmin/modifierDomaineAdmin/<int:id>/',views.rendermodifierDomaineAdmin,name="affichmodifDomaineAdmin"),
+    path('domaineAdmin/modifierDomaineAdmin/<int:id>/MAJDomaineAdmin/',views.MAJDomaineAdmin,name="MAJDomaineAdmin"),
+    path('domaineAdmin/rechercheDomaineAdmin/',views.renderDomaineAdmin,name="rechercheDomaineAdmin"),
+    path('domaineAdmin/rechercheDomaineAdmin/suprimerDomaineAdmin/<int:id>/',views.suprimerDomaineAdmin,name="suprimerDomaineAdmin1"),
+    path('domaineAdmin/rechercheDomaineAdmin/modifierDomaineAdmin/<int:id>/',views.rendermodifierDomaineAdmin,name="affichmodifDomaineAdmin1"),
+    path('domaineAdmin/rechercheDomaineAdmin/modifierDomaineAdmin/<int:id>/MAJDomaineAdmin/',views.MAJDomaineAdmin,name="MAJDomaineAdmin1"),
+
+    
+
+
+
     path('configuration/',views.renderConfiguration,name="configuration"),
     path('planning/',views.renderPlanning,name="planning"),
     path('themes/',views.renderThemes,name="themes"),
-    path('infoPersonnel/',views.renderInfoPersonnel,name="infoPersonnel"),
     path('demandes/',views.renderDemandes,name="demandes"),
     path('evaluation/',views.renderEvaluation,name="evaluation"),
     path('demanderthemes/',views.renderDemanderThemes,name="demanderthemes"),
     path('deposerMemoire/',views.renderDeposerMemoire,name="deposerMemoire"),
 ]
+
+
+# path('occupationEnseignant/',views.renderOccupationEnseignant,name="occupationEnseignant"),
+#     path('occupationEnseignant/ajoutOccupationEnseignant/',views.ajoutOccupationEnseignant,name="ajoutOccupationEnseignant"),
+#     path('occupationEnseignant/suprimerOccupationEnseignant/<int:ide>/',views.suprimerOccupationEnseignant,name="suprimerOccupationEnseignant"),
+#     path('occupationEnseignant/modifierOccupationEnseignant/<int:ide>/',views.rendermodifierOccupationEnseignant,name="affichmodifOccupationEnseignant"),
+#     path('occupationEnseignant/modifierOccupationEnseignant/<int:ide>/MAJOccupationEnseignant/',views.MAJOccupationEnseignant,name="MAJOccupationEnseignant"),
+#     path('occupationEnseignant/rechercheOccupationEnseignant/',views.renderOccupationEnseignant,name="rechercheOccupationEnseignant"),
+#     path('occupationEnseignant/rechercheOccupationEnseignant/suprimerOccupationEnseignant/<int:ide>/',views.suprimerOccupationEnseignant,name="suprimerOccupationEnseignant1"),
+#     path('occupationEnseignant/rechercheOccupationEnseignant/modifierOccupationEnseignant/<int:ide>/',views.rendermodifierOccupationEnseignant,name="affichmodifOccupationEnseignant1"),
+#     path('occupationEnseignant/rechercheOccupationEnseignant/modifierOccupationEnseignant/<int:ide>/MAJOccupationEnseignant/',views.MAJOccupationEnseignant,name="MAJOccupationEnseignant1"),

@@ -1,35 +1,25 @@
 <!-- Modal -->
-<div class="modal fade" id="ModaleSalleOccupation" tabindex="-1" aria-labelledby="ModaleSalleOccupationLabel"
-    aria-hidden="true">
+<div class="modal fade" id="ModaleDomaine" tabindex="-1" aria-labelledby="ModaleDomaineLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-secondary text-center rounded p-4">
-            <form action="ajoutOccupationSalle/" method="post">
+            <form action="ajoutDomaineAdmin/" method="post">
                 {%csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModaleSalleOccupationLabel">Fiche occupation Salle</h5>
+                    <h5 class="modal-title" id="ModaleDomaineLabel">Fiche Domaine d'expertise</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: left;">
 
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Date</label>
-                        <input type="date" class="form-control" name="date">
+                        <label for="exampleInputEmail1" class="form-label">intitule</label>
+                        <input type="text" class="form-control" name="intitule">
                     </div>
-                    
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Heure début</label>
-                        <input type="time" class="form-control" name="heure_deb">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Heure fin</label>
-                        <input type="time" class="form-control" name="heure_fin">
-                    </div>
+
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn button2 btnPrimary2">Ajouter</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
                 </div>
             </form>
         </div>
@@ -38,17 +28,19 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Occupations Salle</h6>
+            <h6 class="mb-0">Domaines d'expertise</h6>
 
-            <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleSalleOccupation">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleDomaine">
                 Ajouter
             </button>
         </div>
 
+
+
         <div style="text-align: right;">
-            <form action="rechercheOccupationSalle/" method="post">
+            <form action="rechercheDomaineAdmin/" method="post">
                 {%csrf_token%}
-                <input type="date" placeholder="Recherche selon la date" class="bg-dark2 border-0 p-2" name="date"
+                <input type="text" placeholder="Recherche selon l'intitulé" class="bg-dark2 border-0 p-2" name="intituler"
                     style="color: dark;">
                 <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
                         class="fa fa-search text-primary"></i></button>
@@ -61,10 +53,8 @@
                     <tr class="text-white">
                         <th scope="col"><input class="form-check-input" type="checkbox"></th>
                         <th scope="col">ID</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Heure début</th>
-                        <th scope="col">Heure fin</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">intitule</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,32 +64,28 @@
 
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
-                        <td>{{i.ids}}</td>
-                        <td>{{i.date_occupation}}</td>
-                        <td>{{i.heure_debut}}</td>
-                        <td>{{i.heure_fin}}</td>
+                        <td>{{i.id}}</td>
+                        <td>{{i.intitule}}</td>
                         <td>
-                            <a href="suprimerOccupationSalle/{{ i.ids }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDomaineAdmin/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierDomaineAdmin/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
                     <!-- Sinon, affichez la liste complète des utilisateurs -->
                     {% else %}
-                    {% for i in listeOccupationSalle%}
+                    {% for i in listeDomaineAdmin%}
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
-                        <td>{{i.ids}}</td>
-                        <td>{{i.date_occupation}}</td>
-                        <td>{{i.heure_debut}}</td>
-                        <td>{{i.heure_fin}}</td>
+                        <td>{{i.id}}</td>
+                        <td>{{i.intitule}}</td>
                         <td>
-                            <a href="suprimerOccupationSalle/{{ i.ids }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDomaineAdmin/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierDomaineAdmin/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

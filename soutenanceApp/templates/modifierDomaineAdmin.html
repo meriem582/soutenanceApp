@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Occupations Salle</title>
+    <title>Domaine</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -66,34 +66,18 @@
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded p-4">
-                    <form action="MAJOccupationSalle/" method="post">
+                    <form action="MAJDomaineAdmin/" method="post">
                         {%csrf_token %}
                         <div class="modal-header">
-                            <h5 class="modal-title" id="ModaleMAJOccupationSalleLabel">Fiche occupation Salle</h5>
-                            <input type="hidden" value="{{osrechercher.ids}}" name="ids">
+                            <h5 class="modal-title" id="ModaleMAJDomaineAdminLabel">Fiche Domaine d'expertise</h5>
+                            <input type="hidden" value="{{darechercher.id}}" name="id">
                         </div>
                         <div class="modal-body" style="text-align: left;">
 
-                            <div class="modal-body" style="text-align: left;">
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Date</label>
-                                    <input type="date" class="form-control" name="date"
-                                        value="{{ osrechercher.date_occupation|date:'Y-m-d' }}">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Heure début</label>
-                                    <input type="time" class="form-control" name="heure_deb"
-                                        value="{{ osrechercher.heure_debut|time:'H:i' }}">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Heure fin</label>
-                                    <input type="time" class="form-control" name="heure_fin"
-                                        value="{{ osrechercher.heure_fin|time:'H:i' }}">
-                                </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Intitulé</label>
+                                <input type="text" class="form-control" name="intitule" value="{{darechercher.intitule}}">
                             </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Modifier</button>

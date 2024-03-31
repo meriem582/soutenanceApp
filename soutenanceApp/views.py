@@ -14,15 +14,15 @@ def renderUtilisateur(request):
         return render(request, 'utilisateur.html', {'search_results': search_results})
     else:
         listeUtilisateur = Utilisateur.objects.all()  
-        return render(request, 'utilisateur.html', {'listeUtilisateur': listeUtilisateur})    
+        return render(request, 'utilisateur.html', {'listeUtilisateur': listeUtilisateur}) 
 
 def ajoutUtilisateur(request):
     e=request.POST["email"]
-    p=request.POST["password"]
+    ps=request.POST["password"]
     t=request.POST["typeUser"]
     n=request.POST["nom"]
     p=request.POST["prenom"]
-    nu=Utilisateur(email=e,password=p,type_User=t,nom=n,prenom=p)
+    nu=Utilisateur(email=e,password=ps,type_User=t,nom=n,prenom=p)
     nu.save()
     return HttpResponseRedirect(reverse("utilisateur"))
 
@@ -58,7 +58,6 @@ def rechercheUtilisateur(request):
     }
     return render(request,'modifierUtilisateur.html',setinfo)
 
-
 def renderSalles(request):
     if request.method == 'POST':
         bloc_recherche = request.POST.get('bloc')
@@ -67,10 +66,7 @@ def renderSalles(request):
     else:
         listeSalle = Salle.objects.all()  
         return render(request, 'salles.html', {'listeSalle': listeSalle}) 
-
-
-
-    
+ 
 def ajoutSalle(request):
     b=request.POST["bloc"]
     s=request.POST["salle"]
@@ -110,12 +106,11 @@ def rechercheSalle(request):
     }
     return render(request,'modifierSalle.html',setinfo)
 
-
-
 def renderOccupationSalles(request,id):
     if request.method == 'POST':
+        salle1=Salle.objects.get(id=id)
         date_recherche = request.POST.get('date')
-        search_results = Occupation_salle.objects.filter(date_occupation=date_recherche)
+        search_results = Occupation_salle.objects.filter(date_occupation=date_recherche,idSalle=salle1)
         return render(request, 'occupationSalle.html', {'search_results': search_results})
     else:
         salle1=Salle.objects.get(id=id)
@@ -124,8 +119,6 @@ def renderOccupationSalles(request,id):
         'listeOccupationSalle':srech,
         }
         return render(request,'occupationSalle.html',setinfo)
-
-
 
 def ajoutOccupationSalle(request, id):
     d = request.POST["date"]
@@ -138,26 +131,85 @@ def ajoutOccupationSalle(request, id):
     nos.save()
     return HttpResponseRedirect(reverse("occupationSalle", args=[id]))
 
-
 def suprimerOccupationSalle(request,id,ids):
     sosup=Occupation_salle.objects.get(ids=ids)
     sosup.delete()
     return HttpResponseRedirect(reverse("occupationSalle", args=[id]))
 
-
 def rendermodifierOccupationSalle(request,ids,id):
+
+
     osrech=Occupation_salle.objects.get(ids=ids)
     setinfo={
         'osrechercher':osrech,
     }
-    return render(request,'modifierOccupationSalle.html',setinfo)    
+    return render(request,'modifierOccupationSalle.html',setinfo) 
 
-     
+def MAJOccupationSalle(request,id,ids):
+    newId=request.POST["ids"]
+    oldos=Occupation_salle.objects.get(ids=newId)
+    d=request.POST["date"]
+    hd=request.POST["heure_deb"]
+    hf=request.POST["heure_fin"]
+    oldos.date_occupation=d
+
+    oldos.heure_debut=hd
+    oldos.heure_fin=hf
+    oldos.save()
+    return HttpResponseRedirect(reverse("occupationSalle", args=[id]))
+
+def renderDomaineAdmin(request):
+    if request.method == 'POST':
+        domaine_recherche = request.POST.get('intituler')
+        search_results = Domain_expertise.objects.filter(intitule=domaine_recherche)
+        return render(request, 'domaineAdmin.html', {'search_results': search_results})
+    else:
+        listeDomaineAdmin = Domain_expertise.objects.all()  
+        return render(request, 'domaineAdmin.html', {'listeDomaineAdmin': listeDomaineAdmin}) 
+        
+def ajoutDomaineAdmin(request):
+    i=request.POST["intitule"]
+    eAdmin=request.session['user_email']
+    admin = Administrateur.objects.get(email=eAdmin)
+    nda=Domain_expertise(intitule=i,idAdministrateur=admin)
+    nda.save()
+    return HttpResponseRedirect(reverse("domaineAdmin"))
+
+def suprimerDomaineAdmin(request,id):
+    dasup=Domain_expertise.objects.get(id=id)
+    dasup.delete()
+    return HttpResponseRedirect(reverse("domaineAdmin"))
+
+def rendermodifierDomaineAdmin(request,id):
+    drech=Domain_expertise.objects.get(id=id)
+    setinfo={
+        'darechercher':drech,
+    }
+    return render(request,'modifierDomaineAdmin.html',setinfo)
+
+def MAJDomaineAdmin(request,id):
+    newId=request.POST["id"]
+    oldd=Domain_expertise.objects.get(id=newId)
+    i=request.POST["intitule"]
+    oldd.intitule=i
+    oldd.save()
+    return HttpResponseRedirect(reverse("domaineAdmin"))
+
+def rechercheDomaineAdmin(request):
+    i=request.POST["intitule"]
+    darech=Domain_expertise.objects.get(intitule=i)
+    setinfo={
+        'darechercher':darech,
+    }
+    return render(request,'modifierDomaineAdmin.html',setinfo)
+
+
 def renderConfiguration(request):
     return render(request,'configuration.html')
 
 def renderPlanning(request):
     return render(request,'planning.html')
+
 
 def renderThemes(request):
     recuperation={
@@ -165,8 +217,6 @@ def renderThemes(request):
     }
     return render(request,'themes.html',recuperation)     
 
-def renderInfoPersonnel(request):
-    return render(request,'infoPersonnel.html')
 
 def renderDemandes(request):
     return render(request,'demandes.html')
