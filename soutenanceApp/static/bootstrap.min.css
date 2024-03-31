@@ -12612,6 +12612,13 @@ fieldset:disabled .btn {
     font-family: cursive;
 }
 
+.mb-000 {                     /*Chiffre du deuxième bloc */
+    margin-bottom: 0 !important;
+    color: white;
+    font-size: 30px;
+    font-family: cursive;
+}
+
 .mb-21 {        /*Style du text des blocs */
     font-weight: bold ;
     font-size : 20px;
@@ -12749,6 +12756,3 @@ fieldset:disabled .btn {
     visibility: visible;    
     transform: scale(100) translateX(2px);
 }
-    
-
-
