@@ -3034,6 +3034,7 @@ textarea.form-control.is-invalid {
 
 .btn {
     display: inline-block;
+    margin-left: 41%;
     font-weight: 400;
     line-height: 1.5;
     color: #6C7293;
@@ -12631,7 +12632,7 @@ fieldset:disabled .btn {
 
 .bg-secondary5 {        /*Tableau des comptes */
      /* Ajout d'une couleur de fond blanche semi-transparente */
-     background-color: rgba(192, 192, 192, 0.3); 
+     /* background-color: rgba(192, 192, 192, 0.3);  */
      /* Application d'un filtre flou */
      backdrop-filter: blur(10px);
 }
@@ -12652,6 +12653,12 @@ fieldset:disabled .btn {
 .mb-01 {
     margin-bottom: 0 !important;
     color: #fdfdfd;
+}
+
+.mb-001 {                  /*Text au dessus des tableaux*/
+    font-size: 30px;
+    font-family: cursive;
+    color : #CDCDCD;
 }
 
 /* Button connexion page Index  */
@@ -12756,3 +12763,8 @@ fieldset:disabled .btn {
     visibility: visible;    
     transform: scale(100) translateX(2px);
 }
+
+
+
+/* Fin  */
+
