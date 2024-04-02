@@ -40,7 +40,7 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Occupations Enseignant</h6>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModaleEnseignantOccupation">
+            <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleEnseignantOccupation">
                 Ajouter
             </button>
         </div>
@@ -48,7 +48,7 @@
         <div style="text-align: right;">
             <form action="rechercheOccupationEnseignant/" method="post">
                 {%csrf_token%}
-                <input type="date" placeholder="Recherche selon la date" class="bg-dark2 border-0 p-2" name="date"
+                <input type="date" placeholder="Recherche selon la date" class="bg-dark2 border-1 p-2" name="date"
                     style="color: dark;">
                 <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
                         class="fa fa-search text-primary"></i></button>

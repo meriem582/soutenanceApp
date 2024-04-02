@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from soutenanceApp.models import Utilisateur,Administrateur,Salle,Occupation_salle,Enseignant,Occupation_Enseignant,Domain_expertise,Theme,Leader,Demande,Evaluation
+from soutenanceApp.models import Utilisateur,Administrateur,Salle,Occupation_salle,Enseignant,Occupation_Enseignant,Domain_expertise,Theme,Leader,Demande,Evaluation,EnseignantDomaineExpertise
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -50,14 +50,6 @@ def MAJUtilisateur(request,email):
     oldu.save()
     return HttpResponseRedirect(reverse("utilisateur"))
 
-def rechercheUtilisateur(request):
-    email=request.POST["emailr"]
-    urech=Utilisateur.objects.get(email=email)
-    setinfo={
-        'urechercher':urech,
-    }
-    return render(request,'modifierUtilisateur.html',setinfo)
-
 def renderSalles(request):
     if request.method == 'POST':
         bloc_recherche = request.POST.get('bloc')
@@ -97,14 +89,6 @@ def MAJSalle(request,id):
     olds.num_salle=nums
     olds.save()
     return HttpResponseRedirect(reverse("salles"))
-
-def rechercheSalle(request):
-    bloc1=request.POST["bloc"]
-    srech=Salle.objects.get(bloc=bloc1)
-    setinfo={
-        'srechercher':srech,
-    }
-    return render(request,'modifierSalle.html',setinfo)
 
 def renderOccupationSalles(request,id):
     if request.method == 'POST':
@@ -166,6 +150,7 @@ def renderDomaineAdmin(request):
     else:
         listeDomaineAdmin = Domain_expertise.objects.all()  
         return render(request, 'domaineAdmin.html', {'listeDomaineAdmin': listeDomaineAdmin}) 
+
         
 def ajoutDomaineAdmin(request):
     i=request.POST["intitule"]
@@ -195,13 +180,137 @@ def MAJDomaineAdmin(request,id):
     oldd.save()
     return HttpResponseRedirect(reverse("domaineAdmin"))
 
-def rechercheDomaineAdmin(request):
-    i=request.POST["intitule"]
-    darech=Domain_expertise.objects.get(intitule=i)
+def renderOccupationEnseignant(request):
+    if request.method == 'POST':
+        eEnseignant=request.session['user_email']
+        enseignant1 = Enseignant.objects.get(email=eEnseignant)
+        date_recherche = request.POST.get('date')
+        search_results = Occupation_Enseignant.objects.filter(date_occupation=date_recherche,idEnseignant=enseignant1)
+        return render(request, 'occupationEnseignant.html', {'search_results': search_results})
+    else:
+        eEnseignant=request.session['user_email']
+        enseignant1=Enseignant.objects.get(email=eEnseignant)
+        erech=Occupation_Enseignant.objects.filter(idEnseignant=enseignant1)
+        setinfo={
+        'listeOccupationEnseignant':erech,
+        }
+        return render(request,'occupationEnseignant.html',setinfo)
+
+
+def ajoutOccupationEnseignant(request):
+    d = request.POST["date"]
+    hd = request.POST["heure_deb"]
+    hf = request.POST["heure_fin"]
+    eEnseignant = request.session['user_email']
+    enseignant1 = Enseignant.objects.get(email=eEnseignant)
+    noe = Occupation_Enseignant(date_occupation=d, heure_debut=hd, heure_fin=hf, idEnseignant=enseignant1)
+    noe.save()
+    return HttpResponseRedirect(reverse("occupationEnseignant"))
+
+def suprimerOccupationEnseignant(request,ide):
+    soesup=Occupation_Enseignant.objects.get(ide=ide)
+    soesup.delete()
+    return HttpResponseRedirect(reverse("occupationEnseignant"))
+
+def rendermodifierOccupationEnseignant(request,ide):
+    oerech=Occupation_Enseignant.objects.get(ide=ide)
     setinfo={
-        'darechercher':darech,
+        'oerechercher':oerech,
     }
-    return render(request,'modifierDomaineAdmin.html',setinfo)
+    return render(request,'modifierOccupationEnseignant.html',setinfo) 
+
+def MAJOccupationEnseignant(request,ide):
+    oldoe=Occupation_Enseignant.objects.get(ide=ide)
+    d=request.POST["date"]
+    hd=request.POST["heure_deb"]
+    hf=request.POST["heure_fin"]
+    oldoe.date_occupation=d
+
+    oldoe.heure_debut=hd
+    oldoe.heure_fin=hf
+    oldoe.save()
+    return HttpResponseRedirect(reverse("occupationEnseignant"))
+
+def renderDomaineEnseignant(request):
+    eEnseignant = request.session['user_email']
+    enseignant = Enseignant.objects.get(email=eEnseignant)
+    domaines_expertise = enseignant.enseignantdomaineexpertise_set.all()
+    context = {
+        'listeDomaineEnseignant': domaines_expertise,
+        'listeDomaineAdmin': Domain_expertise.objects.all()
+    }
+    return render(request, 'domaineEnseignant.html', context)
+
+def ajoutDomaineEnseignant(request):
+    i=request.POST["intitule"]
+    domaine1 = Domain_expertise.objects.get(intitule=i)
+    eEnseignant=request.session['user_email']
+    enseignant1 = Enseignant.objects.get(email=eEnseignant)
+    nde=EnseignantDomaineExpertise(idEnseignant=enseignant1,idDomaineExpertise=domaine1)
+    nde.save()
+    return HttpResponseRedirect(reverse("domaineEnseignant"))
+
+def suprimerDomaineEnseignant(request,id):
+    desup=EnseignantDomaineExpertise.objects.get(id=id)
+    desup.delete()
+    return HttpResponseRedirect(reverse("domaineEnseignant"))
+
+
+def renderThemes(request):
+    if request.method == 'POST':
+        eEnseignant=request.session['user_email']
+        enseignant1 = Enseignant.objects.get(email=eEnseignant)
+        intitule1 = request.POST.get('intitule')
+        search_results = Theme.objects.filter(intitule=intitule1,idEnseignant=enseignant1)
+        return render(request, 'themes.html', {'search_results': search_results})
+    else:
+        eEnseignant = request.session['user_email']
+        enseignant = Enseignant.objects.get(email=eEnseignant)
+        domaines_expertise = enseignant.enseignantdomaineexpertise_set.all()
+        trech=Theme.objects.filter(idEnseignant=enseignant)
+        context = {
+            'listeDomaineEnseignant': domaines_expertise,
+            'listeTheme': trech
+        }
+        return render(request,'themes.html',context)         
+
+def ajoutTheme(request):
+    i=request.POST["intitule"]
+    d=request.POST["domaine"]
+    des=request.POST["description"]
+    eEnseignant=request.session['user_email']
+    enseignant = Enseignant.objects.get(email=eEnseignant)
+    nt=Theme(intitule=i,domaine=d,description=des,idEnseignant=enseignant)
+    nt.save()
+    return HttpResponseRedirect(reverse("themes"))
+
+def suprimerTheme(request,id):
+    tsup=Theme.objects.get(id=id)
+    tsup.delete()
+    return HttpResponseRedirect(reverse("themes"))
+
+def rendermodifierTheme(request,id):
+    eEnseignant = request.session['user_email']
+    enseignant = Enseignant.objects.get(email=eEnseignant)
+    domaines_expertise = enseignant.enseignantdomaineexpertise_set.all()
+    trech=Theme.objects.get(id=id)
+    context = {
+        'listeDomaineEnseignant': domaines_expertise,
+        'trechercher':trech,
+    }
+    return render(request,'modifierTheme.html',context)
+
+def MAJTheme(request,id):
+    newId=request.POST["id"]
+    oldt=Theme.objects.get(id=newId)
+    i=request.POST["intitule"]
+    d=request.POST["domaine"]
+    des=request.POST["description"]
+    oldt.intitule=i
+    oldt.domaine=d
+    oldt.description=des
+    oldt.save()
+    return HttpResponseRedirect(reverse("themes"))
 
 
 def renderConfiguration(request):
@@ -209,13 +318,6 @@ def renderConfiguration(request):
 
 def renderPlanning(request):
     return render(request,'planning.html')
-
-
-def renderThemes(request):
-    recuperation={
-        'listeTheme':Theme.objects.all(),
-    }
-    return render(request,'themes.html',recuperation)     
 
 
 def renderDemandes(request):
@@ -246,5 +348,3 @@ def login(request):
             return render(request, 'dashBoardEnseignant.html')
     else:
         return HttpResponseRedirect("/")
-
-   

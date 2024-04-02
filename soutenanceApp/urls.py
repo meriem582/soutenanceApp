@@ -40,27 +40,36 @@ urlpatterns=[
     path('domaineAdmin/rechercheDomaineAdmin/suprimerDomaineAdmin/<int:id>/',views.suprimerDomaineAdmin,name="suprimerDomaineAdmin1"),
     path('domaineAdmin/rechercheDomaineAdmin/modifierDomaineAdmin/<int:id>/',views.rendermodifierDomaineAdmin,name="affichmodifDomaineAdmin1"),
     path('domaineAdmin/rechercheDomaineAdmin/modifierDomaineAdmin/<int:id>/MAJDomaineAdmin/',views.MAJDomaineAdmin,name="MAJDomaineAdmin1"),
+    path('occupationEnseignant/',views.renderOccupationEnseignant,name="occupationEnseignant"),
+    path('occupationEnseignant/ajoutOccupationEnseignant/',views.ajoutOccupationEnseignant,name="ajoutOccupationEnseignant"),
+    path('occupationEnseignant/suprimerOccupationEnseignant/<int:ide>/',views.suprimerOccupationEnseignant,name="suprimerOccupationEnseignant"),
+    path('occupationEnseignant/modifierOccupationEnseignant/<int:ide>/',views.rendermodifierOccupationEnseignant,name="affichmodifOccupationEnseignant"),
+    path('occupationEnseignant/modifierOccupationEnseignant/<int:ide>/MAJOccupationEnseignant/',views.MAJOccupationEnseignant,name="MAJOccupationEnseignant"),
+    path('occupationEnseignant/rechercheOccupationEnseignant/',views.renderOccupationEnseignant,name="rechercheOccupationEnseignant"),
+    path('occupationEnseignant/rechercheOccupationEnseignant/suprimerOccupationEnseignant/<int:ide>/',views.suprimerOccupationEnseignant,name="suprimerOccupationEnseignant1"),
+    path('occupationEnseignant/rechercheOccupationEnseignant/modifierOccupationEnseignant/<int:ide>/',views.rendermodifierOccupationEnseignant,name="affichmodifOccupationEnseignant1"),
+    path('occupationEnseignant/rechercheOccupationEnseignant/modifierOccupationEnseignant/<int:ide>/MAJOccupationEnseignant/',views.MAJOccupationEnseignant,name="MAJOccupationEnseignant1"),
+    path('domaineEnseignant/',views.renderDomaineEnseignant,name="domaineEnseignant"),
+    path('domaineEnseignant/ajoutDomaineEnseignant/',views.ajoutDomaineEnseignant,name="ajoutDomaineEnseignant"),
+    path('domaineEnseignant/suprimerDomaineEnseignant/<int:id>/',views.suprimerDomaineEnseignant,name="suprimerDomaineEnseignant"),
+    path('themes/modifierTheme/<int:id>/',views.rendermodifierTheme,name="affichmodifTheme"),
+    path('themes/',views.renderThemes,name="themes"),
+    path('themes/ajoutTheme/',views.ajoutTheme,name="ajoutTheme"),
+    path('themes/suprimerTheme/<int:id>/',views.suprimerTheme,name="suprimerTheme"),
+    path('themes/rechercheTheme/',views.renderThemes,name="rechercheTheme"),
+    path('themes/modifierTheme/<int:id>/MAJTheme/',views.MAJTheme,name="MAJTheme"),
+    path('themes/rechercheTheme/suprimerTheme/<int:id>/',views.suprimerTheme,name="suprimerTheme1"),
+    path('themes/rechercheTheme/modifierTheme/<int:id>/',views.rendermodifierTheme,name="affichmodifTheme1"),
+    path('themes/rechercheTheme/modifierTheme/<int:id>/MAJTheme/',views.MAJTheme,name="MAJTheme1"),
 
-    
 
 
 
     path('configuration/',views.renderConfiguration,name="configuration"),
     path('planning/',views.renderPlanning,name="planning"),
-    path('themes/',views.renderThemes,name="themes"),
     path('demandes/',views.renderDemandes,name="demandes"),
     path('evaluation/',views.renderEvaluation,name="evaluation"),
     path('demanderthemes/',views.renderDemanderThemes,name="demanderthemes"),
     path('deposerMemoire/',views.renderDeposerMemoire,name="deposerMemoire"),
 ]
 
-
-# path('occupationEnseignant/',views.renderOccupationEnseignant,name="occupationEnseignant"),
-#     path('occupationEnseignant/ajoutOccupationEnseignant/',views.ajoutOccupationEnseignant,name="ajoutOccupationEnseignant"),
-#     path('occupationEnseignant/suprimerOccupationEnseignant/<int:ide>/',views.suprimerOccupationEnseignant,name="suprimerOccupationEnseignant"),
-#     path('occupationEnseignant/modifierOccupationEnseignant/<int:ide>/',views.rendermodifierOccupationEnseignant,name="affichmodifOccupationEnseignant"),
-#     path('occupationEnseignant/modifierOccupationEnseignant/<int:ide>/MAJOccupationEnseignant/',views.MAJOccupationEnseignant,name="MAJOccupationEnseignant"),
-#     path('occupationEnseignant/rechercheOccupationEnseignant/',views.renderOccupationEnseignant,name="rechercheOccupationEnseignant"),
-#     path('occupationEnseignant/rechercheOccupationEnseignant/suprimerOccupationEnseignant/<int:ide>/',views.suprimerOccupationEnseignant,name="suprimerOccupationEnseignant1"),
-#     path('occupationEnseignant/rechercheOccupationEnseignant/modifierOccupationEnseignant/<int:ide>/',views.rendermodifierOccupationEnseignant,name="affichmodifOccupationEnseignant1"),
-#     path('occupationEnseignant/rechercheOccupationEnseignant/modifierOccupationEnseignant/<int:ide>/MAJOccupationEnseignant/',views.MAJOccupationEnseignant,name="MAJOccupationEnseignant1"),

@@ -44,15 +44,15 @@
         <div style="text-align: right;">
             <form action="rechercheSalle/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon le bloc" class="bg-dark2 border-0 p-2" name="bloc"
-                    style="color: dark;">
+                <input type="text" placeholder="Recherche selon le bloc" class="bg-dark2 border-1 p-2" name="bloc"
+                    style="color: black;">
                 <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
                         class="fa fa-search text-primary"></i></button>
             </form>
         </div>
         <br>
         <div class="table_body">
-            <table class ="table2">
+            <table class="table2">
                 <thead>
                     <tr class="text-white">
                         <th scope="col"><input class="form-check-input" type="checkbox"></th>

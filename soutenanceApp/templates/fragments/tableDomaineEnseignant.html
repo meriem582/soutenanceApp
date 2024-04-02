@@ -1,88 +1,75 @@
- <!-- Modal Domaine-->
- <div class="modal fade" id="ModaleDomaineExpertise" tabindex="-1" aria-labelledby="ModaleDomaineExpertiseLabel"
- aria-hidden="true">
- <div class="modal-dialog">
-     <div class="modal-content bg-secondary text-center rounded p-4">
-         <form action="ajoutFormation/" method="post">
-             {%csrf_token %}
-             <div class="modal-header">
-                 <h5 class="modal-title" id="ModaleDomaineExpertiseLabel">Domaine d'expertise</h5>
-                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body" style="text-align: left;">
-                 <div class="mb-3">
-                     <label for="dure" class="form-label" class="form-control">Domaine d'expertise</label>
-                     <select name="duree" id="duree" class="form-control" style="background-color: black;">
-                         <option value="Domaine 1">Domaine 1</option>
-                         <option value="Domaine 2">Domaine 2</option>
-                         <option value="Domaine 3">Domaine 3</option>
-                     </select>
-                 </div>
+<!-- Modal -->
+<div class="modal fade" id="ModaleDomaine" tabindex="-1" aria-labelledby="ModaleDomaineLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary text-center rounded p-4">
+            <form action="ajoutDomaineEnseignant/" method="post">
+                {%csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModaleDomaineLabel">Fiche Domaine d'expertise</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: left;">
 
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                 <button type="submit" class="btn btn-primary">Ajouter</button>
-             </div>
-         </form>
-     </div>
- </div>
+                    <div class="mb-3">
+                        <label for="intitule" class="form-label" class="form-control">Domaine d'expertise</label>
+                        <select name="intitule" id="intitule" class="form-control" style="background-color: white;">
+                            {% for i in listeDomaineAdmin%}
+                            <option value="{{i.intitule}}">{{i.intitule}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-
-
-
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Les domaines</h6>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#ModaleDomaineExpertise">
-                Ajouter domaine
+            <h6 class="mb-0">Domaines d'expertise</h6>
+            <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal"
+                data-bs-target="#ModaleDomaine">
+                Ajouter
             </button>
         </div>
-        <div style="text-align: right;">
-            <form action="rechercheFormation/" method="post">
-                {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr"
-                    style="color: white;">
-                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i class="fa fa-search text-primary"></i></button>
-            </form>
-        </div>
+
         <br>
-        <!-- table domaine -->
         <div class="table_body">
-            <table class ="table2">
+            <table class="table2">
                 <thead>
                     <tr class="text-white">
                         <th scope="col"><input class="form-check-input" type="checkbox"></th>
                         <th scope="col">ID</th>
-                        <th scope="col">Domaine</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">intitule</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
-                    {%for i in listeFormation%}
+                <tbody>
+
+                    {% for i in listeDomaineEnseignant%}
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
                         <td>{{i.id}}</td>
-                        <td>{{i.intitule}}</td>
-                        <td>{{i.duree}}</td>
-                        <td>{{i.cout}}</td>
+                        <td>{{i.idDomaineExpertise.intitule}}</td>
                         <td>
-                            <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDomaineEnseignant/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
-                    {%endfor%}
-                </tbody> -->
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
-        <!-- end table domaine --> 
+
     </div>
 </div>
 
 
 
-<!-- Deux ème container  -->
