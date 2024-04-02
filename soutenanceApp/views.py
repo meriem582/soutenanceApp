@@ -16,15 +16,31 @@ def renderUtilisateur(request):
         listeUtilisateur = Utilisateur.objects.all()  
         return render(request, 'utilisateur.html', {'listeUtilisateur': listeUtilisateur}) 
 
+
+
 def ajoutUtilisateur(request):
-    e=request.POST["email"]
-    ps=request.POST["password"]
-    t=request.POST["typeUser"]
-    n=request.POST["nom"]
-    p=request.POST["prenom"]
-    nu=Utilisateur(email=e,password=ps,type_User=t,nom=n,prenom=p)
+    e = request.POST["email"]
+    ps = request.POST["password"]
+    t = request.POST["typeUser"]
+    n = request.POST["nom"]
+    p = request.POST["prenom"]
+    
+    nu = Utilisateur(email=e, password=ps, type_User=t, nom=n, prenom=p)
     nu.save()
+
+    user = Utilisateur.objects.get(email=e)
+    
+    if t == "Administrateur":
+        no = Administrateur(email=user)
+    elif t == "Enseignant":
+        no = Enseignant(email=user)
+    elif t == "Leader":
+        no = Leader(email=user)
+    no.save()
+    
     return HttpResponseRedirect(reverse("utilisateur"))
+
+
 
 def suprimerUtilisateur(request,email):
     usup=Utilisateur.objects.get(email=email)
@@ -150,8 +166,7 @@ def renderDomaineAdmin(request):
     else:
         listeDomaineAdmin = Domain_expertise.objects.all()  
         return render(request, 'domaineAdmin.html', {'listeDomaineAdmin': listeDomaineAdmin}) 
-
-        
+     
 def ajoutDomaineAdmin(request):
     i=request.POST["intitule"]
     eAdmin=request.session['user_email']
@@ -195,7 +210,6 @@ def renderOccupationEnseignant(request):
         'listeOccupationEnseignant':erech,
         }
         return render(request,'occupationEnseignant.html',setinfo)
-
 
 def ajoutOccupationEnseignant(request):
     d = request.POST["date"]
@@ -255,7 +269,6 @@ def suprimerDomaineEnseignant(request,id):
     desup.delete()
     return HttpResponseRedirect(reverse("domaineEnseignant"))
 
-
 def renderThemes(request):
     if request.method == 'POST':
         eEnseignant=request.session['user_email']
@@ -313,21 +326,50 @@ def MAJTheme(request,id):
     return HttpResponseRedirect(reverse("themes"))
 
 
-def renderConfiguration(request):
-    return render(request,'configuration.html')
-
-def renderPlanning(request):
-    return render(request,'planning.html')
-
-
 def renderDemandes(request):
-    return render(request,'demandes.html')
+    eEnseignant=request.session['user_email']
+    listeDemande = Demande.objects.filter(idEnseignant=eEnseignant)
+    return render(request, 'demandes.html', {'listeDemande': listeDemande})
+
+
+
 
 def renderEvaluation(request):
     return render(request,'evaluation.html')
 
 def renderDemanderThemes(request):
-    return render(request,'demanderthemes.html')
+    themes = Theme.objects.all()
+    eLeader=request.session['user_email']
+    demandes = Demande.objects.filter(idLeader=eLeader)
+
+    return render(request, 'demanderthemes.html', {'themes': themes, 'demandes': demandes})
+
+def ajoutDemande(request,id):
+    theme1 = Theme.objects.get(id=id)
+    eEnseignant=theme1.idEnseignant.email
+    enseignant1=Enseignant.objects.get(email=eEnseignant)
+    eLeader=request.session['user_email']
+    leader1 = Leader.objects.get(email=eLeader)
+    nd=Demande(idTheme=theme1,reponse="",idEnseignant=enseignant1,idLeader=leader1)
+    nd.save()
+    return HttpResponseRedirect(reverse("demanderthemes"))
+
+def suprimerDemande(request,id):
+    dsup=Demande.objects.get(id=id)
+    dsup.delete()
+    return HttpResponseRedirect(reverse("demanderthemes"))
+
+def validerTheme(request,id):
+    demande=Demande.objects.get(id=id)
+    eLeader=request.session['user_email']
+    leader1 = Leader.objects.get(email=eLeader)
+    leader1.idTheme=demande.idTheme
+    leader1.idEnseignantEncadrant=demande.idEnseignant
+    leader1.save()
+
+      
+
+    return HttpResponseRedirect(reverse("demanderthemes"))
 
 def renderDeposerMemoire(request):
     return render(request,'deposerMemoire.html')
@@ -348,3 +390,11 @@ def login(request):
             return render(request, 'dashBoardEnseignant.html')
     else:
         return HttpResponseRedirect("/")
+
+
+def renderConfiguration(request):
+    return render(request,'configuration.html')
+
+def renderPlanning(request):
+    return render(request,'planning.html')
+

@@ -18,32 +18,28 @@
                     <tr class="text-white">
                         <th scope="col"><input class="form-check-input" type="checkbox"></th>
                         <th scope="col">ID</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">prénom</th>
+                        <th scope="col">Leader</th>
                         <th scope="col">Binôme</th>
                         <th scope="col">Thème</th>
-                        <th scope="col">Email</th>
                         <th scope="col">Réponse</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
-                    {%for i in listeFormation%}
+                <tbody>
+                    {%for d in listeDemande%}
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
-                        <td>{{i.id}}</td>
-                        <td>{{i.intitule}}</td>
-                        <td>{{i.duree}}</td>
-                        <td>{{i.cout}}</td>
+                        <td>{{d.id}}</td>
+                        <td>{{d.idLeader.email.nom}} {{d.idLeader.email.prenom}}</td>
+                        <td>{{d.idLeader.nom_binom}} {{d.idLeader.prenom_binom}}</td>
+                        <td>{{d.idTheme.intitule}}</td>
+                        <td>{{d.reponse}}</td>
                         <td>
-                            <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
-                            &nbsp;
-                            &nbsp;
-                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="#"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {%endfor%}
-                </tbody> -->
+                </tbody>
             </table>
         </div>
         

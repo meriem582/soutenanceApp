@@ -61,15 +61,16 @@ urlpatterns=[
     path('themes/rechercheTheme/suprimerTheme/<int:id>/',views.suprimerTheme,name="suprimerTheme1"),
     path('themes/rechercheTheme/modifierTheme/<int:id>/',views.rendermodifierTheme,name="affichmodifTheme1"),
     path('themes/rechercheTheme/modifierTheme/<int:id>/MAJTheme/',views.MAJTheme,name="MAJTheme1"),
+    path('demanderthemes/',views.renderDemanderThemes,name="demanderthemes"),
+    path('demanderthemes/ajoutDemande/<int:id>/',views.ajoutDemande,name="ajoutDemande"),
+    path('demanderthemes/suprimerDemande/<int:id>/',views.suprimerDemande,name="suprimerDemande"),
+    path('demanderthemes/validerTheme/<int:id>/',views.validerTheme,name="validerTheme"),
 
-
-
+    path('demandes/',views.renderDemandes,name="demandes"),
 
     path('configuration/',views.renderConfiguration,name="configuration"),
     path('planning/',views.renderPlanning,name="planning"),
-    path('demandes/',views.renderDemandes,name="demandes"),
     path('evaluation/',views.renderEvaluation,name="evaluation"),
-    path('demanderthemes/',views.renderDemanderThemes,name="demanderthemes"),
     path('deposerMemoire/',views.renderDeposerMemoire,name="deposerMemoire"),
 ]
 

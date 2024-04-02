@@ -1,3 +1,6 @@
+
+
+
 from django.db import models
 
 # Create your models here.
@@ -12,7 +15,7 @@ class Meta:
     db_table="utilisateur"
 
 class Administrateur(models.Model):
-    email=models.ForeignKey(Utilisateur,on_delete=models.CASCADE,primary_key=True)
+    email = models.OneToOneField(Utilisateur, on_delete=models.CASCADE, primary_key=True)
 
 
 class Meta:
@@ -41,7 +44,7 @@ class Meta:
     db_table="occupation_salle"
 
 class Enseignant(models.Model):
-    email=models.ForeignKey(Utilisateur,on_delete=models.CASCADE,primary_key=True)
+    email = models.OneToOneField(Utilisateur, on_delete=models.CASCADE, primary_key=True)
     grade=models.CharField(max_length=50)
 
 class Meta:
@@ -74,14 +77,14 @@ class Meta:
 class Theme(models.Model):
     intitule=models.CharField(max_length=50,unique=True)
     domaine=models.CharField(max_length=50)
-    description=models.CharField(max_length=255)
+    description=models.CharField(max_length=1500)
     idEnseignant=models.ForeignKey(Enseignant,on_delete=models.CASCADE)
 
 class Meta:
     db_table="theme"
 
 class Leader(models.Model):
-    email=models.ForeignKey(Utilisateur,on_delete=models.CASCADE,primary_key=True)
+    email = models.OneToOneField(Utilisateur, on_delete=models.CASCADE, primary_key=True)
     nom_binom=models.CharField(max_length=50)
     prenom_binom=models.CharField(max_length=50)
     annee_etude=models.CharField(max_length=50)
@@ -89,14 +92,14 @@ class Leader(models.Model):
     domain=models.CharField(max_length=50)
     etat_memoire=models.CharField(max_length=50)
     remarque_memoire=models.CharField(max_length=255)
-    idEnseignantEncadrant=models.ForeignKey(Enseignant,on_delete=models.CASCADE)
-    idTheme=models.OneToOneField(Theme,on_delete=models.CASCADE)
+    idEnseignantEncadrant=models.ForeignKey(Enseignant,on_delete=models.CASCADE,null=True)
+    idTheme=models.OneToOneField(Theme,on_delete=models.CASCADE,null=True)
 
 class Meta:
     db_table="leader"
 
 class Demande(models.Model):
-    theme=models.CharField(max_length=50)
+    idTheme=models.ForeignKey(Theme,on_delete=models.CASCADE)
     reponse=models.CharField(max_length=50)
     idEnseignant=models.ForeignKey(Enseignant,on_delete=models.CASCADE)
     idLeader=models.ForeignKey(Leader,on_delete=models.CASCADE)
@@ -110,7 +113,7 @@ class Evaluation(models.Model):
     heure_debut=models.TimeField()
     heure_fin=models.TimeField()
     role_enseignant=models.CharField(max_length=50)
-    idTheme=models.ForeignKey(Theme,on_delete=models.CASCADE)
+    idLeader=models.ForeignKey(Leader,on_delete=models.CASCADE)
     idEnseignant=models.ForeignKey(Enseignant,on_delete=models.CASCADE)
     idSalle=models.ForeignKey(Salle,on_delete=models.CASCADE)
 
