@@ -4,46 +4,41 @@
             <h6 class="mb-0">Dépot de mon mémoire</h6>
 
         </div>
+        
         <div style="text-align: right;">
-            <form action="rechercheFormation/" method="post">
-                {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="bg-dark2 border-0 p-2" name="idr" style="color: white;">
-                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i class="fa fa-search text-primary"></i></button>
+            <form action="ajoutMemoire/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="exampleInputFile" class="form-label">Description (PDF)</label>
+                <input type="file" class="form-control" id="exampleInputFile" name="memoire">
+                <br>
+                <button type="submit" class="btn btn-primary">Soumettre</button>
             </form>
         </div>
         <br>
         
-        <input type="file" id="fileInput" accept=".pdf">
-        <button id="btnMemoire">Importer PDF</button>
+
 
         <div class="table_body">
-            <table class ="table2">
+            <table class="table2">
                 <thead>
                     <tr class="text-white">
                         <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                        <th scope="col">Mémoire</th>
-                        <th scope="col">Evaluation</th>
+                        <th scope="col">Etat du mémoire</th>
                         <th scope="col">Remarque</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
-                    {%for i in listeFormation%}
+                <tbody>
                     <tr>
                         <td scope="col"><input class="form-check-input" type="checkbox"></td>
-                        <td>{{i.id}}</td>
-                        <td>{{i.intitule}}</td>
-                        <td>{{i.duree}}</td>
-                        <td>{{i.cout}}</td>
+                        <td>{{leader.etat_memoire}}</td>
+                        <td>{{leader.remarque_memoire}}</td>
                         <td>
-                            <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
-                            &nbsp;
-                            &nbsp;
-                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="suprimerMemoire/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
+
                         </td>
                     </tr>
-                    {%endfor%}
-                </tbody> -->
+                </tbody>
             </table>
         </div>
 

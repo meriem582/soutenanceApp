@@ -72,5 +72,6 @@ urlpatterns=[
     path('planning/',views.renderPlanning,name="planning"),
     path('evaluation/',views.renderEvaluation,name="evaluation"),
     path('deposerMemoire/',views.renderDeposerMemoire,name="deposerMemoire"),
+    path('deposerMemoire/ajoutMemoire/',views.ajoutMemoire,name="ajoutMemoire"),
 ]
 

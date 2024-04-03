@@ -16,8 +16,6 @@ def renderUtilisateur(request):
         listeUtilisateur = Utilisateur.objects.all()  
         return render(request, 'utilisateur.html', {'listeUtilisateur': listeUtilisateur}) 
 
-
-
 def ajoutUtilisateur(request):
     e = request.POST["email"]
     ps = request.POST["password"]
@@ -39,8 +37,6 @@ def ajoutUtilisateur(request):
     no.save()
     
     return HttpResponseRedirect(reverse("utilisateur"))
-
-
 
 def suprimerUtilisateur(request,email):
     usup=Utilisateur.objects.get(email=email)
@@ -137,8 +133,6 @@ def suprimerOccupationSalle(request,id,ids):
     return HttpResponseRedirect(reverse("occupationSalle", args=[id]))
 
 def rendermodifierOccupationSalle(request,ids,id):
-
-
     osrech=Occupation_salle.objects.get(ids=ids)
     setinfo={
         'osrechercher':osrech,
@@ -239,7 +233,6 @@ def MAJOccupationEnseignant(request,ide):
     hd=request.POST["heure_deb"]
     hf=request.POST["heure_fin"]
     oldoe.date_occupation=d
-
     oldoe.heure_debut=hd
     oldoe.heure_fin=hf
     oldoe.save()
@@ -325,17 +318,11 @@ def MAJTheme(request,id):
     oldt.save()
     return HttpResponseRedirect(reverse("themes"))
 
-
 def renderDemandes(request):
     eEnseignant=request.session['user_email']
     listeDemande = Demande.objects.filter(idEnseignant=eEnseignant)
     return render(request, 'demandes.html', {'listeDemande': listeDemande})
 
-
-
-
-def renderEvaluation(request):
-    return render(request,'evaluation.html')
 
 def renderDemanderThemes(request):
     themes = Theme.objects.all()
@@ -366,20 +353,34 @@ def validerTheme(request,id):
     leader1.idTheme=demande.idTheme
     leader1.idEnseignantEncadrant=demande.idEnseignant
     leader1.save()
-
-      
-
     return HttpResponseRedirect(reverse("demanderthemes"))
 
 def renderDeposerMemoire(request):
-    return render(request,'deposerMemoire.html')
+    eLeader=request.session['user_email']
+    leader = Leader.objects.get(email=eLeader)
+    return render(request, 'deposerMemoire.html', {'leader': leader})
+
+
+def ajoutMemoire(request):
+    if request.method == 'POST':
+        fichier_pdf = request.FILES['memoire']
+        
+        eLeader=request.session['user_email']
+        leader = Leader.objects.get(email=eLeader)
+        
+        leader.memoire = fichier_pdf.read()
+        leader.save()
+        
+        return HttpResponseRedirect(reverse("deposerMemoire"))
+    
+    return render(request, 'deposerMemoire.html')
+
 
 def login(request):
     email1 = request.POST.get("email")
     password1 = request.POST.get("password")
     type1 = request.POST.get("type_User")
     nuser = Utilisateur.objects.filter(email=email1).first()
-    
     if nuser is not None and nuser.password == password1 and nuser.type_User == type1:
         request.session['user_email'] = email1  # Stocker l'e-mail dans la session
         if type1 == "Administrateur":
@@ -391,10 +392,12 @@ def login(request):
     else:
         return HttpResponseRedirect("/")
 
-
 def renderConfiguration(request):
     return render(request,'configuration.html')
 
 def renderPlanning(request):
     return render(request,'planning.html')
+
+def renderEvaluation(request):
+    return render(request,'evaluation.html')
 
