@@ -3034,7 +3034,8 @@ textarea.form-control.is-invalid {
 
 .btn {
     display: inline-block;
-    margin-left: 41%;
+    /* margin-left: 81%; */
+    margin-left : 29px;
     font-weight: 400;
     line-height: 1.5;
     color: #6C7293;
@@ -12658,7 +12659,9 @@ fieldset:disabled .btn {
 .mb-001 {                  /*Text au dessus des tableaux*/
     font-size: 30px;
     font-family: cursive;
-    color : #CDCDCD;
+    color : black;
+    margin-left: 28%;
+    margin-top : 2%;
 }
 
 /* Button connexion page Index  */

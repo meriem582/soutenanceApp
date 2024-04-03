@@ -47,13 +47,18 @@
 <!-- END Modal ajout-->
 <!-- Modal Modification-->
 
+
+<h6 class="mb-001">Les comptes utilisateurs déjà inscrits</h6>
 <div class="container-fluid-back-content pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
-        
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            
+            <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleCompte">
+                Ajouter un utilisateur
+            </button>
+        </div>
 
-        <h6 class="mb-001">Les comptes utilisateurs déjà inscrits</h6>
-
-        <div style="text-align: left; margin-left : 29px;">
+        <div style="text-align: left; margin-left : 29px; margin-bottom : 20px;">
             <form action="rechercheUtilisateur/" method="post">
                 {%csrf_token%}
                 <input type="text" placeholder="Recherche selon l'email" class="bg-dark2 border-1 p-2" name="emailr"
@@ -120,12 +125,7 @@
             </table>
         </div>
 
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            
-            <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleCompte">
-                Ajouter un utilisateur
-            </button>
-        </div>
+        
 
 
     </div>
