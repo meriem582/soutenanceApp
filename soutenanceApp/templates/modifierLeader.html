@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Configuration</title>
+    <title>Evaluation</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -23,8 +23,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <!-- <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"> -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+
+    <!-- <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" /> -->
+    <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet">
+
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{%static 'bootstrap.min.css'%}" rel="stylesheet">
@@ -34,6 +39,7 @@
 </head>
 
 <body>
+
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         {%include 'fragments/spinner.html'%}
@@ -41,7 +47,7 @@
 
 
         <!-- Sidebar Start -->
-        {%include 'fragments/sideBareAdmin.html'%}
+        {%include 'fragments/sideBareEnseignant.html'%}
         <!-- Sidebar End -->
 
 
@@ -51,14 +57,40 @@
             {%include 'fragments/navBare.html'%}
             <!-- Navbar End -->
 
-            
+
             <!-- Analytics Start-->
+
             <!-- Analytics End -->
 
 
             <!-- Table Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary rounded p-4">
+                    <form action="MAJLeaderR/" method="post">
+                        {%csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModaleMAJSalleLabel">Evaluation mémoire</h5>
+                            <input type="hidden" value="{{lrechercher.email}}" name="email">
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
 
-            {%include 'fragments/tableConfiguration.html'%}
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Remarque</label>
+                                <textarea class="form-control" id="exampleTextarea" rows="5" name="remarque">{{lrechercher.remarque_memoire}}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Etat de mémoire</label>
+                                <input type="text" class="form-control" name="etat" value="{{lrechercher.etat_memoire}}">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Modifier</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- Table End -->
 

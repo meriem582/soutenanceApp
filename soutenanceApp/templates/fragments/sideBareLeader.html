@@ -12,12 +12,13 @@
                 </div>
             </div>
             <div class="ms-3">
-                <h6 class="mb-01">Nom Leader</h6>
+                <h6 class="mb-0" id="admin-span">{{ user.nom }}</h6>
+                <h6 class="mb-0" id="admin-span">{{ user.prenom }}</h6>
                 <span id="E-span">Leader</span>
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{%url 'dashBoard'%}" class="nav-item nav-link active"><i
+            <a href="{%url 'dashBoardLeader'%}" class="nav-item nav-link active"><i
                     class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
 
             <a href="{%url 'demanderthemes'%}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Demande thème</a>

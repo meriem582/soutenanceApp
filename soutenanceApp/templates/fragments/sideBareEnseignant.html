@@ -12,15 +12,17 @@
                 </div>
             </div>
             <div class="ms-3">
-                <h6 class="mb-0", id="admin-span">Nom admin</h6>
+                <h6 class="mb-0" id="admin-span">{{ user.nom }}</h6>
+                <h6 class="mb-0" id="admin-span">{{ user.prenom }}</h6>
                 <span id="E-span">Enseignant</span>
             </div>
-        </div> 
+        </div>
         <div class="navbar-nav w-100">
-            <a href="{%url 'dashBoard'%}" class="nav-item nav-link active"><i
+            <a href="{%url 'dashBoardEnseignant'%}" class="nav-item nav-link active"><i
                     class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
             <a href="{%url 'domaineEnseignant'%}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Domaines</a>
-            <a href="{%url 'occupationEnseignant'%}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Occupations</a>
+            <a href="{%url 'occupationEnseignant'%}" class="nav-item nav-link"><i
+                    class="fa fa-th me-2"></i>Occupations</a>
             <a href="{%url 'themes'%}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Thèmes</a>
             <a href="{%url 'demandes'%}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Les demandes</a>
             <a href="{%url 'evaluation'%}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Mémoires</a>

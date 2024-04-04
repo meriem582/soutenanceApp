@@ -1,3 +1,29 @@
+<!-- Modal -->
+ <div class="modal fade" id="ModaleEvaluation" tabindex="-1" aria-labelledby="ModaleEvaluationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary text-center rounded p-4">
+            <form action="ajoutFormation/" method="post">
+                {%csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModaleEvaluationLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Remarque</label>
+                        <input type="textarea" class="form-control" name="remarque">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn button2 btnPrimary2">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -16,64 +42,33 @@
             <table class ="table2">
                 <thead>
                     <tr class="text-white">
-                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">prénom</th>
+                        <th scope="col">email</th>
+                        <th scope="col">Leader</th>
                         <th scope="col">Binôme</th>
                         <th scope="col">Thème</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Evaluation</th>
+                        <th scope="col">Etat du mémoire</th>
+                        <th scope="col">Remarque</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
-                    {%for i in listeFormation%}
+                <tbody>
+                    {%for i in listeLeader%}
                     <tr>
-                        <td scope="col"><input class="form-check-input" type="checkbox"></td>
-                        <td>{{i.id}}</td>
-                        <td>{{i.intitule}}</td>
-                        <td>{{i.duree}}</td>
-                        <td>{{i.cout}}</td>
+                        <td>{{i.email.email}}</td>
+                        <td>{{i.email.nom}} {{i.email.prenom}}</td>
+                        <td>{{i.nom_binom}} {{i.prenom_binom}}</td>
+                        <td>{{i.idTheme.intitule}}</td>
+                        <td>{{i.etat_memoire}}</td>
+                        <td>{{i.remarque_memoire}}</td>
                         <td>
-                            <a href="suprimerFormation/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="modifierLeader/{{i.email.email}}"><i class="fa fa-edit text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifier/{{i.id}}"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {%endfor%}
-                </tbody> -->
+                </tbody>
             </table>
         </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="ModaleEvaluation" tabindex="-1" aria-labelledby="ModaleEvaluationLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary text-center rounded p-4">
-                    <form action="ajoutFormation/" method="post">
-                        {%csrf_token %}
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="ModaleEvaluationLabel">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="text-align: left;">
-
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Remarque</label>
-                                <input type="textarea" class="form-control" name="remarque">
-                            </div>
-                            
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn button2 btnPrimary2">Ajouter</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>

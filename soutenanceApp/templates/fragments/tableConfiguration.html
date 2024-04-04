@@ -1,0 +1,190 @@
+<!-- Modal -->
+<div class="modal fade" id="ModaleSalle" tabindex="-1" aria-labelledby="ModaleSalleLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary text-center rounded p-4">
+            <form action="ajoutParametre/" method="post">
+                {%csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModaleSalleLabel">Fiche Paramètre</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date début de soutenance</label>
+                        <input type="date" class="form-control" name="dateDebSoutenance">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date fin de soutenance</label>
+                        <input type="date" class="form-control" name="dateFinSoutenace">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Duré du soutenace par minutes</label>
+                        <input type="text" class="form-control" name="dureeSoutenance">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">l'écart entre les soutenaces par
+                            minutes</label>
+                        <input type="text" class="form-control" name="ecartSoutenance">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Année du soutenance</label>
+                        <input type="text" class="form-control" name="anneeSoutenance">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nombre maximal des domaines
+                            d'enseignant</label>
+                        <input type="text" class="form-control" name="nbrDomaineEnseignant">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nombre maximal de minutes d'occupation
+                            d'enseignant</label>
+                        <input type="text" class="form-control" name="nbrMinuteOccupEns">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nombre maximal de thèmes par
+                            enseignant</label>
+                        <input type="text" class="form-control" name="nbrThemeEns">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nombre maximal de demande par leader</label>
+                        <input type="text" class="form-control" name="nbrDemande">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nombre maximal de binôme encadré par
+                            enseignant</label>
+                        <input type="text" class="form-control" name="nbrDemandeAccepter">
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date début de configuration
+                            enseignant</label>
+                        <input type="date" class="form-control" name="dateDebConfigEns">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date fin de configuration enseignant</label>
+                        <input type="date" class="form-control" name="dateFinConfigEns">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date début des demandes </label>
+                        <input type="date" class="form-control" name="dateDebDem">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date fin des demandes </label>
+                        <input type="date" class="form-control" name="dateFinDem">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date début des réponses </label>
+                        <input type="date" class="form-control" name="dateDebRep">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date fin des réponses </label>
+                        <input type="date" class="form-control" name="dateFinRep">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date debut de traitement des mémoire </label>
+                        <input type="date" class="form-control" name="dateDebTraitement">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date limite de traitement des mémoire
+                        </label>
+                        <input type="date" class="form-control" name="dateLimiteTtraitement">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn button2 btnPrimary2">Ajouter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary5 text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Configuration</h6>
+
+            <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleSalle">
+                Ajouter
+            </button>
+        </div>
+
+
+
+        <div style="text-align: right;">
+            <form action="rechercheParametre/" method="post">
+                {%csrf_token%}
+                <input type="text" placeholder="Recherche selon l'année" class="bg-dark2 border-1 p-2" name="anneer"
+                    style="color: black;">
+                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
+                        class="fa fa-search text-primary"></i></button>
+            </form>
+        </div>
+        <br>
+        <div class="table_body">
+            <table class="table2">
+                <thead>
+                    <tr class="text-white">
+                        <th scope="col">ID</th>
+                        <th scope="col">Année</th>
+                        <th scope="col">date début soutenance</th>
+                        <th scope="col">date fin soutenance</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Si des résultats de recherche existent, affichez-les -->
+                    {% if search_results %}
+                    {% for i in search_results %}
+
+                    <tr>
+                        <td>{{i.id}}</td>
+                        <td>{{i.anneeSoutenance}}</td>
+                        <td>{{i.dateDebSoutenance}}</td>
+                        <td>{{i.dateFinSoutenace}}</td>
+                        <td>
+                            <a href="suprimerParametre/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            &nbsp;
+                            &nbsp;
+                            <a href="modifierParametre/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <!-- Sinon, affichez la liste complète des utilisateurs -->
+                    {% else %}
+                    {% for i in listeParametre%}
+                    <tr>
+                        <td>{{i.id}}</td>
+                        <td>{{i.anneeSoutenance}}</td>
+                        <td>{{i.dateDebSoutenance}}</td>
+                        <td>{{i.dateFinSoutenace}}</td>
+                        <td>
+                            <a href="suprimerParametre/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            &nbsp;
+                            &nbsp;
+                            <a href="modifierParametre/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -6,24 +6,26 @@
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-                <img class="rounded-circle" src="{%static 'img/user.jpg'%}" alt="" style="width: 40px; height: 40px;">
+                <img class="rounded-circle" src="{%static 'img/user.jpg'%}" alt="" style="width: 50px; height: 50px;">
                 <div
                     class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
                 </div>
             </div>
             <div class="ms-3">
-                <h6 class="mb-0", id="admin-span">Nom admin</h6>
+                <h6 class="mb-0" id="admin-span">{{ user.nom }}</h6>
+                <h6 class="mb-0" id="admin-span">{{ user.prenom }}</h6>
                 <span id="E-span">Admin</span>
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{%url 'dashBoard'%}" class="nav-item nav-link active"><i
+            <a href="{%url 'dashBoardAdmin'%}" class="nav-item nav-link active"><i
                     class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
 
             <a href="{%url 'utilisateur'%}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Utilisateurs</a>
             <a href="{%url 'salles'%}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Salles</a>
             <a href="{%url 'domaineAdmin'%}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Domains</a>
-            <a href="{%url 'configuration'%}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Configuration</a>
+            <a href="{%url 'configuration'%}" class="nav-item nav-link"><i
+                    class="fa fa-table me-2"></i>Configuration</a>
             <a href="{%url 'planning'%}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Planning</a>
             <a href="{%url 'index'%}" class="nav-item nav-link"><i class="far fa-file-alt me-2"></i>Déconnecter</a>
         </div>

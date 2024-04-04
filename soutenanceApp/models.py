@@ -1,6 +1,3 @@
-
-
-
 from django.db import models
 
 # Create your models here.
@@ -20,6 +17,30 @@ class Administrateur(models.Model):
 
 class Meta:
     db_table="administrateur"
+
+class Parametre(models.Model):
+    dateDebSoutenance=models.DateField()
+    dateFinSoutenace=models.DateField()
+    dureeSoutenance=models.IntegerField()
+    ecartSoutenance=models.IntegerField()
+    anneeSoutenance=models.IntegerField(unique=True)
+    nbrDomaineEnseignant=models.IntegerField()
+    nbrMinuteOccupEns=models.IntegerField()
+    nbrThemeEns=models.IntegerField()
+    nbrDemande=models.IntegerField()
+    nbrDemandeAccepter=models.IntegerField()
+    dateDebConfigEns=models.DateField()
+    dateFinConfigEns=models.DateField()
+    dateDebDem=models.DateField()
+    dateFinDem=models.DateField()
+    dateDebRep=models.DateField()
+    dateFinRep=models.DateField()
+    dateDebTraitement=models.DateField()
+    dateLimiteTtraitement=models.DateField()
+    idAdministrateur=models.ForeignKey(Administrateur,on_delete=models.CASCADE)    
+
+class Meta:
+    db_table="Parametre"
 
 class Salle(models.Model):
     num_bloc=models.IntegerField()

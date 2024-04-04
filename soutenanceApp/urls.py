@@ -4,6 +4,9 @@ from soutenanceApp import views
 urlpatterns=[
     path('',views.renderIndex,name="index"),
     path('login/',views.login,name="dashBoard"), 
+    path('login/dashBoardAdmin/',views.renderDashBoardAdmin,name="dashBoardAdmin"), 
+    path('login/dashBoardEnseignant/',views.renderDashBoardEnseignant,name="dashBoardEnseignant"), 
+    path('login/dashBoardLeader/',views.renderDashBoardLeader,name="dashBoardLeader"), 
     path('utilisateur/',views.renderUtilisateur,name="utilisateur"),
     path('utilisateur/ajoutUtilisateur/',views.ajoutUtilisateur,name="ajoutUtilisateur"),
     path('utilisateur/suprimerUtilisateur/<str:email>/',views.suprimerUtilisateur,name="suprimerUtilisateur"),
@@ -65,13 +68,23 @@ urlpatterns=[
     path('demanderthemes/ajoutDemande/<int:id>/',views.ajoutDemande,name="ajoutDemande"),
     path('demanderthemes/suprimerDemande/<int:id>/',views.suprimerDemande,name="suprimerDemande"),
     path('demanderthemes/validerTheme/<int:id>/',views.validerTheme,name="validerTheme"),
-
     path('demandes/',views.renderDemandes,name="demandes"),
 
     path('configuration/',views.renderConfiguration,name="configuration"),
+    path('configuration/ajoutParametre/',views.ajoutParametre,name="ajoutParametre"),
+    path('configuration/suprimerParametre/<int:id>/',views.suprimerParametre,name="suprimerParametre"),
+    path('configuration/modifierParametre/<int:id>/',views.rendermodifierParametre,name="affichmodifParametre"),
+    path('configuration/modifierParametre/<int:id>/MAJParametre/',views.MAJParametre,name="MAJParametre"),
+    path('configuration/rechercheParametre/',views.renderConfiguration,name="rechercheParametre"),
+    path('configuration/rechercheParametre/suprimerParametre/<int:id>/',views.suprimerParametre,name="suprimerParametre1"),
+    path('configuration/rechercheParametre/modifierParametre/<int:id>/',views.rendermodifierParametre,name="affichmodifParametre1"),
+    path('configuration/rechercheParametre/modifierParametre/<int:id>/MAJParametre/',views.MAJParametre,name="MAJParametre1"),
+    
+    path('demandes/accepter/<int:id>/',views.accepter,name="accepter"),
     path('planning/',views.renderPlanning,name="planning"),
     path('evaluation/',views.renderEvaluation,name="evaluation"),
+    path('evaluation/modifierLeader/<str:email>/',views.rendermodifierLeaderR,name="rendermodifierLeaderR"),
+    path('evaluation/modifierLeader/<str:email>/MAJLeaderR/',views.MAJLeaderR,name="MAJLeaderR"),
     path('deposerMemoire/',views.renderDeposerMemoire,name="deposerMemoire"),
     path('deposerMemoire/ajoutMemoire/',views.ajoutMemoire,name="ajoutMemoire"),
 ]
-

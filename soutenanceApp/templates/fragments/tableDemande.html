@@ -16,7 +16,6 @@
             <table class ="table2">
                 <thead>
                     <tr class="text-white">
-                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
                         <th scope="col">ID</th>
                         <th scope="col">Leader</th>
                         <th scope="col">Binôme</th>
@@ -28,14 +27,13 @@
                 <tbody>
                     {%for d in listeDemande%}
                     <tr>
-                        <td scope="col"><input class="form-check-input" type="checkbox"></td>
                         <td>{{d.id}}</td>
                         <td>{{d.idLeader.email.nom}} {{d.idLeader.email.prenom}}</td>
                         <td>{{d.idLeader.nom_binom}} {{d.idLeader.prenom_binom}}</td>
                         <td>{{d.idTheme.intitule}}</td>
                         <td>{{d.reponse}}</td>
                         <td>
-                            <a href="#"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="accepter/{{d.id}}"><i class="fa fa-check text-primary"></i></a>
                         </td>
                     </tr>
                     {%endfor%}
