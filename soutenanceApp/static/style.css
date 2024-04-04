@@ -379,7 +379,6 @@ thead th {
     position: sticky;
     top: 0;
     left: 0;
-    /* background-color: #d5d1defe; */
     background-color: rgba(135, 206, 235, 0.4);
     cursor: pointer;
     text-transform: capitalize;

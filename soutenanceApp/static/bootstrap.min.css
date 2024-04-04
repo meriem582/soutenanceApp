@@ -12657,62 +12657,19 @@ fieldset:disabled .btn {
 .mb-001 {                  /*Text au dessus des tableaux*/
     font-size: 30px;
     font-family: cursive;
-    color: white;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-    /* margin-left: 28%; */
-    margin-top : 2%;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+    font-weight: 1000;
+    color: rgba(0, 0, 0, 0.8); /* Noir avec un peu d'opacité */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); 
+    margin-left: 28%;
+    margin-top : 4%;
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center; /* Centre les éléments verticalement */
+    gap: 10px; /* Espacement entre les éléments */
 }
 
 /* Titre des tableaux  (div)*/
-/* .titree{
-    border-radius : 200px;
-    background-color: red;
-    width : 50%;
-    height: 8%;
-    margin-top : 10px;
-    margin-left: 26%;
-    padding : 30px;
-    background-image: url(/static/img/back-titre.png) !important;
-    background-size: cover;
-    background-position: center;
-    content: ""; /*Nécessaire pour générer le pseudo-élément*/
-    /* filter: blur(10px); Applique un flou de 10 pixels */
-    /* z-index: -1; Assure que le flou est derrière le contenu de l'élément */
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); Ombre : décalage horizontal, décalage vertical, flou, couleur */
-    /* margin-bottom : 20px; */
-/* } */
 
-.titree {
-    position: relative; /* Nécessaire pour le positionnement du pseudo-élément */
-    border-radius: 200px;
-    width: 50%;
-    height: 8%;
-    margin-top: 10px;
-    margin-left: 26%;
-    padding: 30px;
-    z-index: 1; /* Assure que le contenu est au-dessus du pseudo-élément */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
-    overflow: hidden; /* Empêche le débordement du flou hors du bord arrondi */
-}
-
-.titree::before {
-    content: ""; /* Nécessaire pour générer le pseudo-élément */
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url(/static/img/back-titre.png);
-    background-size: cover;
-    background-position: center;
-    filter: blur(2px); /* Applique un flou à l'arrière-plan */
-    z-index: -2; /* Place l'arrière-plan flou derrière le contenu */
-    border-radius: 200px; /* Assure que le flou respecte le bord arrondi du conteneur */
-}
 
 /* Button connexion page Index  */
 
@@ -12779,16 +12736,29 @@ fieldset:disabled .btn {
 /* Début  */
 
 .button2  {
-    /* height: 50px;
-    width: 200px; */
-    position: relative;
-    background-color: #003366;
+    display: inline-block;
+    /* margin-top: 1px; */
+    margin-left: 88%;
+    font-weight: 1000;
+    color: rgba(0, 0, 0, 0.8); /* Noir avec un peu d'opacité */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); 
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    vertical-align: middle;
     cursor: pointer;
-    border: 3px solid #003366;
+    user-select: none;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    /* En haut c'était la classe btn */
+    background-color:  rgba(135, 206, 235, 0.3);
+    cursor: pointer;
+    border: 3px solid  rgba(135, 206, 235, 0.3);
     overflow: hidden;
-    color: white;
     border-radius: 10px;
     transition: all 0.3s ease-in-out;
+    text-transform: capitalize;
+    font-style: bold;
 }
 
 .btnPrimary2::after {
@@ -12797,7 +12767,6 @@ fieldset:disabled .btn {
     left: 0;
     top: 0;
     transition: all 0.3s ease-in-out;
-    /* background-color: #fdfdfd; */
     border-radius: 30px;
     visibility: hidden;
     height: 10px;
@@ -12806,10 +12775,11 @@ fieldset:disabled .btn {
 }
     
 .button2:hover {
-    box-shadow: 1px 1px 200px #252525;    
-    color: #323232;
+    box-shadow: 1px 1px 30px rgba(135, 206, 235, 1);    
+    color: rgba(0, 0, 0, 0.8); /* Noir avec un peu d'opacité */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); 
     background-color: transparent;
-    border: 3px solid #003366;
+    border: 3px solid  rgba(135, 206, 235, 0.3);
 }
     
 .btnPrimary2:hover::after {
