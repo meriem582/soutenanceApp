@@ -1,9 +1,8 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Evaluation</h6>
         </div>
-        <div style="text-align: left; margin-left : 29px; margin-bottom : 20px;">
+        <div style="text-align: left; margin-left : 29px; margin-bottom : 0px;">
             <form action="rechercheUtilisateur/" method="post">
                 {%csrf_token%}
                 <input type="text" placeholder="Recherche selon l'email" class="border-1 p-2 research_bar_in_table"
@@ -13,7 +12,7 @@
             </form>
         </div>
         <br>
-        <div class="table_body">
+        <div class="table_body" style ="margin-top: 0px;">
             <table class="table2">
                 <thead>
                     <tr class="text-white">

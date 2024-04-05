@@ -30,7 +30,7 @@
                 class="nav-item nav-link {% if request.resolver_match.url_name == 'occupationEnseignant' %}active{% endif %}"><i
                     class="fa fa-th me-2"></i>Occupations</a>
 
-            <a href="{% url 'themes' %}"
+            <a href="{% url 'themes' %}"     
                 class="nav-item nav-link {% if request.resolver_match.url_name == 'themes' %}active{% endif %}"><i
                     class="fa fa-th me-2"></i>Thèmes</a>
 
@@ -40,7 +40,7 @@
 
             <a href="{% url 'evaluation' %}"
                 class="nav-item nav-link {% if request.resolver_match.url_name == 'evaluation' %}active{% endif %}"><i
-                    class="fa fa-chart-bar me-2"></i>Mémoires</a>
+                    class="fa fa-chart-bar me-2"></i>Evaluations</a>
 
             <a href="{% url 'index' %}"
                 class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i
