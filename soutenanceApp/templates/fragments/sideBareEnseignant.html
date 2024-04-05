@@ -18,28 +18,33 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <!-- <a href="{%url 'dashBoardEnseignant'%}" class="nav-item nav-link active"><i
+            <a href="{% url 'dashBoardEnseignant' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardEnseignant' %}active{% endif %}"><i
                     class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
-            <a href="{%url 'domaineEnseignant'%}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Domaines</a>
-            <a href="{%url 'occupationEnseignant'%}" class="nav-item nav-link"><i
+
+            <a href="{% url 'domaineEnseignant' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'domaineEnseignant' %}active{% endif %}"><i
+                    class="fa fa-th me-2"></i>Domaines</a>
+
+            <a href="{% url 'occupationEnseignant' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'occupationEnseignant' %}active{% endif %}"><i
                     class="fa fa-th me-2"></i>Occupations</a>
-            <a href="{%url 'themes'%}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Thèmes</a>
-            <a href="{%url 'demandes'%}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Les demandes</a>
-            <a href="{%url 'evaluation'%}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Mémoires</a>
-            <a href="{%url 'index'%}" class="nav-item nav-link"><i class="far fa-file-alt me-2"></i>Déconnecter</a> -->
-            <a href="{% url 'dashBoardEnseignant' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardEnseignant' %}active{% endif %}"><i class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
 
-            <a href="{% url 'domaineEnseignant' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'domaineEnseignant' %}active{% endif %}"><i class="fa fa-th me-2"></i>Domaines</a>
+            <a href="{% url 'themes' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'themes' %}active{% endif %}"><i
+                    class="fa fa-th me-2"></i>Thèmes</a>
 
-<a href="{% url 'occupationEnseignant' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'occupationEnseignant' %}active{% endif %}"><i class="fa fa-th me-2"></i>Occupations</a>
+            <a href="{% url 'demandes' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'demandes' %}active{% endif %}"><i
+                    class="fa fa-table me-2"></i>Les demandes</a>
 
-<a href="{% url 'themes' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'themes' %}active{% endif %}"><i class="fa fa-th me-2"></i>Thèmes</a>
+            <a href="{% url 'evaluation' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'evaluation' %}active{% endif %}"><i
+                    class="fa fa-chart-bar me-2"></i>Mémoires</a>
 
-<a href="{% url 'demandes' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'demandes' %}active{% endif %}"><i class="fa fa-table me-2"></i>Les demandes</a>
-
-<a href="{% url 'evaluation' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'evaluation' %}active{% endif %}"><i class="fa fa-chart-bar me-2"></i>Mémoires</a>
-
-<a href="{% url 'index' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i class="far fa-file-alt me-2"></i>Déconnecter</a>
+            <a href="{% url 'index' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i
+                    class="far fa-file-alt me-2"></i>Déconnecter</a>
 
         </div>
     </nav>

@@ -26,7 +26,6 @@
     <!-- <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"> -->
     <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
 
-
     <!-- <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" /> -->
     <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet">
 
@@ -57,12 +56,6 @@
             {%include 'fragments/navBare.html'%}
             <!-- Navbar End -->
 
-
-            <!-- Analytics Start-->
-
-            <!-- Analytics End -->
-
-
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded p-4">
@@ -76,12 +69,14 @@
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Remarque</label>
-                                <textarea class="form-control" id="exampleTextarea" rows="5" name="remarque">{{lrechercher.remarque_memoire}}</textarea>
+                                <textarea class="form-control" id="exampleTextarea" rows="5"
+                                    name="remarque">{{lrechercher.remarque_memoire}}</textarea>
                             </div>
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Etat de mémoire</label>
-                                <input type="text" class="form-control" name="etat" value="{{lrechercher.etat_memoire}}">
+                                <input type="text" class="form-control" name="etat"
+                                    value="{{lrechercher.etat_memoire}}">
                             </div>
 
                         </div>

@@ -449,7 +449,6 @@ def renderConfiguration(request):
         listeParametre = Parametre.objects.all()  
         return render(request, 'configuration.html', {'listeParametre': listeParametre,'user': user}) 
 
-
 def ajoutParametre(request):
     dateDebSoutenance=request.POST["dateDebSoutenance"]
     dateFinSoutenace=request.POST["dateFinSoutenace"]
@@ -511,7 +510,6 @@ def MAJParametre(request,id):
     dateFinRep=request.POST["dateFinRep"]
     dateDebTraitement=request.POST["dateDebTraitement"]
     dateLimiteTtraitement=request.POST["dateLimiteTtraitement"]
-
     oldp.dateDebSoutenance=dateDebSoutenance
     oldp.dateFinSoutenace=dateFinSoutenace
     oldp.dureeSoutenance=dureeSoutenance
@@ -530,15 +528,8 @@ def MAJParametre(request,id):
     oldp.dateFinRep=dateFinRep
     oldp.dateDebTraitement=dateDebTraitement
     oldp.dateLimiteTtraitement=dateLimiteTtraitement
-
     oldp.save()
     return HttpResponseRedirect(reverse("configuration"))
-
-
-
-
-
-
 
 def renderPlanning(request):
     eUser=request.session['user_email']

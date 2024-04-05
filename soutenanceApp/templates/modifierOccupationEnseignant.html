@@ -57,19 +57,14 @@
             {%include 'fragments/navBare.html'%}
             <!-- Navbar End -->
 
-
-            <!-- Analytics Start-->
-
-            <!-- Analytics End -->
-
-
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded p-4">
                     <form action="MAJOccupationEnseignant/" method="post">
                         {%csrf_token %}
                         <div class="modal-header">
-                            <h5 class="modal-title" id="ModaleMAJOccupationEnseignantLabel">Fiche occupation Enseignant</h5>
+                            <h5 class="modal-title" id="ModaleMAJOccupationEnseignantLabel">Fiche occupation Enseignant
+                            </h5>
                             <input type="hidden" value="{{oerechercher.ids}}" name="ids">
                         </div>
                         <div class="modal-body" style="text-align: left;">

@@ -69,7 +69,6 @@ urlpatterns=[
     path('demanderthemes/suprimerDemande/<int:id>/',views.suprimerDemande,name="suprimerDemande"),
     path('demanderthemes/validerTheme/<int:id>/',views.validerTheme,name="validerTheme"),
     path('demandes/',views.renderDemandes,name="demandes"),
-
     path('configuration/',views.renderConfiguration,name="configuration"),
     path('configuration/ajoutParametre/',views.ajoutParametre,name="ajoutParametre"),
     path('configuration/suprimerParametre/<int:id>/',views.suprimerParametre,name="suprimerParametre"),

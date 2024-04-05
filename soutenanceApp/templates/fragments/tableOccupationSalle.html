@@ -68,7 +68,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Si des résultats de recherche existent, affichez-les -->
                     {% if search_results %}
                     {% for i in search_results %}
 
@@ -85,7 +84,6 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    <!-- Sinon, affichez la liste complète des utilisateurs -->
                     {% else %}
                     {% for i in listeOccupationSalle%}
                     <tr>
@@ -105,6 +103,5 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>

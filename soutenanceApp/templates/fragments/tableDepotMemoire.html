@@ -4,7 +4,7 @@
             <h6 class="mb-0">Dépot de mon mémoire</h6>
 
         </div>
-        
+
         <div style="text-align: right;">
             <form action="ajoutMemoire/" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -15,8 +15,6 @@
             </form>
         </div>
         <br>
-        
-
 
         <div class="table_body">
             <table class="table2">
@@ -33,7 +31,6 @@
                         <td>{{leader.remarque_memoire}}</td>
                         <td>
                             <a href="suprimerMemoire/{{i.id}}"><i class="fa fa-trash text-primary"></i></a>
-
                         </td>
                     </tr>
                 </tbody>

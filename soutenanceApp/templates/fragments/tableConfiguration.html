@@ -65,8 +65,6 @@
                         <input type="text" class="form-control" name="nbrDemandeAccepter">
                     </div>
 
-
-
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Date début de configuration
                             enseignant</label>
@@ -87,18 +85,22 @@
                         <label for="exampleInputEmail1" class="form-label">Date fin des demandes </label>
                         <input type="date" class="form-control" name="dateFinDem">
                     </div>
+
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Date début des réponses </label>
                         <input type="date" class="form-control" name="dateDebRep">
                     </div>
+
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Date fin des réponses </label>
                         <input type="date" class="form-control" name="dateFinRep">
                     </div>
+
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Date debut de traitement des mémoire </label>
                         <input type="date" class="form-control" name="dateDebTraitement">
                     </div>
+
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Date limite de traitement des mémoire
                         </label>
@@ -118,14 +120,10 @@
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Configuration</h6>
-
             <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleSalle">
                 Ajouter
             </button>
         </div>
-
-
-
         <div style="text-align: right;">
             <form action="rechercheParametre/" method="post">
                 {%csrf_token%}
@@ -148,10 +146,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Si des résultats de recherche existent, affichez-les -->
                     {% if search_results %}
                     {% for i in search_results %}
-
                     <tr>
                         <td>{{i.id}}</td>
                         <td>{{i.anneeSoutenance}}</td>
@@ -165,7 +161,6 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    <!-- Sinon, affichez la liste complète des utilisateurs -->
                     {% else %}
                     {% for i in listeParametre%}
                     <tr>
@@ -185,6 +180,5 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>

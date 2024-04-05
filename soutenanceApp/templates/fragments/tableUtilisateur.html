@@ -46,14 +46,12 @@
 </div>
 <!-- END Modal ajout-->
 <!-- Modal Modification-->
-
-
 <!-- <h6 class="mb-001">Les utilisateurs</h6> -->
 
 <div class="container-fluid-back-content pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            
+
             <button type="button" class="button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleCompte">
                 Ajouter un utilisateur
             </button>
@@ -62,16 +60,15 @@
         <div style="text-align: left; margin-left : 29px; margin-bottom : 20px;">
             <form action="rechercheUtilisateur/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'email" class="border-1 p-2 research_bar_in_table" name="emailr">
+                <input type="text" placeholder="Recherche selon l'email" class="border-1 p-2 research_bar_in_table"
+                    name="emailr">
                 <!-- <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
                         class="fa fa-search text-primary"></i></button> -->
             </form>
         </div>
 
-        
-        
-       <div class="table_body">
-            <table class ="table2">
+        <div class="table_body">
+            <table class="table2">
                 <thead>
                     <tr class="text-white">
                         <th scope="col">Nom</th>
@@ -83,7 +80,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Si des résultats de recherche existent, affichez-les -->
                     {% if search_results %}
                     {% for user in search_results %}
                     <tr>
@@ -92,7 +88,6 @@
                         <td>{{ user.type_User }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.password }}</td>
-                        
                         <td>
                             <a href="suprimerUtilisateur/{{ user.email }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
@@ -101,7 +96,6 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    <!-- Sinon, affichez la liste complète des utilisateurs -->
                     {% else %}
                     {% for user in listeUtilisateur %}
                     <tr>
@@ -110,7 +104,6 @@
                         <td>{{ user.type_User }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.password }}</td>
-                        
                         <td>
                             <a href="suprimerUtilisateur/{{ user.email }}"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;

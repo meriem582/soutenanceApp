@@ -18,13 +18,27 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{% url 'dashBoardAdmin' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardAdmin' %}active{% endif %}"><i class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
-            <a href="{% url 'utilisateur' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'utilisateur' %}active{% endif %}"><i class="fa fa-th me-2"></i>Utilisateurs</a>
-            <a href="{% url 'salles' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'salles' %}active{% endif %}"><i class="fa fa-keyboard me-2"></i>Salles</a>
-            <a href="{% url 'domaineAdmin' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'domaineAdmin' %}active{% endif %}"><i class="fa fa-keyboard me-2"></i>Domains</a>
-            <a href="{% url 'configuration' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'configuration' %}active{% endif %}"><i class="fa fa-table me-2"></i>Configuration</a>
-            <a href="{% url 'planning' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'planning' %}active{% endif %}"><i class="fa fa-table me-2"></i>Planning</a>
-            <a href="{% url 'index' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i class="far fa-file-alt me-2"></i>Déconnecter</a>
+            <a href="{% url 'dashBoardAdmin' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardAdmin' %}active{% endif %}"><i
+                    class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
+            <a href="{% url 'utilisateur' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'utilisateur' %}active{% endif %}"><i
+                    class="fa fa-th me-2"></i>Utilisateurs</a>
+            <a href="{% url 'salles' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'salles' %}active{% endif %}"><i
+                    class="fa fa-keyboard me-2"></i>Salles</a>
+            <a href="{% url 'domaineAdmin' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'domaineAdmin' %}active{% endif %}"><i
+                    class="fa fa-keyboard me-2"></i>Domains</a>
+            <a href="{% url 'configuration' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'configuration' %}active{% endif %}"><i
+                    class="fa fa-table me-2"></i>Configuration</a>
+            <a href="{% url 'planning' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'planning' %}active{% endif %}"><i
+                    class="fa fa-table me-2"></i>Planning</a>
+            <a href="{% url 'index' %}"
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i
+                    class="far fa-file-alt me-2"></i>Déconnecter</a>
         </div>
     </nav>
 </div>

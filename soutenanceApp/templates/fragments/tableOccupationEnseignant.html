@@ -15,12 +15,12 @@
                         <label for="exampleInputEmail1" class="form-label">Date</label>
                         <input type="date" class="form-control" name="date">
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Heure début</label>
                         <input type="time" class="form-control" name="heure_deb">
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Heure fin</label>
                         <input type="time" class="form-control" name="heure_fin">
@@ -40,7 +40,8 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Occupations Enseignant</h6>
 
-            <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleEnseignantOccupation">
+            <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal"
+                data-bs-target="#ModaleEnseignantOccupation">
                 Ajouter
             </button>
         </div>
@@ -56,7 +57,7 @@
         </div>
         <br>
         <div class="table_body">
-            <table class ="table2">
+            <table class="table2">
                 <thead>
                     <tr class="text-white">
                         <th scope="col">ID</th>
@@ -67,7 +68,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Si des résultats de recherche existent, affichez-les -->
                     {% if search_results %}
                     {% for i in search_results %}
                     <tr>
@@ -76,14 +76,15 @@
                         <td>{{i.heure_debut}}</td>
                         <td>{{i.heure_fin}}</td>
                         <td>
-                            <a href="suprimerOccupationEnseignant/{{ i.ide }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerOccupationEnseignant/{{ i.ide }}"><i
+                                    class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierOccupationEnseignant/{{ i.ide }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierOccupationEnseignant/{{ i.ide }}"><i
+                                    class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
-                    <!-- Sinon, affichez la liste complète des utilisateurs -->
                     {% else %}
                     {% for i in listeOccupationEnseignant%}
                     <tr>
@@ -92,10 +93,12 @@
                         <td>{{i.heure_debut}}</td>
                         <td>{{i.heure_fin}}</td>
                         <td>
-                            <a href="suprimerOccupationEnseignant/{{ i.ide }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerOccupationEnseignant/{{ i.ide }}"><i
+                                    class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierOccupationEnseignant/{{ i.ide }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierOccupationEnseignant/{{ i.ide }}"><i
+                                    class="fa fa-edit text-primary"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -103,6 +106,5 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>

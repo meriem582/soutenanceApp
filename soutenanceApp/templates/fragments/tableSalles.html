@@ -18,8 +18,6 @@
                         <label for="exampleInputEmail1" class="form-label">Salle</label>
                         <input type="text" class="form-control" name="salle">
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -33,14 +31,10 @@
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Salles</h6>
-
             <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleSalle">
                 Ajouter
             </button>
         </div>
-
-
-
         <div style="text-align: right;">
             <form action="rechercheSalle/" method="post">
                 {%csrf_token%}
@@ -62,10 +56,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Si des résultats de recherche existent, affichez-les -->
                     {% if search_results %}
                     {% for i in search_results %}
-
                     <tr>
                         <td>{{i.id}}</td>
                         <td>{{i.num_bloc}}</td>
@@ -78,7 +70,6 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    <!-- Sinon, affichez la liste complète des utilisateurs -->
                     {% else %}
                     {% for i in listeSalle%}
                     <tr>
@@ -100,6 +91,5 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
