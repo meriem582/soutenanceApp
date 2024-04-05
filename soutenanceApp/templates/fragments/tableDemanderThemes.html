@@ -3,13 +3,13 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Liste des thèmes </h6>
         </div>
-        <div style="text-align: right;">
-            <form action="#/" method="post">
+        <div style="text-align: left; margin-left : 29px; margin-bottom : 20px;">
+            <form action="rechercheUtilisateur/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'intitulé" class="bg-dark2 border-1 p-2"
-                    name="intitule" style="color: black;">
-                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
-                        class="fa fa-search text-primary"></i></button>
+                <input type="text" placeholder="Recherche selon l'email" class="border-1 p-2 research_bar_in_table"
+                    name="emailr">
+                <!-- <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
+                        class="fa fa-search text-primary"></i></button> -->
             </form>
         </div>
         <br>

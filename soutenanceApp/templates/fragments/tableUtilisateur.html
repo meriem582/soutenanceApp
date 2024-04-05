@@ -1,7 +1,7 @@
 <!-- Modal ajout-->
 <div class="modal fade" id="ModaleCompte" tabindex="-1" aria-labelledby="ModaleCompteLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content bg-secondary text-center rounded p-4">
+        <div class="modal-content bg-secondary text-center rounded_modal p-4">
             <form action="ajoutUtilisateur/" method="post">
                 {%csrf_token %}
                 <div class="modal-header">
@@ -20,7 +20,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="dure" class="form-label" class="form-control">Type</label>
-                        <select name="typeUser" id="typeUser" class="form-control" style="background-color: 003366;">
+                        <select name="typeUser" id="typeUser" class="form-control" style="background-color: #fdfdfd;">
                             <option value="Administrateur">Administrateur</option>
                             <option value="Enseignant">Enseignant</option>
                             <option value="Leader">Leader</option>
@@ -37,8 +37,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn button2 btnPrimary2">Ajouter</button>
+                    <button type="button" class="btn button_fermer_modal btnPrimary2" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn button_ajout_modal btnPrimary2">Ajouter</button>
                 </div>
             </form>
         </div>

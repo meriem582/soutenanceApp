@@ -108,8 +108,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn button2 btnPrimary2">Ajouter</button>
+                        <button type="button" class="btn button_fermer_modal btnPrimary2" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn button_ajout_modal btnPrimary2">Ajouter</button>
                     </div>
                 </div>
             </form>
@@ -119,22 +119,21 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Configuration</h6>
             <button type="button" class="btn button2 btnPrimary2" data-bs-toggle="modal" data-bs-target="#ModaleSalle">
-                Ajouter
+                Ajouter une configuration
             </button>
         </div>
-        <div style="text-align: right;">
-            <form action="rechercheParametre/" method="post">
+        <div style="text-align: left; margin-left : 29px; margin-bottom : 0px;">
+            <form action="rechercheUtilisateur/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'année" class="bg-dark2 border-1 p-2" name="anneer"
-                    style="color: black;">
-                <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
-                        class="fa fa-search text-primary"></i></button>
+                <input type="text" placeholder="Recherche selon l'email" class="border-1 p-2 research_bar_in_table"
+                    name="emailr">
+                <!-- <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
+                        class="fa fa-search text-primary"></i></button> -->
             </form>
         </div>
         <br>
-        <div class="table_body">
+        <div class="table_body" style ="margin-top: 0px;">
             <table class="table2">
                 <thead>
                     <tr class="text-white">

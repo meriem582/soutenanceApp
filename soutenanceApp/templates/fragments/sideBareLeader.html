@@ -19,7 +19,7 @@
         </div>
         <div class="navbar-nav w-100">
             <a href="{% url 'dashBoardLeader' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardLeader' %}active{% endif %}"><i
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardLeader' or  request.resolver_match.url_name == 'dashBoard' %}active{% endif %}"><i
                     class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
 
             <a href="{% url 'demanderthemes' %}"
