@@ -76,7 +76,7 @@
                         <td>{{i.num_bloc}}</td>
                         <td>{{i.num_salle}}</td>
                         <td>
-                            <a href="suprimerSalle/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerSalle/{{ i.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer cette salle?')"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
                             <a href="modifierSalle/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>

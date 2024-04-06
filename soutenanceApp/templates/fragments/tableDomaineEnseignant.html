@@ -52,7 +52,7 @@
                         <td>{{i.id}}</td>
                         <td>{{i.idDomaineExpertise.intitule}}</td>
                         <td>
-                            <a href="suprimerDomaineEnseignant/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDomaineEnseignant/{{ i.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer ce domain?')"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
                         </td>

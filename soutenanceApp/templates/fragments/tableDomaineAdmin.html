@@ -58,7 +58,7 @@
                         <td>{{i.id}}</td>
                         <td>{{i.intitule}}</td>
                         <td>
-                            <a href="suprimerDomaineAdmin/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDomaineAdmin/{{ i.id }}" ><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
                             <a href="modifierDomaineAdmin/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
@@ -71,7 +71,7 @@
                         <td>{{i.id}}</td>
                         <td>{{i.intitule}}</td>
                         <td>
-                            <a href="suprimerDomaineAdmin/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDomaineAdmin/{{ i.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer ce domain?')"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
                             <a href="modifierDomaineAdmin/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>

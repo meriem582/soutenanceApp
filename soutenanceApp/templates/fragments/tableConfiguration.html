@@ -168,7 +168,7 @@
                         <td>{{i.dateDebSoutenance}}</td>
                         <td>{{i.dateFinSoutenace}}</td>
                         <td>
-                            <a href="suprimerParametre/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerParametre/{{ i.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer cette configuration?')"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
                             <a href="modifierParametre/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>

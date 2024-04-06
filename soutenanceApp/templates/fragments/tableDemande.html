@@ -33,7 +33,7 @@
                         <td>{{d.idTheme.intitule}}</td>
                         <td>{{d.reponse}}</td>
                         <td>
-                            <a href="accepter/{{d.id}}"><i class="fa fa-check text-primary"></i></a>
+                            <a href="accepter/{{d.id}}"><i class="fa fa-check text-primary" onclick="return confirm('êtes-vous sure de vouloir accepter cette demande?')"></i></a>
                         </td>
                     </tr>
                     {%endfor%}

@@ -90,7 +90,7 @@
                         <td>{{i.intitule}}</td>
                         <td>{{i.domaine}}</td>
                         <td>
-                            <a href="suprimerTheme/{{ i.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerTheme/{{ i.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer ce thème??')"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
                             <a href="modifierTheme/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>

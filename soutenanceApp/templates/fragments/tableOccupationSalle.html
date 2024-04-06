@@ -92,7 +92,7 @@
                         <td>{{i.heure_debut}}</td>
                         <td>{{i.heure_fin}}</td>
                         <td>
-                            <a href="suprimerOccupationSalle/{{ i.ids }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerOccupationSalle/{{ i.ids }}" onclick="return confirm('êtes-vous sure de vouloir supprimer cette occupation?')"><i class="fa fa-trash text-primary"></i></a>
                             &nbsp;
                             &nbsp;
                             <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa fa-edit text-primary"></i></a>

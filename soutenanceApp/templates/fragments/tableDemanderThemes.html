@@ -78,7 +78,7 @@
                         <td>{{ d.idEnseignant.email.nom }} {{ d.idEnseignant.email.prenom }}</td>
                         <td>{{ d.reponse}}</td>
                         <td>
-                            <a href="suprimerDemande/{{ d.id }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDemande/{{ d.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer cette demande?')"><i class="fa fa-trash text-primary"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

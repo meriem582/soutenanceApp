@@ -2,6 +2,7 @@ from django.shortcuts import render
 from soutenanceApp.models import Utilisateur,Administrateur,Salle,Occupation_salle,Enseignant,Occupation_Enseignant,Domain_expertise,Theme,Leader,Demande,Evaluation,EnseignantDomaineExpertise,Parametre
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 
 def renderIndex(request):
     return render(request,'index.html')
@@ -76,6 +77,8 @@ def MAJUtilisateur(request,email):
     oldu.prenom=p
     oldu.save()
     return HttpResponseRedirect(reverse("utilisateur"))
+    
+
 
 def renderSalles(request):
     eUser=request.session['user_email']
