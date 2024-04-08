@@ -423,4 +423,12 @@ thead th:hover {
 /* Fin  */
 
 
-
+.logo-circulaire{
+    width: 50%;
+    display: block; /* Assure que l'image est centrée correctement si son conteneur permet le centrage */
+    margin: -7px auto; /* Centre l'image horizontalement */
+    margin-left: 67px;
+    /* margin-bottom: 0px; */
+    border-radius: 50%; /* Rend l'image parfaitement circulaire */
+    border: 3px solid black; /* Ajoute une bordure noire autour de l'image */
+}

@@ -1,22 +1,21 @@
 {%load static%}
 <div class="sidebar pe-4 pb-3">
-    <nav class="navbar bg-secondary navbar-dark">
-        <a href="index.html" class="navbar-brand mx-4 mb-3">
-            <h3 class="text-primary2">SOUTENANCE</h3>
-        </a>
+    <a href="{% url 'index' %}" class="navbar-brand mx-4 mb-3">
+        <img src="{% static 'img/logo-échantillion1.png' %}" alt="Logo" class ="logo-circulaire">
+    </a>
+    <div class="d-flex align-items-center ms-4 mb-4">
         <div class="d-flex align-items-center ms-4 mb-4">
-            <div class="position-relative">
-                <img class="rounded-circle" src="{%static 'img/user.jpg'%}" alt="" style="width: 40px; height: 40px;">
-                <div
-                    class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+            <div class="conteneur-parent2">
+                <div class="ms-32 ">
+                    <h6 class="mb-0 user-info" id="admin-span">{{ user.nom }}</h6>
+                    <h6 class="mb-0 user-info" id="admin-span">{{ user.prenom }}</h6>
                 </div>
-            </div>
-            <div class="ms-3">
-                <h6 class="mb-0" id="admin-span">{{ user.nom }}</h6>
-                <h6 class="mb-0" id="admin-span">{{ user.prenom }}</h6>
                 <span id="E-span">Leader</span>
-            </div>
+                <div class="delimiteur2"></div> <!-- Div utilisé comme séparateur -->
+            </div>        
         </div>
+    </div>
+    <nav class="navbar bg-secondary navbar-dark">
         <div class="navbar-nav w-100">
             <a href="{% url 'dashBoardLeader' %}"
                 class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardLeader' or  request.resolver_match.url_name == 'dashBoard' %}active{% endif %}"><i
@@ -32,7 +31,7 @@
 
             <a href="{% url 'index' %}"
                 class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i
-                    class="far fa-file-alt me-2"></i>Déconnecter</a>
+                    class="far fa-file-alt me-2"></i>Se déconnecter</a>
 
         </div>
     </nav>

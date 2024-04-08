@@ -7780,6 +7780,8 @@ fieldset:disabled .btn {
 .mb-0 {
     margin-bottom: 0 !important;
     color: #000;
+    display: flex;
+
 }
 
 .mb-1 {
@@ -12891,3 +12893,82 @@ fieldset:disabled .btn {
     /* Application d'un filtre flou */
     backdrop-filter: blur(10px);    
 }
+
+
+/* User  */
+
+/* Début */
+
+.ms-31 {
+    margin-left: 0.8rem !important;
+    color:#000 ;
+    display: flex;
+    align-items: center; /* Centre les éléments verticalement */
+    gap: 5px; /* Ajoute un espace entre les éléments */
+    
+}
+
+.user-info {
+    margin: 0; /* Supprime les marges par défaut des h6 si nécessaire */
+    white-space: nowrap;
+}
+
+.conteneur-parent {
+    display: flex;
+    flex-direction: column; /* Organise les enfants en colonne */
+    align-items: center; /* Centre les enfants horizontalement */
+    width: 90%;
+    margin-top: -10px;
+}
+
+.delimiteur {
+    position : static;
+    height: 3px; /* Hauteur de la ligne */
+    background-color: white; /* Couleur de la ligne */
+    /* width: 80%; Ajustez la largeur selon le besoin */
+    width: 140px;
+    margin: 10px auto; /* Centrer le div et ajouter de l'espace autour */
+    margin-bottom: -15px;
+    margin-left : 25px;
+    border-radius: 50px;
+}
+
+/* Fin  */
+
+
+
+/* User (Pour la page du leader à cause d'un bug) */
+
+/* Début */
+
+.ms-32 {
+    margin-left : 20px!important;
+    color:#000 ;
+    display: flex;
+    align-items: center; /* Centre les éléments verticalement */
+    gap: 5px; /* Ajoute un espace entre les éléments */
+    
+}
+
+.conteneur-parent2 {
+    display: flex;
+    flex-direction: column; /* Organise les enfants en colonne */
+    align-items: center; /* Centre les enfants horizontalement */
+    width: 90%;
+    margin-top: -10px;
+}
+
+.delimiteur2 {
+    position : static;
+    height: 3px; /* Hauteur de la ligne */
+    background-color: white; /* Couleur de la ligne */
+    /* width: 80%; Ajustez la largeur selon le besoin */
+    width: 140px;
+    margin: 10px auto; /* Centrer le div et ajouter de l'espace autour */
+    margin-bottom: -35px;
+    margin-left : 8px;
+    border-radius: 50px;
+}
+
+/* Fin  */
+
