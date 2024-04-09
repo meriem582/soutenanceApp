@@ -40,6 +40,8 @@
 </head>
 
 <body>
+    
+  
 
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
@@ -57,8 +59,11 @@
             {%include 'fragments/navBare.html'%}
             <!-- Navbar End -->
 
-            <!-- Table Start -->
+            <!-- affichage de msg lors d'un ajout, maj ou sup -->
+            {%include 'fragments/messages.html'%}
 
+            <!-- Table Start -->
+            
             {%include 'fragments/tableSalles.html'%}
 
             <!-- Table End -->
@@ -87,6 +92,8 @@
 
     <!-- Template Javascript -->
     <script src="{%static 'js/main.js'%}"></script>
+   
+
 </body>
 
 </html>

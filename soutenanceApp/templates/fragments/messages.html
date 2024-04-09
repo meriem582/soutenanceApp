@@ -1,0 +1,16 @@
+{% if messages %}
+{% for msg in messages %}
+<div class="alert alert-{{ msg.tags }} m-2" id="msg" role="alert">
+  {{msg}}
+</div>
+{% endfor %}
+{% endif %}
+
+<!-- un timer pour faire disparaitre le msg automatiquement -->
+<script>
+    setTimeout(function(){
+if ($('#msg').length > 0) {
+    $('#msg').remove();
+}
+}, 2000)
+</script>

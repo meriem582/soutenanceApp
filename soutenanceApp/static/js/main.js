@@ -231,3 +231,5 @@ btnMmoire.addEventListener("click", function () {
     }
 })
 
+
+

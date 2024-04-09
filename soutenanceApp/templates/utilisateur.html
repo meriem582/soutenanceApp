@@ -51,8 +51,10 @@
             {%include 'fragments/navBare.html'%}
             <!-- Navbar End -->
 
+            <!-- affichage de msg lors d'un ajout, maj ou sup -->
+            {%include 'fragments/messages.html'%}
+            
             <!-- Table Start -->
-
             {%include 'fragments/tableUtilisateur.html'%}
 
             <!-- Table End -->
@@ -80,6 +82,13 @@
 
     <!-- Template Javascript -->
     <script src="{%static 'js/main.js'%}"></script>
+    <script>
+        setTimeout(function(){
+    if ($('#msg').length > 0) {
+        $('#msg').remove();
+    }
+}, 3000)
+    </script>
 </body>
 
 </html>
