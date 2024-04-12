@@ -18,26 +18,20 @@
         
         <div class="navbar-nav w-100">
             <a href="{% url 'dashBoardAdmin' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardAdmin' or  request.resolver_match.url_name == 'dashBoard' %}active{% endif %}"><i
-                    class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardAdmin' or  request.resolver_match.url_name == 'dashBoard' %}active{% endif %}">
+                <i class="fa-solid fa-house me-2"></i>Acceuil</a>
             <a href="{% url 'utilisateur' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'utilisateur' %}active{% endif %}"><i
-                    class="fa fa-th me-2"></i>Utilisateurs</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'utilisateur' %}active{% endif %}"><i class="fa-solid fa-users me-2"></i>Utilisateurs</a>
             <a href="{% url 'salles' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'salles' %}active{% endif %}"><i
-                    class="fa fa-keyboard me-2"></i>Salles</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'salles' %}active{% endif %}"><i class="fa-solid fa-hotel me-2"></i>Salles</a>
             <a href="{% url 'domaineAdmin' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'domaineAdmin' %}active{% endif %}"><i
-                    class="fa fa-keyboard me-2"></i>Domains</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'domaineAdmin' %}active{% endif %}"><i class="fa-solid fa-graduation-cap me-2"></i>Domaines</a>
             <a href="{% url 'configuration' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'configuration' %}active{% endif %}"><i
-                    class="fa fa-table me-2"></i>Configuration</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'configuration' %}active{% endif %}"><i class="fa-solid fa-sliders me-2"></i>Configuration</a>
             <a href="{% url 'planning' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'planning' %}active{% endif %}"><i
-                    class="fa fa-table me-2"></i>Planning</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'planning' %}active{% endif %}"><i class="fa-solid fa-table-list me-2"></i>Planning</a>
             <a href="{% url 'index' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i
-                    class="far fa-file-alt me-2"></i>Se déconnecter</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i class="fa-solid fa-door-open me-2"></i>Se déconnecter</a>
         </div>
     </nav>
 

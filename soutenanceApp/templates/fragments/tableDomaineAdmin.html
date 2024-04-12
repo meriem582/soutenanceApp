@@ -35,7 +35,7 @@
         <div style="text-align: left; margin-left : 29px; margin-bottom : 0px;">
             <form action="rechercheUtilisateur/" method="post">
                 {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'email" class="border-1 p-2 research_bar_in_table"
+                <input type="text" placeholder="Recherche selon l'Id" class="border-1 p-2 research_bar_in_table"
                     name="emailr">
                 <!-- <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
                         class="fa fa-search text-primary"></i></button> -->
@@ -58,10 +58,10 @@
                         <td>{{i.id}}</td>
                         <td>{{i.intitule}}</td>
                         <td>
-                            <a href="suprimerDomaineAdmin/{{ i.id }}" ><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDomaineAdmin/{{ i.id }}" ><i class="fa-solid fa-trash-arrow-up fa-lg"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierDomaineAdmin/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierDomaineAdmin/{{ i.id }}"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -71,10 +71,10 @@
                         <td>{{i.id}}</td>
                         <td>{{i.intitule}}</td>
                         <td>
-                            <a href="suprimerDomaineAdmin/{{ i.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer ce domain?')"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerDomaineAdmin/{{ i.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer ce domain?')"><i class="fa-solid fa-trash-arrow-up fa-lg"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierDomaineAdmin/{{ i.id }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierDomaineAdmin/{{ i.id }}"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

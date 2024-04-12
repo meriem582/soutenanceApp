@@ -38,14 +38,13 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Occupations Salle</h6>
+            <h6 class="mb-001" style ="margin-left: 32.5%;">Les occupations de la salle</h6>
 
             <button type="button" class="button2 btnPrimary2" data-bs-toggle="modal"
-                data-bs-target="#ModaleSalleOccupation">
-                Ajouter
+                data-bs-target="#ModaleSalleOccupation" style="margin-left : -40px">
+                Ajouter une occupation
             </button>
         </div>
-
         <div style="text-align: left; margin-left : 29px; margin-bottom : 20px;">
             <form action="rechercheUtilisateur/" method="post">
                 {%csrf_token%}
@@ -56,7 +55,7 @@
             </form>
         </div>
         <br>
-        <div class="table_body">
+        <div class="table_body" style ="margin-top: 0px;">
             <table class="table2">
                 <thead>
                     <tr class="text-white">
@@ -77,10 +76,10 @@
                         <td>{{i.heure_debut}}</td>
                         <td>{{i.heure_fin}}</td>
                         <td>
-                            <a href="suprimerOccupationSalle/{{ i.ids }}"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerOccupationSalle/{{ i.ids }}"><i class="fa-solid fa-trash-arrow-up fa-lg"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -92,10 +91,10 @@
                         <td>{{i.heure_debut}}</td>
                         <td>{{i.heure_fin}}</td>
                         <td>
-                            <a href="suprimerOccupationSalle/{{ i.ids }}" onclick="return confirm('êtes-vous sure de vouloir supprimer cette occupation?')"><i class="fa fa-trash text-primary"></i></a>
+                            <a href="suprimerOccupationSalle/{{ i.ids }}" onclick="return confirm('êtes-vous sure de vouloir supprimer cette occupation?')"><i class="fa-solid fa-trash-arrow-up fa-lg"></i></a>
                             &nbsp;
                             &nbsp;
-                            <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="modifierOccupationSalle/{{ i.ids }}"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

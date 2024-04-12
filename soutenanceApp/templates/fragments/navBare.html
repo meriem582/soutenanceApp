@@ -76,11 +76,16 @@
                 <a href="#" class="dropdown-item text-center">Voir toute les notifications</a>
             </div>
         </div>
-        <div class="nav-item dropdown">
+        <div class="nav-item dropdown ">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="{%static 'img/user.jpg'%}" alt=""
-                    style="width: 40px; height: 40px;">
-                <span class="d-none d-lg-inline-flex">John Doe</span>
+                <!-- <img class="rounded-circle me-lg-2" src="{%static 'img/user.jpg'%}" alt=""
+                    style="width: 40px; height: 40px;"> -->
+                    
+                <!-- <div class="bg-success rounded-circle border border-2 border-white end-0 bottom-0 p-1" style="width: 5px; height: 5px;"></div> -->
+                <!-- <i class="fa fa-bell me-lg-2"></i> -->
+                <!-- <i class="fa-solid fa-circle fa-2xs" style="color: #198754;"></i> -->
+                <i class="fa-solid fa-circle-user fa-lg"></i> 
+                <span class="d-none d-lg-inline-flex">{{ user.nom }} {{ user.prenom }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                 <a href="#" class="dropdown-item">Mon profil</a>

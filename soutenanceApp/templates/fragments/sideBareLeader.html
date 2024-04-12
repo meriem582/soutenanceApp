@@ -4,34 +4,31 @@
         <img src="{% static 'img/logo-échantillion1.png' %}" alt="Logo" class ="logo-circulaire">
     </a>
     <div class="d-flex align-items-center ms-4 mb-4">
-        <div class="d-flex align-items-center ms-4 mb-4">
-            <div class="conteneur-parent2">
-                <div class="ms-32 ">
-                    <h6 class="mb-0 user-info" id="admin-span">{{ user.nom }}</h6>
-                    <h6 class="mb-0 user-info" id="admin-span">{{ user.prenom }}</h6>
+            <div class="conteneur-parent">
+                <div class="ms-31 ">
+                    <h6 class="mb-0 user-info" id="admin-span">{{ user.nom }} {{ user.prenom }}</h6>
+                    <!-- <h6 class="mb-0 user-info" id="admin-span"></h6> -->
                 </div>
                 <span id="E-span">Leader</span>
-                <div class="delimiteur2"></div> <!-- Div utilisé comme séparateur -->
+                <div class="delimiteur"></div> <!-- Div utilisé comme séparateur -->
             </div>        
-        </div>
+        
+
+        
     </div>
     <nav class="navbar bg-secondary navbar-dark">
         <div class="navbar-nav w-100">
             <a href="{% url 'dashBoardLeader' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardLeader' or  request.resolver_match.url_name == 'dashBoard' %}active{% endif %}"><i
-                    class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'dashBoardLeader' or  request.resolver_match.url_name == 'dashBoard' %}active{% endif %}"><i class="fa-solid fa-house me-2"></i>Acceuil</a>
 
             <a href="{% url 'demanderthemes' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'demanderthemes' %}active{% endif %}"><i
-                    class="fa fa-th me-2"></i>Demande thème</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'demanderthemes' %}active{% endif %}"><i class="fa-solid fa-plus me-2"></i>Demande thème</a>
 
             <a href="{% url 'deposerMemoire' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'deposerMemoire' %}active{% endif %}"><i
-                    class="fa fa-keyboard me-2"></i>Déposer mémoire</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'deposerMemoire' %}active{% endif %}"><i class="fa-solid fa-upload me-2"></i>Déposer mémoire</a>
 
             <a href="{% url 'index' %}"
-                class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i
-                    class="far fa-file-alt me-2"></i>Se déconnecter</a>
+                class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"><i class="fa-solid fa-door-open me-2"></i>Se déconnecter</a>
 
         </div>
     </nav>

@@ -12966,9 +12966,13 @@ fieldset:disabled .btn {
     width: 140px;
     margin: 10px auto; /* Centrer le div et ajouter de l'espace autour */
     margin-bottom: -35px;
-    margin-left : 8px;
+    margin-left : 5px;
     border-radius: 50px;
 }
 
 /* Fin  */
+
+
+
+/* Ajustement for user */
 
