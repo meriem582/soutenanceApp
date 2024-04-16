@@ -1,6 +1,6 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
+        <div  class="d-flex align-items-center justify-content-between mb-4">
         </div>
         <div style="text-align: left; margin-left : 29px; margin-bottom : 0px;">
             <form action="rechercheUtilisateur/" method="post">
@@ -12,7 +12,7 @@
             </form>
         </div>
         <br>
-        <div class="table_body" style ="margin-top: 0px;">
+        <div id="table_evaluation" class="table_body" style ="margin-top: 0px;">
             <table class="table2">
                 <thead>
                     <tr class="text-white">
@@ -46,3 +46,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Récupération des dates de début et de fin
+    var dateDebTraitement = new Date('{{ parametre.dateDebTraitement }}');
+    var dateLimiteTtraitement = new Date('{{ parametre.dateLimiteTtraitement }}');
+
+    // Fonction pour vérifier si la date actuelle est entre les dates de début et de fin
+    function checkDate() {
+        var currentDate = new Date();
+        if (currentDate >= dateDebTraitement && currentDate <= dateLimiteTtraitement) {
+            document.getElementById('table_evaluation').style.display = 'block'; // Afficher la table
+        } else {
+            document.getElementById('table_evaluation').style.display = 'none'; // Masquer la table
+        }
+    }
+
+    // Vérifier la date lors du chargement de la page
+    checkDate();
+
+    // Vérifier la date toutes les secondes (pour les mises à jour en temps réel)
+    setInterval(checkDate, 1000);
+</script>
