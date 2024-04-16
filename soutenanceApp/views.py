@@ -598,12 +598,14 @@ def MAJLeaderR(request,email):
     return HttpResponseRedirect(reverse("evaluation"))
 
 def accepter(request, id):
+    
     demande_acceptee = Demande.objects.get(id=id)
     demande_acceptee.reponse = "Accepté"
     demande_acceptee.save()
+    messages.success(request,"réponse envoyé avec succès")
     autres_demandes = Demande.objects.filter(idTheme=demande_acceptee.idTheme).exclude(id=id)
     for demande in autres_demandes:
         demande.reponse = "Refusé"
         demande.save()
-        messages.success(request,"réponse envoyé avec succès") #ne fonction pas jsp prq
+
     return HttpResponseRedirect(reverse("demandes"))

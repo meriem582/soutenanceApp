@@ -1,3 +1,7 @@
+  <!-- affichage de msg lors d'un ajout, maj ou sup -->
+  {%include 'fragments/messages.html'%}
+
+
 <!-- Modal -->
 <div class="modal fade" id="ModaleDomaine" tabindex="-1" aria-labelledby="ModaleDomaineLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -30,7 +34,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <button type="button" class="button2 btnPrimary2" data-bs-toggle="modal"
+            <button type="button" id="ajt_domaine" class="button2 btnPrimary2" data-bs-toggle="modal"
                 data-bs-target="#ModaleDomaine">
                 Ajouter un domaine
             </button>
@@ -63,3 +67,26 @@
         </div>
     </div>
 </div>
+<script>
+    // Récupération des dates de début et de fin
+    var dateDebConfigEns = new Date('{{ parametre.dateDebConfigEns }}');
+    var dateFinConfigEns = new Date('{{ parametre.dateFinConfigEns }}');
+
+    // Fonction pour vérifier si la date actuelle est entre les dates de début et de fin
+    function checkDate() {
+        var currentDate = new Date();
+        if (currentDate >= dateDebConfigEns && currentDate <= dateFinConfigEns) {
+        ajt_domaine.disabled = false;  
+    } else {
+        ajt_domaine.disabled = true;
+        messages.success(request,"hors temps");
+        };
+    }
+
+    
+    // Vérifier la date lors du chargement de la page
+    checkDate();
+
+    // Vérifier la date toutes les secondes (pour les mises à jour en temps réel)
+    setInterval(checkDate, 1000);
+</script>
