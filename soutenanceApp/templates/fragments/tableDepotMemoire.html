@@ -11,7 +11,7 @@
                 <label for="exampleInputFile" class="form-label">Description (PDF)</label>
                 <input type="file" class="form-control" id="exampleInputFile" name="memoire">
                 <br>
-                <button type="submit" class="btn btn-primary">Soumettre</button>
+                <button type="submit" id="ajt_memoire" class="btn btn-primary">Soumettre</button>
             </form>
         </div>
         <br>
@@ -38,3 +38,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Récupération des dates de début et de fin
+    var dateLimiteTtraitement = new Date('{{ parametre.dateLimiteTtraitement }}');
+
+    // Fonction pour vérifier si la date actuelle est entre les dates de début et de fin
+    function checkDate() {
+        var currentDate = new Date();
+        if (currentDate <= dateLimiteTtraitement) {
+            ajt_memoire.disabled = false;  
+    } else {
+        ajt_memoire.disabled = true;
+        console.log("la periode de depot de memoire est dépassée");
+    }
+}
+
+    // Vérifier la date lors du chargement de la page
+    checkDate();
+
+    // Vérifier la date toutes les secondes (pour les mises à jour en temps réel)
+    setInterval(checkDate, 1000);
+</script>

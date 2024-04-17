@@ -1,52 +1,55 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary5 text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-001" style ="margin-left: 40%;">Liste des thèmes </h6>
-        </div>
-        <div style="text-align: left; margin-left : 29px; margin-bottom :0px;">
-            <form action="rechercheUtilisateur/" method="post">
-                {%csrf_token%}
-                <input type="text" placeholder="Recherche selon l'id" class="border-1 p-2 research_bar_in_table"
-                    name="emailr">
-                <!-- <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
+        <div id="demandeTable">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-001" style="margin-left: 40%;">Liste des thèmes </h6>
+            </div>
+
+            <div style="text-align: left; margin-left : 29px; margin-bottom :0px;">
+                <form action="rechercheUtilisateur/" method="post">
+                    {%csrf_token%}
+                    <input type="text" placeholder="Recherche selon l'id" class="border-1 p-2 research_bar_in_table"
+                        name="emailr">
+                    <!-- <button type="submit" class="bg-dark2 border-0 p-2 la-loupe"><i
                         class="fa fa-search text-primary"></i></button> -->
-            </form>
-        </div>
-        <br>
-        <div class="table_body" style ="margin-top: 0px;">
-            <table class="table2">
-                <thead>
-                    <tr class="text-white">
-                        <th scope="col">ID</th>
-                        <th scope="col">Thème</th>
-                        <th scope="col">Domaine</th>
-                        <th scope="col">Enseignant</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for theme in themes %}
-                    <tr>
-                        <td>{{ theme.id }}</td>
-                        <td>{{ theme.intitule }}</td>
-                        <td>{{ theme.domaine }}</td>
-                        <td>{{ theme.idEnseignant.email.nom }} {{ theme.idEnseignant.email.prenom }}</td>
-                        <!-- Accès au nom de l'enseignant -->
-                        <td>
-                            <a href="ajoutDemande/{{ theme.id }}"><i class="fa fa-plus-circle text-primary"></i></a>
-                            &nbsp;
-                            &nbsp;
-                            <a href="#"><i class="fa fa-eye text-primary"></i></a>
+                </form>
+            </div>
+            <br>
+            <div class="table_body" style="margin-top: 0px;">
+                <table class="table2">
+                    <thead>
+                        <tr class="text-white">
+                            <th scope="col">ID</th>
+                            <th scope="col">Thème</th>
+                            <th scope="col">Domaine</th>
+                            <th scope="col">Enseignant</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for theme in themes %}
+                        <tr>
+                            <td>{{ theme.id }}</td>
+                            <td>{{ theme.intitule }}</td>
+                            <td>{{ theme.domaine }}</td>
+                            <td>{{ theme.idEnseignant.email.nom }} {{ theme.idEnseignant.email.prenom }}</td>
+                            <!-- Accès au nom de l'enseignant -->
+                            <td>
+                                <a href="ajoutDemande/{{ theme.id }}"><i class="fa fa-plus-circle text-primary"></i></a>
+                                &nbsp;
+                                &nbsp;
+                                <a href="#"><i class="fa fa-eye text-primary"></i></a>
 
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
         </div>
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-001" style ="margin-left: 40%;">Ma liste de demande </h6>
+            <h6 class="mb-001" style="margin-left: 40%;">Ma liste de demande </h6>
         </div>
 
         <div style="text-align: left; margin-left : 29px; margin-bottom :0px;">
@@ -78,7 +81,9 @@
                         <td>{{ d.idEnseignant.email.nom }} {{ d.idEnseignant.email.prenom }}</td>
                         <td>{{ d.reponse}}</td>
                         <td>
-                            <a href="suprimerDemande/{{ d.id }}" onclick="return confirm('êtes-vous sure de vouloir supprimer cette demande?')"><i class="fa-solid fa-trash-arrow-up fa-lg"></i></a>
+                            <a href="suprimerDemande/{{ d.id }}"
+                                onclick="return confirm('êtes-vous sure de vouloir supprimer cette demande?')"><i
+                                    class="fa-solid fa-trash-arrow-up fa-lg"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -88,10 +93,10 @@
         </div>
 
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-001" style ="margin-left: 40%;">Mes demandes acceptés</h6>
+            <h6 class="mb-001" style="margin-left: 40%;">Mes demandes acceptés</h6>
         </div>
 
-        
+
         <div class="table_body">
             <table class="table2">
                 <thead>
@@ -121,3 +126,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Récupération des dates de début et de fin
+    var dateDebDem = new Date('{{ parametre.dateDebDem }}');
+    var dateFinDem = new Date('{{ parametre.dateFinDem }}');
+
+    // Fonction pour vérifier si la date actuelle est entre les dates de début et de fin
+    function checkDate() {
+        var currentDate = new Date();
+        if (currentDate >= dateDebDem && currentDate <= dateFinDem) {
+            document.getElementById('demandeTable').style.display = 'block'; // Afficher la table
+        } else {
+            document.getElementById('demandeTable').style.display = 'none'; // Masquer la table
+        }
+    }
+
+    // Vérifier la date lors du chargement de la page
+    checkDate();
+
+    // Vérifier la date toutes les secondes (pour les mises à jour en temps réel)
+    setInterval(checkDate, 1000);
+</script>

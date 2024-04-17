@@ -33,7 +33,7 @@
                         <td>{{d.idTheme.intitule}}</td>
                         <td>{{d.reponse}}</td>
                         <td>
-                            <a href="accepter/{{d.id}}"><i class="fa fa-check text-primary" onclick="return confirm('êtes-vous sure de vouloir accepter cette demande?')"></i></a>
+                            <a href="accepter/{{d.id}}"><i  id="ajt_rep" class="fa fa-check text-primary"></i></a>
                         </td>
                     </tr>
                     {%endfor%}
@@ -43,3 +43,29 @@
 
     </div>
 </div>
+
+
+
+<script>
+    // Récupération des dates de début et de fin
+    var dateDebRep = new Date('{{ parametre.dateDebRep }}');
+    var dateFinRep = new Date('{{ parametre.dateFinRep }}');
+
+    // Fonction pour vérifier si la date actuelle est entre les dates de début et de fin
+    function checkDate() {
+        var currentDate = new Date();
+        if (currentDate >= dateDebRep && currentDate <= dateFinRep) {
+            ajt_rep.disabled = false;  
+    } else {
+        ajt_rep.disabled = true;
+        console.log("la periode de configuration est dépassée");
+        };
+    }
+
+    
+    // Vérifier la date lors du chargement de la page
+    checkDate();
+
+    // Vérifier la date toutes les secondes (pour les mises à jour en temps réel)
+    setInterval(checkDate, 1000);
+</script>
