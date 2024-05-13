@@ -33,7 +33,7 @@
                         <td>{{d.idTheme.intitule}}</td>
                         <td>{{d.reponse}}</td>
                         <td>
-                            <a href="accepter/{{d.id}}"><i  id="ajt_rep" class="fa fa-check text-primary"></i></a>
+                            <a href="accepter/{{d.id}}"><i class="fa fa-check text-primary"></i></a>
                         </td>
                     </tr>
                     {%endfor%}
@@ -46,7 +46,7 @@
 
 
 
-<script>
+<!-- <script>
     // Récupération des dates de début et de fin
     var dateDebRep = new Date('{{ parametre.dateDebRep }}');
     var dateFinRep = new Date('{{ parametre.dateFinRep }}');
@@ -68,4 +68,4 @@
 
     // Vérifier la date toutes les secondes (pour les mises à jour en temps réel)
     setInterval(checkDate, 1000);
-</script>
+</script> -->

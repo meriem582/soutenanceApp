@@ -6,76 +6,9 @@
     <a href="#" class="sidebar-toggler flex-shrink-0">
         <i class="fa fa-bars"></i>
     </a>
-    <form class="d-none d-md-flex ms-4">
-        <input class="form-control bgg-dark border-1" type="search" placeholder="Recherche">
-    </form>
     <div class="navbar-nav align-items-center ms-auto">
-        <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <i class="fa fa-envelope me-lg-2"></i>
-                <span class="d-none d-lg-inline-flex">Messages</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                <a href="#" class="dropdown-item">
-                    <div class="d-flex align-items-center">
-                        <img class="rounded-circle" src="{%static 'img/user.jpg'%}" alt=""
-                            style="width: 40px; height: 40px;">
-                        <div class="ms-2">
-                            <h6 class="fw-normal mb-0">Jhon vous a envoyé un message</h6>
-                            <small>Il y a 15 minutes</small>
-                        </div>
-                    </div>
-                </a>
-                <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item">
-                    <div class="d-flex align-items-center">
-                        <img class="rounded-circle" src="{%static 'img/user.jpg'%}" alt=""
-                            style="width: 40px; height: 40px;">
-                        <div class="ms-2">
-                            <h6 class="fw-normal mb-0">Jhon vous a envoyé un message</h6>
-                            <small>Il y a 15 minutes</small>
-                        </div>
-                    </div>
-                </a>
-                <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item">
-                    <div class="d-flex align-items-center">
-                        <img class="rounded-circle" src="{%static 'img/user.jpg'%}" alt=""
-                            style="width: 40px; height: 40px;">
-                        <div class="ms-2">
-                            <h6 class="fw-normal mb-0">Jhon vous a envoyé un message</h6>
-                            <small>Il y a 15 minutes</small>
-                        </div>
-                    </div>
-                </a>
-                <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item text-center">Voir tous les messages</a>
-            </div>
-        </div>
-        <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <i class="fa fa-bell me-lg-2"></i>
-                <span class="d-none d-lg-inline-flex">Notification</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                <a href="#" class="dropdown-item">
-                    <h6 class="fw-normal mb-0">Profile mis à jour</h6>
-                    <small>Il y a 15 minutes</small>
-                </a>
-                <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item">
-                    <h6 class="fw-normal mb-0">Nouvel utilisateur ajouté</h6>
-                    <small>15 minutes ago</small>
-                </a>
-                <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item">
-                    <h6 class="fw-normal mb-0">Mot de passe changé</h6>
-                    <small>15 minutes ago</small>
-                </a>
-                <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item text-center">Voir toute les notifications</a>
-            </div>
-        </div>
+        
+        
         <div class="nav-item dropdown ">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <!-- <img class="rounded-circle me-lg-2" src="{%static 'img/user.jpg'%}" alt=""
@@ -88,9 +21,10 @@
                 <span class="d-none d-lg-inline-flex">{{ user.nom }} {{ user.prenom }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                <a href="#" class="dropdown-item">Mon profil</a>
                 <a href="#" class="dropdown-item">Paramètres</a>
-                <a href="#" class="dropdown-item">Se déconnecter</a>
+                <a href="{% url 'index' %}"
+                class="{% if request.resolver_match.url_name == 'index' %}active{% endif %} dropdown-item">Se déconnecter</a>
+                <!-- <a href="#" class="dropdown-item">Se déconnecter</a> -->
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Acceuil</title>
+    <title>Paramètre</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -23,8 +23,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <!-- <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"> -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+
+    <!-- <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" /> -->
+    <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet">
+
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{%static 'bootstrap.min.css'%}" rel="stylesheet">
@@ -34,38 +39,52 @@
 </head>
 
 <body>
+
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         {%include 'fragments/spinner.html'%}
         <!-- Spinner End -->
 
-
         <!-- Sidebar Start -->
-        {%include 'fragments/sideBareEnseignant.html'%}
+        {%include 'fragments/sideBareAdmin.html'%}
         <!-- Sidebar End -->
-
 
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
-
             {%include 'fragments/navBare.html'%}
-
             <!-- Navbar End -->
 
-
-
+            <!-- affichage de msg lors d'un ajout, maj ou sup -->
+            {%include 'fragments/messages.html'%}
 
             <!-- Table Start -->
-            <div class="container-fluid-back-content pt-4 px-4">
+            <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded p-4">
-                    <h1>Acceuil</h1>
-                    copyright &copy;2023 ,tous droits réserver
-                    {%lorem 3 p%}
+                    <form action="MAJInforAdmin/" method="post">
+                        {%csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModaleMAJinfoLabel">Fiche Compte</h5>
+                            <input type="hidden" value="{{user.}}" name="id">
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Bloc</label>
+                                <input type="text" class="form-control" name="bloc" value="{{crechercher.num_bloc}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Salle</label>
+                                <input type="text" class="form-control" name="salle" value="{{crechercher.num_salle}}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('êtes-vous sure de vouloir modifier cette salle?')">Modifier</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <!-- Table End -->
-
 
             <!-- Footer Start -->
             {%include 'fragments/footer.html'%}
