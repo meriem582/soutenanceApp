@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from soutenanceApp.models import Utilisateur,Administrateur,Salle,Occupation_salle,Enseignant,Occupation_Enseignant,Domain_expertise,Theme,Leader,Demande,Evaluation,EnseignantDomaineExpertise,Parametre
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def renderIndex(request):
     return render(request,'index.html')
@@ -23,6 +24,28 @@ def renderDashBoardLeader(request):
     user = Utilisateur.objects.get(email=eUser)
     return render(request,'dashBoardLeader.html', {'user': user})
 
+
+
+def enseignant_required(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        eUser=request.session['user_email']
+        user = Utilisateur.objects.get(email=eUser)
+
+        if  user.type_User == 'Enseignant':
+            return view_func(request, *args, **kwargs)
+        else:
+            messages.error(request, "Accès non autorisé. Vous devez être enseignant pour accéder à cette page.")
+            return redirect('/login/')  # Redirige vers la page de connexion
+    return wrapper_func
+
+
+
+@enseignant_required
+def renderParamètres(request):
+    eUser = request.session['user_email']
+    user = Utilisateur.objects.get(email=eUser)
+    return render(request, 'paramètres.html', {'user': user})
+
 def renderUtilisateur(request):
     eUser=request.session['user_email']
     user = Utilisateur.objects.get(email=eUser)
@@ -33,6 +56,61 @@ def renderUtilisateur(request):
     else:
         listeUtilisateur = Utilisateur.objects.all()  
         return render(request, 'utilisateur.html', {'listeUtilisateur': listeUtilisateur,'user': user}) 
+
+
+def ajoutGrade(request):
+    if request.method == 'POST':
+        # Assurez-vous que l'utilisateur est connecté
+        if 'user_email' in request.session:
+            # Récupérez l'adresse e-mail de l'utilisateur connecté
+            email = request.session['user_email']
+            
+            try:
+                # Récupérez l'enseignant associé à cette adresse e-mail
+                enseignant = Enseignant.objects.get(email=email)
+            except Enseignant.DoesNotExist:
+                # Gérer le cas où l'enseignant n'existe pas
+                messages.error(request, "Impossible de trouver votre profil d'enseignant.")
+                return redirect('paramètres')  # Rediriger vers une page appropriée
+            
+            # Mettez à jour le grade de l'enseignant avec la valeur du formulaire
+            grade = request.POST.get('grade')
+            enseignant.grade = grade
+            enseignant.save()
+
+            # Afficher un message de succès ou de confirmation
+            messages.success(request, "Votre grade a été mis à jour avec succès.")
+            return redirect('paramètres')  # Rediriger vers une page appropriée
+        else:
+            # Gérer le cas où l'utilisateur n'est pas connecté
+            messages.error(request, "Bug.")
+            return redirect('paramètres')  # Rediriger vers une page appropriée
+    else:
+        # Gérer le cas où la méthode de la requête n'est pas POST
+        messages.error(request, "Méthode de requête non autorisée.")
+        return redirect('paramètres')  # Rediriger vers une page appropriée
+
+# def ajoutGrade(request):
+#     if request.method == "POST":
+#         # Récupérer l'adresse e-mail de l'utilisateur connecté depuis la session
+#         user_email = request.session.get('user_email')
+#         # Récupérer l'utilisateur à partir de l'adresse e-mail
+#         user = Utilisateur.objects.get(email=user_email)
+        
+#         # Récupérer le grade à partir des données du formulaire
+#         grade = request.POST.get("grade")
+        
+#         # Enregistrer le grade pour l'utilisateur connecté
+#         user.grade = grade
+#         user.save()
+
+#         # Rediriger l'utilisateur vers une page de confirmation ou une autre page appropriée
+#         messages.success(request, "Votre grade a été mis à jour avec succès.")
+#         return HttpResponseRedirect(reverse("paramètres"))
+#     else:
+#         # Gérer le cas où la méthode de requête n'est pas POST
+#         return messages.error("Méthode non autorisée")
+
 
 def ajoutUtilisateur(request):
     e = request.POST["email"]

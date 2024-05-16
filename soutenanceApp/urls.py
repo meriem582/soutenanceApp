@@ -3,6 +3,8 @@ from soutenanceApp import views
 # de views c'est la fonctions ,
 urlpatterns=[
     path('',views.renderIndex,name="index"),
+    path('accounts/login/', views.login, name='login'),
+
     path('login/',views.login,name="dashBoard"), 
     path('login/dashBoardAdmin/',views.renderDashBoardAdmin,name="dashBoardAdmin"), 
     path('login/dashBoardEnseignant/',views.renderDashBoardEnseignant,name="dashBoardEnseignant"), 
@@ -86,4 +88,8 @@ urlpatterns=[
     path('evaluation/modifierLeader/<str:email>/MAJLeaderR/',views.MAJLeaderR,name="MAJLeaderR"),
     path('deposerMemoire/',views.renderDeposerMemoire,name="deposerMemoire"),
     path('deposerMemoire/ajoutMemoire/',views.ajoutMemoire,name="ajoutMemoire"),
+    path('paramètres', views.renderParamètres, name='paramètres'),
+    path('paramètres/ajout_grade/', views.ajoutGrade, name='ajout_grade'),
+
+
 ]
