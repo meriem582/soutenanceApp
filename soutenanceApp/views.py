@@ -8,9 +8,14 @@ import logging
 from datetime import datetime, timedelta, time
 import random
 from collections import defaultdict
-from weasyprint import HTML
+from weasyprint import HTML , CSS
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+
 
 
 def renderIndex(request):
@@ -866,9 +871,101 @@ def generate_planning(salles, parametres, occupations_salles, enseignants):
 
 
 # Générer PDF
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup 
+def generate_pdf(request):
+    eUser = request.session['user_email']
+    user = Utilisateur.objects.get(email=eUser)
 
-# def generate_pdf(request):
+    try:
+        salles, parametres, occupations_salles, enseignants = get_data()
+        planning = generate_planning(salles, parametres, occupations_salles, enseignants)
+    except Exception as e:
+        logger.error("Error generating planning: %s", e)
+        planning = {}
+
+    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
+
+    context = {
+        'user': user,
+        'planning': planning,
+        'planning_hours': planning_hours,
+        'days': days,
+    }
+
+    html_string = render_to_string('planning.html', context)
+
+    # Utilisation de BeautifulSoup pour extraire la section désirée du HTML
+    soup = BeautifulSoup(html_string, 'html.parser')
+    table_section = soup.select_one('.container-fluid.pt-4.px-4 .bg-secondary.text-center.rounded.p-4')
+
+    if table_section:
+        form = table_section.find('form')
+        if form:
+            form.decompose()
+
+        # Inclure les styles CSS dans la section head pour le PDF
+        pdf_css = '''
+        <style>
+            body {
+                font-size: 12px;
+            }
+            .custom-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 0 auto;
+            }
+            .custom-table th, .custom-table td {
+                border: 1px solid black;
+                padding: 5px;
+                text-align: left;
+                font-size: 10px;
+                word-wrap: break-word; /* Ensure long words break to avoid overflow */
+                /*height: 100px; /* Increase cell height */
+            }
+            .custom-table th {
+                background-color: #f2f2f2;
+            }
+            .custom-table td {
+                vertical-align: top;
+            }
+            .soutenance-item {
+                padding: 2px;
+                margin-bottom: 2px; /* Space between items */
+            }
+            .available-slot {
+                background-color: #d4edda;
+            }
+            .unavailable-slot {
+                background-color: #f8d7da;
+            }
+            .available-slot p, .unavailable-slot p {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+        '''
+
+        table_section.insert_before(BeautifulSoup(pdf_css, 'html.parser'))
+
+        html_table_string = f"<html><head>{pdf_css}</head><body>{str(table_section)}</body></html>"
+    else:
+        logger.error("No planning table section found in the HTML")
+        html_table_string = "<p>No planning table available</p>"
+
+    no_margin_css = CSS(string='''
+        @page { margin: 10px; }
+        body { margin: 0; }
+    ''')
+
+    html = HTML(string=html_table_string)
+    pdf_file = html.write_pdf(stylesheets=[no_margin_css])
+
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
+
+    return response
+# def generate_pdf(request):   2 
 #     eUser = request.session['user_email']
 #     user = Utilisateur.objects.get(email=eUser)
 
@@ -903,6 +1000,9 @@ from bs4 import BeautifulSoup
 #         # Inclure les styles CSS dans la section head
 #         head_content = '''
 #         <style>
+#             body {
+#                 font-size: 12px;
+#             }
 #             .custom-table {
 #                 width: 100%;
 #                 border-collapse: collapse;
@@ -910,22 +1010,21 @@ from bs4 import BeautifulSoup
 #             }
 #             .custom-table th, .custom-table td {
 #                 border: 1px solid black;
-#                 padding: 0.3px;
+#                 padding: 2px;
 #                 text-align: left;
-#                 font-size: 70%;
+#                 font-size: 10px;
 #             }
 #             .custom-table th {
 #                 background-color: #f2f2f2;
 #             }
 #             .custom-table td {
-#                 height: 1px;
 #                 vertical-align: top;
 #             }
 #             .soutenance-item:not(:first-of-type) {
 #                 border-top: 1px solid black;
 #             }
 #             .soutenance-item {
-#                 padding: 1px;
+#                 padding: 0px;
 #             }
 #             .available-slot {
 #                 background-color: #d4edda;
@@ -949,80 +1048,80 @@ from bs4 import BeautifulSoup
 #         html_table_string = "<p>No planning table available</p>"
 
 #     html = HTML(string=html_table_string)
-#     pdf_file = html.write_pdf()
+#     pdf_file = html.write_pdf(stylesheets=[])
 
 #     response = HttpResponse(pdf_file, content_type='application/pdf')
-#     response['Content-Disposition'] = 'attachment; filename=\"planning.pdf\"'
+#     response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
 
 #     return response
     
-    
-def generate_pdf(request):
-    eUser = request.session['user_email']
-    user = Utilisateur.objects.get(email=eUser)
+# def generate_pdf(request):   1
+#     eUser = request.session['user_email']
+#     user = Utilisateur.objects.get(email=eUser)
 
-    try:
-        salles, parametres, occupations_salles, enseignants = get_data()
-        planning = generate_planning(salles, parametres, occupations_salles, enseignants)
-    except Exception as e:
-        logger.error("Error generating planning: %s", e)
-        planning = {}
+#     try:
+#         salles, parametres, occupations_salles, enseignants = get_data()
+#         planning = generate_planning(salles, parametres, occupations_salles, enseignants)
+#     except Exception as e:
+#         logger.error("Error generating planning: %s", e)
+#         planning = {}
 
-    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
-    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
+#     planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+#     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
 
-    context = {
-        'user': user,
-        'planning': planning,
-        'planning_hours': planning_hours,
-        'days': days,
-    }
+#     context = {
+#         'user': user,
+#         'planning': planning,
+#         'planning_hours': planning_hours,
+#         'days': days,
+#     }
 
-    html_string = render_to_string('planning.html', context)
+#     html_string = render_to_string('planning.html', context)
 
-    # Utilisation de BeautifulSoup pour extraire la section désirée du HTML
-    soup = BeautifulSoup(html_string, 'html.parser')
-    table_section = soup.select_one('.container-fluid.pt-4.px-4 .bg-secondary.text-center.rounded.p-4')
+#     # Utilisation de BeautifulSoup pour extraire la section désirée du HTML
+#     soup = BeautifulSoup(html_string, 'html.parser')
+#     table_section = soup.select_one('.container-fluid.pt-4.px-4 .bg-secondary.text-center.rounded.p-4')
 
-    if table_section:
-        form = table_section.find('form')
-        if form:
-            form.decompose()
+#     if table_section:
+#         form = table_section.find('form')
+#         if form:
+#             form.decompose()
 
-        head_content = '''
-        <style>
-            .custom-table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            .custom-table th, .custom-table td {
-                border: 1px solid black;
-                padding: 1px;
-                text-align: left;
-            }
-            .custom-table th {
-                background-color: #f2f2f2;
-            }
-            .custom-table td {
-                height: 10px;
-                vertical-align: top;
-            }
-        </style>
-        '''
+#         head_content = '''
+#         <style>
+#             .custom-table {
+#                 width: 100%;
+#                 border-collapse: collapse;
+#             }
+#             .custom-table th, .custom-table td {
+#                 border: 1px solid black;
+#                 padding: 1px;
+#                 text-align: left;
+#             }
+#             .custom-table th {
+#                 background-color: #f2f2f2;
+#             }
+#             .custom-table td {
+#                 height: 10px;
+#                 vertical-align: top;
+#             }
+#         </style>
+#         '''
 
-        # Insertion du contenu du head et du CSS dans la section table
-        table_section.insert_before(BeautifulSoup(head_content, 'html.parser'))
+#         # Insertion du contenu du head et du CSS dans la section table
+#         table_section.insert_before(BeautifulSoup(head_content, 'html.parser'))
 
-        html_table_string = f"<html><head>{head_content}</head><body>{str(table_section)}</body></html>"
-    else:
-        logger.error("No planning table section found in the HTML")
-        html_table_string = "<p>No planning table available</p>"
+#         html_table_string = f"<html><head>{head_content}</head><body>{str(table_section)}</body></html>"
+#     else:
+#         logger.error("No planning table section found in the HTML")
+#         html_table_string = "<p>No planning table available</p>"
 
-    html = HTML(string=html_table_string)
-    pdf_file = html.write_pdf()
+#     html = HTML(string=html_table_string)
+#     pdf_file = html.write_pdf()
 
-    response = HttpResponse(pdf_file, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
+#     response = HttpResponse(pdf_file, content_type='application/pdf')
+#     response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
 
-    return response
+#     return response
+
 
