@@ -8,6 +8,10 @@ import logging
 from datetime import datetime, timedelta, time
 import random
 from collections import defaultdict
+from weasyprint import HTML
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
 
 def renderIndex(request):
     return render(request,'index.html')
@@ -650,25 +654,28 @@ def MAJParametre(request,id):
 def renderPlanning(request):
     eUser = request.session['user_email']
     user = Utilisateur.objects.get(email=eUser)
-    
+
     try:
         salles, parametres, occupations_salles, enseignants = get_data()
         planning = generate_planning(salles, parametres, occupations_salles, enseignants)
     except Exception as e:
         logger.error("Error generating planning: %s", e)
         planning = {}
-    
-    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
-    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    
+
+    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
+
     context = {
         'user': user,
         'planning': planning,
         'planning_hours': planning_hours,
         'days': days,
     }
-    
+
     return render(request, 'planning.html', context)
+
+
+
 
 def renderEvaluation(request):
     eUser=request.session['user_email']
@@ -716,20 +723,15 @@ def accepter(request, id):
 logger = logging.getLogger(__name__)
 
 def get_data():
-    # Generating 20 rooms dynamically
     salles = [{"num_bloc": random.randint(1, 3), "num_salle": random.randint(101, 120)} for _ in range(20)]
-
-    # Setting parameters with a broader date range to ensure daily soutenances
     today = datetime.today()
     parametres = {
         "dateDebSoutenance": today + timedelta(days=1),
-        "dateFinSoutenance": today + timedelta(days=60),  # Extended to two months
-        "dureeSoutenance": 90,  # in minutes
-        "ecartSoutenance": 30,  # in minutes
+        "dateFinSoutenance": today + timedelta(days=60),
+        "dureeSoutenance": 90,
+        "ecartSoutenance": 30,
         "anneeSoutenance": today.year
     }
-
-    # Generating a larger number of room occupations to simulate real-world scenarios
     occupations_salles = []
     for _ in range(100):
         date_occupation = today + timedelta(days=random.randint(1, 60))
@@ -743,30 +745,26 @@ def get_data():
             "num_bloc": random.randint(1, 3),
             "num_salle": random.randint(101, 120)
         })
-
-    # Generating a larger set of teachers with dynamic unavailabilities
     enseignants = []
-    for i in range(30):  # Increased to 30 teachers
+    for i in range(30):
         enseignants.append({
             "email": f"enseignant{i + 1}@example.com",
             "occupations": [],
             "indispos": generate_teacher_unavailabilities(today, parametres["dateFinSoutenance"])
         })
-
     return salles, parametres, occupations_salles, enseignants
 
 def generate_teacher_unavailabilities(start_date, end_date):
     indispos = []
     current_date = start_date
     while current_date <= end_date:
-        if random.random() < 0.2:  # 20% chance a teacher is unavailable for the whole day
+        if random.random() < 0.2:
             indispos.append({
                 "date": current_date,
                 "heure_debut": time(8, 0),
                 "heure_fin": time(18, 0)
             })
         else:
-            # 50% chance the teacher is unavailable for a random period within the day
             if random.random() < 0.5:
                 heure_debut = time(random.randint(8, 15), random.choice([0, 30]))
                 duree = timedelta(minutes=random.choice([90, 120, 180]))
@@ -785,14 +783,12 @@ def generate_creneaux(heure_debut, heure_fin, duree_soutenance, ecart_soutenance
     end_time = datetime.combine(datetime.today(), heure_fin)
     duree_soutenance_delta = timedelta(minutes=duree_soutenance)
     ecart_soutenance_delta = timedelta(minutes=ecart_soutenance)
-
     while current_time + duree_soutenance_delta <= end_time:
         creneaux.append({
             "heureD": current_time.time(),
             "heureF": (current_time + duree_soutenance_delta).time()
         })
         current_time += duree_soutenance_delta + ecart_soutenance_delta
-
     return creneaux
 
 def is_salle_disponible(date, heureD, heureF, occupations_salles, num_bloc, num_salle):
@@ -823,43 +819,35 @@ def assign_occupations(jury, current_date, creneau):
             "heure_debut": creneau["heureD"],
             "heure_fin": creneau["heureF"]
         })
+
 def generate_planning(salles, parametres, occupations_salles, enseignants):
     planning = defaultdict(lambda: defaultdict(list))
-    
     start_date = parametres["dateDebSoutenance"]
     end_date = parametres["dateFinSoutenance"]
     duree_soutenance = parametres["dureeSoutenance"]
     ecart_soutenance = parametres["ecartSoutenance"]
-
     jour_debut = time(8, 0)
     jour_fin = time(18, 0)
-
     current_date = start_date
     while current_date <= end_date:
         jour_semaine = current_date.strftime("%A")
         creneaux = generate_creneaux(jour_debut, jour_fin, duree_soutenance, ecart_soutenance)
-
         for creneau in creneaux:
             for salle in salles:
                 if not is_salle_disponible(current_date, creneau["heureD"], creneau["heureF"], occupations_salles, salle["num_bloc"], salle["num_salle"]):
                     continue
-                
                 jury = random.sample(enseignants, 5)
                 if all(is_enseignant_disponible(enseignant["email"], current_date, creneau["heureD"], creneau["heureF"], enseignants) for enseignant in jury):
                     assign_occupations(jury, current_date, creneau)
-
                     creneau_info = {
                         "heure_debut": creneau["heureD"].strftime("%H:%M"),
                         "heure_fin": creneau["heureF"].strftime("%H:%M"),
                         "salle": f"{salle['num_bloc']}-{salle['num_salle']}",
                         "enseignants": [enseignant["email"] for enseignant in jury],
-                        "leader_groupe": "leader@example.com"  # Replace with actual data
+                        "leader_groupe": "leader@example.com"
                     }
-
                     planning[jour_semaine][creneau["heureD"].strftime("%H:%M")].append(creneau_info)
-
         current_date += timedelta(days=1)
-        
     return planning
 
 
@@ -875,3 +863,166 @@ def generate_planning(salles, parametres, occupations_salles, enseignants):
 # Teacher Unavailabilities: Teachers' unavailabilities are generated to reflect different patterns, including full-day unavailabilities and partial-day periods.
 
 # This comprehensive approach will ensure that the planning schedule is well-populated with multiple soutenances occurring daily, adhering to real-world constraints and requirements.
+
+
+# Générer PDF
+from bs4 import BeautifulSoup
+
+# def generate_pdf(request):
+#     eUser = request.session['user_email']
+#     user = Utilisateur.objects.get(email=eUser)
+
+#     try:
+#         salles, parametres, occupations_salles, enseignants = get_data()
+#         planning = generate_planning(salles, parametres, occupations_salles, enseignants)
+#     except Exception as e:
+#         logger.error("Error generating planning: %s", e)
+#         planning = {}
+
+#     planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+#     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
+
+#     context = {
+#         'user': user,
+#         'planning': planning,
+#         'planning_hours': planning_hours,
+#         'days': days,
+#     }
+
+#     html_string = render_to_string('planning.html', context)
+
+#     # Utilisation de BeautifulSoup pour extraire la section désirée du HTML
+#     soup = BeautifulSoup(html_string, 'html.parser')
+#     table_section = soup.select_one('.container-fluid.pt-4.px-4 .bg-secondary.text-center.rounded.p-4')
+
+#     if table_section:
+#         form = table_section.find('form')
+#         if form:
+#             form.decompose()
+
+#         # Inclure les styles CSS dans la section head
+#         head_content = '''
+#         <style>
+#             .custom-table {
+#                 width: 100%;
+#                 border-collapse: collapse;
+#                 margin: 0 auto;
+#             }
+#             .custom-table th, .custom-table td {
+#                 border: 1px solid black;
+#                 padding: 0.3px;
+#                 text-align: left;
+#                 font-size: 70%;
+#             }
+#             .custom-table th {
+#                 background-color: #f2f2f2;
+#             }
+#             .custom-table td {
+#                 height: 1px;
+#                 vertical-align: top;
+#             }
+#             .soutenance-item:not(:first-of-type) {
+#                 border-top: 1px solid black;
+#             }
+#             .soutenance-item {
+#                 padding: 1px;
+#             }
+#             .available-slot {
+#                 background-color: #d4edda;
+#                 display: flex;
+#                 align-items: center;
+#             }
+#             .unavailable-slot {
+#                 background-color: #f8d7da;
+#                 display: flex;
+#                 align-items: center;
+#             }
+#         </style>
+#         '''
+
+#         # Insertion du contenu du head et du CSS dans la section table
+#         table_section.insert_before(BeautifulSoup(head_content, 'html.parser'))
+
+#         html_table_string = f"<html><head>{head_content}</head><body>{str(table_section)}</body></html>"
+#     else:
+#         logger.error("No planning table section found in the HTML")
+#         html_table_string = "<p>No planning table available</p>"
+
+#     html = HTML(string=html_table_string)
+#     pdf_file = html.write_pdf()
+
+#     response = HttpResponse(pdf_file, content_type='application/pdf')
+#     response['Content-Disposition'] = 'attachment; filename=\"planning.pdf\"'
+
+#     return response
+    
+    
+def generate_pdf(request):
+    eUser = request.session['user_email']
+    user = Utilisateur.objects.get(email=eUser)
+
+    try:
+        salles, parametres, occupations_salles, enseignants = get_data()
+        planning = generate_planning(salles, parametres, occupations_salles, enseignants)
+    except Exception as e:
+        logger.error("Error generating planning: %s", e)
+        planning = {}
+
+    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
+
+    context = {
+        'user': user,
+        'planning': planning,
+        'planning_hours': planning_hours,
+        'days': days,
+    }
+
+    html_string = render_to_string('planning.html', context)
+
+    # Utilisation de BeautifulSoup pour extraire la section désirée du HTML
+    soup = BeautifulSoup(html_string, 'html.parser')
+    table_section = soup.select_one('.container-fluid.pt-4.px-4 .bg-secondary.text-center.rounded.p-4')
+
+    if table_section:
+        form = table_section.find('form')
+        if form:
+            form.decompose()
+
+        head_content = '''
+        <style>
+            .custom-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .custom-table th, .custom-table td {
+                border: 1px solid black;
+                padding: 1px;
+                text-align: left;
+            }
+            .custom-table th {
+                background-color: #f2f2f2;
+            }
+            .custom-table td {
+                height: 10px;
+                vertical-align: top;
+            }
+        </style>
+        '''
+
+        # Insertion du contenu du head et du CSS dans la section table
+        table_section.insert_before(BeautifulSoup(head_content, 'html.parser'))
+
+        html_table_string = f"<html><head>{head_content}</head><body>{str(table_section)}</body></html>"
+    else:
+        logger.error("No planning table section found in the HTML")
+        html_table_string = "<p>No planning table available</p>"
+
+    html = HTML(string=html_table_string)
+    pdf_file = html.write_pdf()
+
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
+
+    return response
+

@@ -90,6 +90,5 @@ urlpatterns=[
     path('deposerMemoire/ajoutMemoire/',views.ajoutMemoire,name="ajoutMemoire"),
     path('paramètres', views.renderParamètres, name='paramètres'),
     path('paramètres/ajout_grade/', views.ajoutGrade, name='ajout_grade'),
-
-
+    path('planning/generate-pdf/', views.generate_pdf, name='generate_pdf'),
 ]
