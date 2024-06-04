@@ -103,28 +103,6 @@ def ajoutGrade(request):
         messages.error(request, "Méthode de requête non autorisée.")
         return redirect('paramètres')  # Rediriger vers une page appropriée
 
-# def ajoutGrade(request):
-#     if request.method == "POST":
-#         # Récupérer l'adresse e-mail de l'utilisateur connecté depuis la session
-#         user_email = request.session.get('user_email')
-#         # Récupérer l'utilisateur à partir de l'adresse e-mail
-#         user = Utilisateur.objects.get(email=user_email)
-        
-#         # Récupérer le grade à partir des données du formulaire
-#         grade = request.POST.get("grade")
-        
-#         # Enregistrer le grade pour l'utilisateur connecté
-#         user.grade = grade
-#         user.save()
-
-#         # Rediriger l'utilisateur vers une page de confirmation ou une autre page appropriée
-#         messages.success(request, "Votre grade a été mis à jour avec succès.")
-#         return HttpResponseRedirect(reverse("paramètres"))
-#     else:
-#         # Gérer le cas où la méthode de requête n'est pas POST
-#         return messages.error("Méthode non autorisée")
-
-
 def ajoutUtilisateur(request):
     e = request.POST["email"]
     ps = request.POST["password"]
@@ -656,28 +634,31 @@ def MAJParametre(request,id):
     messages.success(request,"Configuration modifiée avec succès")
     return HttpResponseRedirect(reverse("configuration"))
 
-def renderPlanning(request):
-    eUser = request.session['user_email']
-    user = Utilisateur.objects.get(email=eUser)
 
-    try:
-        salles, parametres, occupations_salles, enseignants = get_data()
-        planning = generate_planning(salles, parametres, occupations_salles, enseignants)
-    except Exception as e:
-        logger.error("Error generating planning: %s", e)
-        planning = {}
 
-    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
-    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
+# def renderPlanning(request):
+#     eUser = request.session['user_email']
+#     user = Utilisateur.objects.get(email=eUser)
 
-    context = {
-        'user': user,
-        'planning': planning,
-        'planning_hours': planning_hours,
-        'days': days,
-    }
+#     try:
+#         salles, parametres, occupations_salles, enseignants = get_data()
+#         generate_and_save_planning(salles, parametres, occupations_salles, enseignants)
+#         planning = generate_planning()
+#     except Exception as e:
+#         logger.error("Error generating planning: %s", e)
+#         planning = {}
 
-    return render(request, 'planning.html', context)
+#     planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+#     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+
+#     context = {
+#         'user': user,
+#         'planning': planning,
+#         'planning_hours': planning_hours,
+#         'days': days,
+#     }
+
+#     return render(request, 'planning.html', context)
 
 
 
@@ -725,62 +706,132 @@ def accepter(request, id):
 
 # Génération de planning 
 
+
+
+from bs4 import BeautifulSoup
+
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-def get_data():
-    salles = [{"num_bloc": random.randint(1, 3), "num_salle": random.randint(101, 120)} for _ in range(20)]
-    today = datetime.today()
-    parametres = {
-        "dateDebSoutenance": today + timedelta(days=1),
-        "dateFinSoutenance": today + timedelta(days=60),
-        "dureeSoutenance": 90,
-        "ecartSoutenance": 30,
-        "anneeSoutenance": today.year
+def renderPlanning(request):
+    eUser = request.session['user_email']
+    user = Utilisateur.objects.get(email=eUser)
+
+    try:
+        salles, parametres, occupations_salles, enseignants = get_data()
+        generate_and_save_planning(salles, parametres, occupations_salles, enseignants)
+        planning = generate_planning()
+    except Exception as e:
+        logger.error("Error generating planning: %s", e)
+        planning = {}
+
+    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+
+    context = {
+        'user': user,
+        'planning': planning,
+        'planning_hours': planning_hours,
+        'days': days,
     }
-    occupations_salles = []
-    for _ in range(100):
-        date_occupation = today + timedelta(days=random.randint(1, 60))
-        heure_debut = time(random.randint(8, 15), random.choice([0, 30]))
-        duree = timedelta(minutes=parametres["dureeSoutenance"])
-        heure_fin = (datetime.combine(datetime.today(), heure_debut) + duree).time()
-        occupations_salles.append({
-            "date_occupation": date_occupation,
-            "heure_debut": heure_debut,
-            "heure_fin": heure_fin,
-            "num_bloc": random.randint(1, 3),
-            "num_salle": random.randint(101, 120)
-        })
-    enseignants = []
-    for i in range(30):
-        enseignants.append({
-            "email": f"enseignant{i + 1}@example.com",
-            "occupations": [],
-            "indispos": generate_teacher_unavailabilities(today, parametres["dateFinSoutenance"])
-        })
+
+    return render(request, 'planning.html', context)
+
+def get_data():
+    salles = list(Salle.objects.values('num_bloc', 'num_salle'))
+    parametres = Parametre.objects.first()
+    occupations_salles = list(Occupation_salle.objects.values('date_occupation', 'heure_debut', 'heure_fin', 'idSalle__num_bloc', 'idSalle__num_salle'))
+    enseignants = list(Enseignant.objects.values('email'))
+
+    teacher_unavailabilities = {}
+    for enseignant in enseignants:
+        email = enseignant['email']
+        occupations = Occupation_Enseignant.objects.filter(idEnseignant__email=email).values('date_occupation', 'heure_debut', 'heure_fin')
+        indispos = [{
+            "date": occupation['date_occupation'],
+            "heure_debut": occupation['heure_debut'],
+            "heure_fin": occupation['heure_fin']
+        } for occupation in occupations]
+        teacher_unavailabilities[email] = indispos
+
+    for enseignant in enseignants:
+        email = enseignant['email']
+        enseignant['indispos'] = teacher_unavailabilities.get(email, [])
+
+    logger.debug(f"Salles: {salles}")
+    logger.debug(f"Parametres: {parametres}")
+    logger.debug(f"Occupations salles: {occupations_salles}")
+    logger.debug(f"Enseignants: {enseignants}")
+
     return salles, parametres, occupations_salles, enseignants
 
-def generate_teacher_unavailabilities(start_date, end_date):
-    indispos = []
+def generate_and_save_planning(salles, parametres, occupations_salles, enseignants):
+    try:
+        start_date = parametres.dateDebSoutenance
+        end_date = parametres.dateFinSoutenace
+        duree_soutenance = parametres.dureeSoutenance
+        ecart_soutenance = parametres.ecartSoutenance
+    except AttributeError as e:
+        logger.error(f"Missing attribute in Parametre model: {e}")
+        return
+    
+    jour_debut = time(8, 0)
+    jour_fin = time(18, 0)
     current_date = start_date
+
+    Evaluation.objects.all().delete()  # Clear previous evaluations
+    logger.info("Starting planning generation")
+
     while current_date <= end_date:
-        if random.random() < 0.2:
-            indispos.append({
-                "date": current_date,
-                "heure_debut": time(8, 0),
-                "heure_fin": time(18, 0)
-            })
-        else:
-            if random.random() < 0.5:
-                heure_debut = time(random.randint(8, 15), random.choice([0, 30]))
-                duree = timedelta(minutes=random.choice([90, 120, 180]))
-                heure_fin = (datetime.combine(datetime.today(), heure_debut) + duree).time()
-                indispos.append({
-                    "date": current_date,
-                    "heure_debut": heure_debut,
-                    "heure_fin": heure_fin
-                })
+        logger.info(f"Processing date: {current_date}")
+        jour_semaine = current_date.strftime("%A")
+        creneaux = generate_creneaux(jour_debut, jour_fin, duree_soutenance, ecart_soutenance)
+
+        if not creneaux:
+            logger.warning(f"No créneaux generated for date: {current_date}")
+            current_date += timedelta(days=1)
+            continue
+
+        logger.info(f"Generated créneaux: {creneaux}")
+
+        for creneau in creneaux:
+            for salle in salles:
+                logger.info(f"Checking salle: {salle['num_bloc']}-{salle['num_salle']} for créneau: {creneau}")
+                if not is_salle_disponible(current_date, creneau["heureD"], creneau["heureF"], occupations_salles, salle["num_bloc"], salle["num_salle"]):
+                    logger.info("Salle not available")
+                    continue
+
+                jury = random.sample(enseignants, 5)
+                logger.info(f"Selected jury: {jury}")
+                
+                if all(is_enseignant_disponible(enseignant["email"], current_date, creneau["heureD"], creneau["heureF"], enseignants) for enseignant in jury):
+                    logger.info("All enseignants available")
+
+                    # Enregistrer chaque soutenance dans la table Evaluation
+                    try:
+                        for enseignant in jury:
+                            logger.info(f"Creating evaluation for enseignant: {enseignant['email']} in salle: {salle['num_bloc']}-{salle['num_salle']}")
+                            evaluation = Evaluation(
+                                date_evaluation=current_date,
+                                heure_debut=creneau["heureD"],
+                                heure_fin=creneau["heureF"],
+                                role_enseignant="Jury",
+                                idLeader=Leader.objects.first(),  # Vous devez peut-être ajuster cela
+                                idEnseignant=Enseignant.objects.get(email=enseignant["email"]),
+                                idSalle=Salle.objects.get(num_bloc=salle['num_bloc'], num_salle=salle['num_salle'])
+                            )
+                            evaluation.save()
+                            logger.info(f"Evaluation created: {evaluation}")
+                    except Exception as e:
+                        logger.error(f"Error creating evaluation: {e}")
+                        continue
+                else:
+                    logger.info("Not all enseignants available")
+
         current_date += timedelta(days=1)
-    return indispos
+        logger.info(f"Moving to next date: {current_date}")
+
+    logger.info("Planning generation completed")
 
 def generate_creneaux(heure_debut, heure_fin, duree_soutenance, ecart_soutenance):
     creneaux = []
@@ -788,97 +839,65 @@ def generate_creneaux(heure_debut, heure_fin, duree_soutenance, ecart_soutenance
     end_time = datetime.combine(datetime.today(), heure_fin)
     duree_soutenance_delta = timedelta(minutes=duree_soutenance)
     ecart_soutenance_delta = timedelta(minutes=ecart_soutenance)
+
     while current_time + duree_soutenance_delta <= end_time:
         creneaux.append({
             "heureD": current_time.time(),
             "heureF": (current_time + duree_soutenance_delta).time()
         })
         current_time += duree_soutenance_delta + ecart_soutenance_delta
+
+    logger.debug(f"Generated créneaux: {creneaux}")
     return creneaux
 
 def is_salle_disponible(date, heureD, heureF, occupations_salles, num_bloc, num_salle):
     for occupation in occupations_salles:
-        if (occupation["date_occupation"].date() == date.date() and
-            occupation["num_bloc"] == num_bloc and
-            occupation["num_salle"] == num_salle and
+        if (occupation["date_occupation"] == date and
+            occupation["idSalle__num_bloc"] == num_bloc and
+            occupation["idSalle__num_salle"] == num_salle and
             not (heureF <= occupation["heure_debut"] or heureD >= occupation["heure_fin"])):
+            logger.debug(f"Salle not available: {occupation}")
             return False
     return True
 
 def is_enseignant_disponible(email, jour, heureD, heureF, enseignants):
     for enseignant in enseignants:
         if enseignant["email"] == email:
-            for occupation in enseignant["occupations"]:
-                if not (heureF <= occupation["heure_debut"] or heureD >= occupation["heure_fin"]):
-                    return False
-            for indispo in enseignant["indispos"]:
-                if (indispo["date"].date() == jour and
+            for indispo in enseignant.get("indispos", []):
+                if (indispo["date"] == jour and
                     not (heureF <= indispo["heure_debut"] or heureD >= indispo["heure_fin"])):
+                    logger.debug(f"Enseignant not available: {indispo}")
                     return False
     return True
 
-def assign_occupations(jury, current_date, creneau):
-    for enseignant in jury:
-        enseignant["occupations"].append({
-            "date": current_date,
-            "heure_debut": creneau["heureD"],
-            "heure_fin": creneau["heureF"]
-        })
-
-def generate_planning(salles, parametres, occupations_salles, enseignants):
+def generate_planning():
+    evaluations = Evaluation.objects.all()
     planning = defaultdict(lambda: defaultdict(list))
-    start_date = parametres["dateDebSoutenance"]
-    end_date = parametres["dateFinSoutenance"]
-    duree_soutenance = parametres["dureeSoutenance"]
-    ecart_soutenance = parametres["ecartSoutenance"]
-    jour_debut = time(8, 0)
-    jour_fin = time(18, 0)
-    current_date = start_date
-    while current_date <= end_date:
-        jour_semaine = current_date.strftime("%A")
-        creneaux = generate_creneaux(jour_debut, jour_fin, duree_soutenance, ecart_soutenance)
-        for creneau in creneaux:
-            for salle in salles:
-                if not is_salle_disponible(current_date, creneau["heureD"], creneau["heureF"], occupations_salles, salle["num_bloc"], salle["num_salle"]):
-                    continue
-                jury = random.sample(enseignants, 5)
-                if all(is_enseignant_disponible(enseignant["email"], current_date, creneau["heureD"], creneau["heureF"], enseignants) for enseignant in jury):
-                    assign_occupations(jury, current_date, creneau)
-                    creneau_info = {
-                        "heure_debut": creneau["heureD"].strftime("%H:%M"),
-                        "heure_fin": creneau["heureF"].strftime("%H:%M"),
-                        "salle": f"{salle['num_bloc']}-{salle['num_salle']}",
-                        "enseignants": [enseignant["email"] for enseignant in jury],
-                        "leader_groupe": "leader@example.com"
-                    }
-                    planning[jour_semaine][creneau["heureD"].strftime("%H:%M")].append(creneau_info)
-        current_date += timedelta(days=1)
+
+    for evaluation in evaluations:
+        jour_semaine = evaluation.date_evaluation.strftime("%A")
+        heure_debut = evaluation.heure_debut.strftime("%H:%M")
+        
+        creneau_info = {
+            "heure_debut": evaluation.heure_debut.strftime("%H:%M"),
+            "heure_fin": evaluation.heure_fin.strftime("%H:%M"),
+            "salle": f"{evaluation.idSalle.num_bloc}-{evaluation.idSalle.num_salle}",
+            "enseignants": [evaluation.idEnseignant.email],
+            "leader_groupe": evaluation.idLeader.email
+        }
+        
+        planning[jour_semaine][heure_debut].append(creneau_info)
+
     return planning
 
 
-# Explanation:
-# Rooms: We now generate 20 rooms to ensure a sufficient number of venues for the soutenances.
-
-# Extended Date Range: The period for soutenances has been extended to 60 days, allowing for more scheduling opportunities.
-
-# Room Occupations: A total of 100 room occupations are generated dynamically, representing a more realistic and varied schedule.
-
-# Teachers: The number of teachers has been increased to 30, with dynamic unavailabilities ensuring realistic constraints in scheduling.
-
-# Teacher Unavailabilities: Teachers' unavailabilities are generated to reflect different patterns, including full-day unavailabilities and partial-day periods.
-
-# This comprehensive approach will ensure that the planning schedule is well-populated with multiple soutenances occurring daily, adhering to real-world constraints and requirements.
-
-
-# Générer PDF
-from bs4 import BeautifulSoup 
 def generate_pdf(request):
     eUser = request.session['user_email']
     user = Utilisateur.objects.get(email=eUser)
 
     try:
         salles, parametres, occupations_salles, enseignants = get_data()
-        planning = generate_planning(salles, parametres, occupations_salles, enseignants)
+        planning = generate_planning()
     except Exception as e:
         logger.error("Error generating planning: %s", e)
         planning = {}
@@ -894,75 +913,35 @@ def generate_pdf(request):
     }
 
     html_string = render_to_string('planning.html', context)
-
-    # Utilisation de BeautifulSoup pour extraire la section désirée du HTML
     soup = BeautifulSoup(html_string, 'html.parser')
-    table_section = soup.select_one('.container-fluid.pt-4.px-4 .bg-secondary.text-center.rounded.p-4')
+    table_section = soup.find('table')
 
     if table_section:
-        form = table_section.find('form')
-        if form:
-            form.decompose()
-
-        # Inclure les styles CSS dans la section head pour le PDF
         pdf_css = '''
         <style>
-            body {
-                font-size: 12px;
-            }
-            .custom-table {
+            table {
                 width: 100%;
                 border-collapse: collapse;
-                margin: 0 auto;
             }
-            .custom-table th, .custom-table td {
+            table, th, td {
                 border: 1px solid black;
-                padding: 5px;
+            }
+            th, td {
+                padding: 8px;
                 text-align: left;
-                font-size: 10px;
-                word-wrap: break-word; /* Ensure long words break to avoid overflow */
-                /*height: 100px; /* Increase cell height */
             }
             .custom-table th {
                 background-color: #f2f2f2;
             }
-            .custom-table td {
-                vertical-align: top;
-            }
-            .soutenance-item {
-                padding: 2px;
-                margin-bottom: 2px; /* Space between items */
-            }
-            .available-slot {
-                background-color: #d4edda;
-            }
-            .unavailable-slot {
-                background-color: #f8d7da;
-            }
-            .available-slot p, .unavailable-slot p {
-                margin: 0;
-                padding: 0;
-            }
         </style>
         '''
+        html_content = f'<html><head>{pdf_css}</head><body>{str(table_section)}</body></html>'
 
-        table_section.insert_before(BeautifulSoup(pdf_css, 'html.parser'))
+        pdf_file = HTML(string=html_content).write_pdf(stylesheets=[CSS(string=pdf_css)])
 
-        html_table_string = f"<html><head>{pdf_css}</head><body>{str(table_section)}</body></html>"
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
+        return response
     else:
-        logger.error("No planning table section found in the HTML")
-        html_table_string = "<p>No planning table available</p>"
-
-    no_margin_css = CSS(string='''
-        @page { margin: 10px; }
-        body { margin: 0; }
-    ''')
-
-    html = HTML(string=html_table_string)
-    pdf_file = html.write_pdf(stylesheets=[no_margin_css])
-
-    response = HttpResponse(pdf_file, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
-
-    return response
+        return HttpResponse("Table section not found in the HTML content.")
 
