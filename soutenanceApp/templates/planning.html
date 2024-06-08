@@ -1,6 +1,5 @@
-{% load static %}
 {% load custom_filters %}
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,9 +113,9 @@
                             {% endfor %}
                         </tbody>                     
                     </table>
-{% comment %}                     
+                    
                     <!-- Ajout pour le débogage : affichez les données brutes -->
-                    <pre>{{ planning|pprint }}</pre> {% endcomment %}
+                    <pre>{{ planning|pprint }}</pre>
                     
                 </div>
             </div>

@@ -710,6 +710,12 @@ from bs4 import BeautifulSoup
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+from collections import defaultdict
+import random
+import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 def renderPlanning(request):
     eUser = request.session.get('user_email')
@@ -726,11 +732,13 @@ def renderPlanning(request):
         logger.debug(f"Leaders: {leaders}")
 
         # Utilisation de valeurs statiques prédéfinies
-        days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
-        planning_hours = ["08:00", "10:00", "12:00", "14:00", "16:00"]
+        start_date = datetime.date(2024, 6, 25)
+        end_date = datetime.date(2024, 7, 2)
+        days = [(start_date + datetime.timedelta(days=i)).strftime('%Y-%m-%d') for i in range((end_date - start_date).days + 1)]
+        planning_hours = [f"{hour:02d}:00" for hour in range(9, 17)]
         
         # Génération du planning
-        planning = generate_planning(salles, occupations_salles, enseignants, leaders)
+        planning = generate_planning(salles, occupations_salles, enseignants, leaders, days, planning_hours)
 
         # Logging des données passées au template
         logger.debug(f"Planning: {dict(planning)}")
@@ -779,11 +787,7 @@ def get_data():
 
     return salles, occupations_salles, enseignants, leaders
 
-def generate_planning(salles, occupations_salles, enseignants, leaders):
-    # Utilisation de dates et heures statiques
-    days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
-    planning_hours = ["08:00", "10:00", "12:00", "14:00", "16:00"]
-
+def generate_planning(salles, occupations_salles, enseignants, leaders, days, planning_hours):
     planning = defaultdict(lambda: defaultdict(list))
     used_leaders = set()
     total_leaders = len(leaders)
@@ -833,7 +837,7 @@ def generate_planning(salles, occupations_salles, enseignants, leaders):
 def is_salle_disponible(day, hour, occupations_salles, num_bloc, num_salle):
     for occupation in occupations_salles:
         if (
-            occupation['date_occupation'].strftime('%A') == day and
+            occupation['date_occupation'].strftime('%Y-%m-%d') == day and
             occupation['heure_debut'].strftime('%H:%M') <= hour <= occupation['heure_fin'].strftime('%H:%M') and
             occupation['idSalle__num_bloc'] == num_bloc and
             occupation['idSalle__num_salle'] == num_salle
@@ -847,12 +851,13 @@ def is_enseignant_disponible(email, day, hour, enseignants):
         if enseignant['email'] == email:
             for indispo in enseignant['indispos']:
                 if (
-                    indispo['date'].strftime('%A') == day and
+                    indispo['date'].strftime('%Y-%m-%d') == day and
                     indispo['heure_debut'].strftime('%H:%M') <= hour <= indispo['heure_fin'].strftime('%H:%M')
                 ):
                     logger.debug(f"Enseignant {email} non disponible pour le créneau {hour} le {day}")
                     return False
     return True
+
 
 
 
