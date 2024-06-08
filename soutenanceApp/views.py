@@ -15,6 +15,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
+import locale
 
 
 
@@ -705,41 +706,57 @@ def accepter(request, id):
 
 
 # Génération de planning 
-
-
-
 from bs4 import BeautifulSoup
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 def renderPlanning(request):
-    eUser = request.session['user_email']
+    eUser = request.session.get('user_email')
     user = Utilisateur.objects.get(email=eUser)
 
     try:
-        salles, parametres, occupations_salles, enseignants = get_data()
-        generate_and_save_planning(salles, parametres, occupations_salles, enseignants)
-        planning = generate_planning()
+        # Récupération des données
+        salles, occupations_salles, enseignants, leaders = get_data()
+
+        # Logging des données récupérées
+        logger.debug(f"Salles: {salles}")
+        logger.debug(f"Occupations salles: {occupations_salles}")
+        logger.debug(f"Enseignants: {enseignants}")
+        logger.debug(f"Leaders: {leaders}")
+
+        # Génération du planning
+        planning = generate_planning(salles, occupations_salles, enseignants, leaders)
+
+        # Définition des jours de la semaine et des heures de planning
+        days = ["Dimance","Lundi", "Mardi", "Mercredi", "Jeudi","Samedi"]
+        planning_hours = [f"{hour:02}:00" for hour in range(8, 19)]
+
+        # Logging des données passées au template
+        logger.debug(f"Planning: {dict(planning)}")
+        logger.debug(f"Days: {days}")
+        logger.debug(f"Planning hours: {planning_hours}")
+
+        # Rendu de la vue avec les données
+        return render(request, 'planning.html', {
+            'user': user,
+            'planning': dict(planning),  # Assurez-vous que le planning est un dict
+            'days': days,
+            'planning_hours': planning_hours,
+        })
+
     except Exception as e:
-        logger.error("Error generating planning: %s", e)
-        planning = {}
-
-    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
-    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-
-    context = {
-        'user': user,
-        'planning': planning,
-        'planning_hours': planning_hours,
-        'days': days,
-    }
-
-    return render(request, 'planning.html', context)
+        logger.error(f"Error generating planning: {e}", exc_info=True)
+        return render(request, 'planning.html', {
+            'user': user,
+            'planning': {},
+            'days': [],
+            'planning_hours': [],
+            'error': 'Erreur lors de la génération du planning'
+        })
 
 def get_data():
     salles = list(Salle.objects.values('num_bloc', 'num_salle'))
-    parametres = Parametre.objects.first()
     occupations_salles = list(Occupation_salle.objects.values('date_occupation', 'heure_debut', 'heure_fin', 'idSalle__num_bloc', 'idSalle__num_salle'))
     enseignants = list(Enseignant.objects.values('email'))
 
@@ -758,137 +775,142 @@ def get_data():
         email = enseignant['email']
         enseignant['indispos'] = teacher_unavailabilities.get(email, [])
 
-    logger.debug(f"Salles: {salles}")
-    logger.debug(f"Parametres: {parametres}")
-    logger.debug(f"Occupations salles: {occupations_salles}")
-    logger.debug(f"Enseignants: {enseignants}")
+    leaders = list(Leader.objects.values('email', 'nom_binom', 'prenom_binom', 'annee_etude', 'domain', 'idTheme__intitule', 'idEnseignantEncadrant__email'))
 
-    return salles, parametres, occupations_salles, enseignants
+    return salles, occupations_salles, enseignants, leaders
 
-def generate_and_save_planning(salles, parametres, occupations_salles, enseignants):
-    try:
-        start_date = parametres.dateDebSoutenance
-        end_date = parametres.dateFinSoutenace
-        duree_soutenance = parametres.dureeSoutenance
-        ecart_soutenance = parametres.ecartSoutenance
-    except AttributeError as e:
-        logger.error(f"Missing attribute in Parametre model: {e}")
-        return
+locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
+
+def generate_planning(salles, occupations_salles, enseignants, leaders):
+    # Date de début et de fin
+    start_date = datetime(2023, 6, 1)
+    end_date = datetime(2023, 6, 7)
     
+    # Durée de soutenance et écart entre soutenances
+    duree_soutenance = timedelta(minutes=60)
+    ecart_soutenance = timedelta(minutes=30)
+    
+    # Horaires de début et de fin des soutenances
     jour_debut = time(8, 0)
     jour_fin = time(18, 0)
     current_date = start_date
 
-    Evaluation.objects.all().delete()  # Clear previous evaluations
-    logger.info("Starting planning generation")
+    # Initialisation du planning
+    planning = defaultdict(lambda: defaultdict(list))
+    used_leaders = set()  # Pour garder une trace des leaders déjà utilisés
 
-    while current_date <= end_date:
-        logger.info(f"Processing date: {current_date}")
+    # Récupérer le nombre de leaders
+    total_leaders = len(leaders)
+
+    while current_date <= end_date and len(used_leaders) < total_leaders:
         jour_semaine = current_date.strftime("%A")
+        logger.info(f"Processing date: {current_date} ({jour_semaine})")
+        
+        # Générer les créneaux pour la journée
         creneaux = generate_creneaux(jour_debut, jour_fin, duree_soutenance, ecart_soutenance)
 
-        if not creneaux:
-            logger.warning(f"No créneaux generated for date: {current_date}")
-            current_date += timedelta(days=1)
-            continue
-
-        logger.info(f"Generated créneaux: {creneaux}")
-
-        for creneau in creneaux:
-            for salle in salles:
-                logger.info(f"Checking salle: {salle['num_bloc']}-{salle['num_salle']} for créneau: {creneau}")
-                if not is_salle_disponible(current_date, creneau["heureD"], creneau["heureF"], occupations_salles, salle["num_bloc"], salle["num_salle"]):
-                    logger.info("Salle not available")
-                    continue
-
-                jury = random.sample(enseignants, 5)
-                logger.info(f"Selected jury: {jury}")
-                
-                if all(is_enseignant_disponible(enseignant["email"], current_date, creneau["heureD"], creneau["heureF"], enseignants) for enseignant in jury):
-                    logger.info("All enseignants available")
-
-                    # Enregistrer chaque soutenance dans la table Evaluation
-                    try:
-                        for enseignant in jury:
-                            logger.info(f"Creating evaluation for enseignant: {enseignant['email']} in salle: {salle['num_bloc']}-{salle['num_salle']}")
-                            evaluation = Evaluation(
-                                date_evaluation=current_date,
-                                heure_debut=creneau["heureD"],
-                                heure_fin=creneau["heureF"],
-                                role_enseignant="Jury",
-                                idLeader=Leader.objects.first(),  # Vous devez peut-être ajuster cela
-                                idEnseignant=Enseignant.objects.get(email=enseignant["email"]),
-                                idSalle=Salle.objects.get(num_bloc=salle['num_bloc'], num_salle=salle['num_salle'])
-                            )
-                            evaluation.save()
-                            logger.info(f"Evaluation created: {evaluation}")
-                    except Exception as e:
-                        logger.error(f"Error creating evaluation: {e}")
+        if creneaux:
+            for creneau in creneaux:
+                for salle in salles:
+                    # Vérifier si la salle est disponible
+                    if not is_salle_disponible(current_date.date(), creneau["heureD"], creneau["heureF"], occupations_salles, salle["num_bloc"], salle["num_salle"]):
                         continue
-                else:
-                    logger.info("Not all enseignants available")
 
+                    # Sélectionner 5 enseignants disponibles
+                    jury = random.sample(enseignants, 5)
+                    enseignants_disponibles = all(is_enseignant_disponible(enseignant["email"], current_date.date(), creneau["heureD"], creneau["heureF"], enseignants) for enseignant in jury)
+
+                    if enseignants_disponibles:
+                        # Filtrer les leaders disponibles qui n'ont pas encore été utilisés
+                        available_leaders = [leader for leader in leaders if leader['email'] not in used_leaders]
+                        if not available_leaders:
+                            logger.info("Tous les leaders ont été utilisés")
+                            break  # Sortir de la boucle si tous les leaders ont été utilisés
+                        
+                        # Sélectionner un leader disponible
+                        leader = random.choice(available_leaders)
+                        used_leaders.add(leader['email'])  # Marquer le leader comme utilisé
+                        
+                        # Créer l'information de soutenance
+                        soutenance_info = {
+                            "salle": f"{salle['num_bloc']}-{salle['num_salle']}",
+                            "leader_groupe": leader['email'],
+                            "enseignants": [enseignant['email'] for enseignant in jury]
+                        }
+                        planning[jour_semaine][creneau["heureD"].strftime("%H:%M")].append(soutenance_info)
+                        logger.debug(f"Added soutenance: {soutenance_info} on {current_date} at {creneau['heureD']}")
+                        
+                        # Vérifier si la limite de leaders a été atteinte
+                        if len(used_leaders) >= total_leaders:
+                            logger.info("Limite des leaders atteinte")
+                            break  # Sortir de la boucle si la limite est atteinte
+                if len(used_leaders) >= total_leaders:
+                    break  # Sortir de la boucle si la limite est atteinte
         current_date += timedelta(days=1)
-        logger.info(f"Moving to next date: {current_date}")
+        
+    logger.debug("Final planning structure:")
+    for day, hours in planning.items():
+        for hour, soutenances in hours.items():
+            logger.debug(f"Day: {day}, Hour: {hour}, Soutenances: {soutenances}")
 
     logger.info("Planning generation completed")
+    return planning
 
-def generate_creneaux(heure_debut, heure_fin, duree_soutenance, ecart_soutenance):
+
+
+def generate_creneaux(jour_debut, jour_fin, duree_soutenance, ecart_soutenance):
     creneaux = []
-    current_time = datetime.combine(datetime.today(), heure_debut)
-    end_time = datetime.combine(datetime.today(), heure_fin)
-    duree_soutenance_delta = timedelta(minutes=duree_soutenance)
-    ecart_soutenance_delta = timedelta(minutes=ecart_soutenance)
+    current_time = jour_debut
 
-    while current_time + duree_soutenance_delta <= end_time:
+    while (datetime.combine(datetime.today(), current_time) + duree_soutenance).time() <= jour_fin:
         creneaux.append({
-            "heureD": current_time.time(),
-            "heureF": (current_time + duree_soutenance_delta).time()
+            "heureD": current_time,
+            "heureF": (datetime.combine(datetime.today(), current_time) + duree_soutenance).time()
         })
-        current_time += duree_soutenance_delta + ecart_soutenance_delta
+        current_time = (datetime.combine(datetime.today(), current_time) + duree_soutenance + ecart_soutenance).time()
 
-    logger.debug(f"Generated créneaux: {creneaux}")
+    logger.debug(f"Créneaux générés : {creneaux}")
     return creneaux
 
-def is_salle_disponible(date, heureD, heureF, occupations_salles, num_bloc, num_salle):
+def is_salle_disponible(date, heure_debut, heure_fin, occupations_salles, num_bloc, num_salle):
     for occupation in occupations_salles:
-        if (occupation["date_occupation"] == date and
-            occupation["idSalle__num_bloc"] == num_bloc and
-            occupation["idSalle__num_salle"] == num_salle and
-            not (heureF <= occupation["heure_debut"] or heureD >= occupation["heure_fin"])):
-            logger.debug(f"Salle not available: {occupation}")
+        if (
+            occupation['date_occupation'] == date and
+            occupation['idSalle__num_bloc'] == num_bloc and
+            occupation['idSalle__num_salle'] == num_salle and
+            not (
+                heure_fin <= occupation['heure_debut'] or
+                heure_debut >= occupation['heure_fin']
+            )
+        ):
+            logger.debug(f"Salle {num_bloc}-{num_salle} non disponible pour le créneau {heure_debut}-{heure_fin} le {date}")
             return False
     return True
 
-def is_enseignant_disponible(email, jour, heureD, heureF, enseignants):
+def is_enseignant_disponible(email, date, heure_debut, heure_fin, enseignants):
     for enseignant in enseignants:
-        if enseignant["email"] == email:
-            for indispo in enseignant.get("indispos", []):
-                if (indispo["date"] == jour and
-                    not (heureF <= indispo["heure_debut"] or heureD >= indispo["heure_fin"])):
-                    logger.debug(f"Enseignant not available: {indispo}")
+        if enseignant['email'] == email:
+            for indispo in enseignant['indispos']:
+                if (
+                    indispo['date'] == date and
+                    not (
+                        heure_fin <= indispo['heure_debut'] or
+                        heure_debut >= indispo['heure_fin']
+                    )
+                ):
+                    logger.debug(f"Enseignant {email} non disponible pour le créneau {heure_debut}-{heure_fin} le {date}")
                     return False
     return True
 
-def generate_planning():
-    evaluations = Evaluation.objects.all()
-    planning = defaultdict(lambda: defaultdict(list))
 
-    for evaluation in evaluations:
-        jour_semaine = evaluation.date_evaluation.strftime("%A")
-        heure_debut = evaluation.heure_debut.strftime("%H:%M")
-        
-        creneau_info = {
-            "heure_debut": evaluation.heure_debut.strftime("%H:%M"),
-            "heure_fin": evaluation.heure_fin.strftime("%H:%M"),
-            "salle": f"{evaluation.idSalle.num_bloc}-{evaluation.idSalle.num_salle}",
-            "enseignants": [evaluation.idEnseignant.email],
-            "leader_groupe": evaluation.idLeader.email
-        }
-        
-        planning[jour_semaine][heure_debut].append(creneau_info)
 
-    return planning
+
+
+
+
+
+
+
 
 
 def generate_pdf(request):

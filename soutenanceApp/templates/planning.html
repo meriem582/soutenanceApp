@@ -115,6 +115,11 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    
+
+                    <!-- Ajout pour le débogage : affichez les données brutes -->
+                    <pre>{{ planning|pprint }}</pre>
+                    
                 </div>
             </div>
             {% include 'fragments/footer.html' %}
