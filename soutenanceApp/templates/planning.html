@@ -1,5 +1,6 @@
-{% load custom_filters %}
 {% load static %}
+{% load custom_filters %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,39 +87,36 @@
                                     <td>{{ heure }}</td>
                                     {% for day in days %}
                                         <td>
-                                            {% with day_planning=planning|get_item:day %}
-                                                {% if day_planning %}
-                                                    {% with hour_planning=day_planning|get_item:heure %}
-                                                        {% if hour_planning %}
-                                                            {% for soutenance in hour_planning %}
-                                                                <div class="soutenance-item available-slot">
-                                                                    <p>Salle: {{ soutenance.salle }}</p>
-                                                                    <p>Leader de groupe: {{ soutenance.leader_groupe }}</p>
-                                                                    <p>Jury: {{ soutenance.enseignants|join:", " }}</p>
-                                                                </div>
-                                                            {% endfor %}
-                                                        {% else %}
-                                                            <div class="soutenance-item unavailable-slot">
-                                                                <p>Pas de planning pour cette heure</p>
+                                            {% if day in planning %}
+                                                {% with soutenances=planning|get_item:day %}
+                                                    {% if heure in soutenances %}
+                                                        {% for soutenance in soutenances|get_item:heure %}
+                                                            <div class="soutenance-item available-slot">
+                                                                <p>Salle: {{ soutenance.salle }}</p>
+                                                                <p>Leader de groupe: {{ soutenance.leader_groupe }}</p>
+                                                                <p>Jury: {{ soutenance.enseignants|join:", " }}</p>
                                                             </div>
-                                                        {% endif %}
-                                                    {% endwith %}
-                                                {% else %}
-                                                    <div class="soutenance-item unavailable-slot">
-                                                        <p>Pas de planning pour ce jour</p>
-                                                    </div>
-                                                {% endif %}
-                                            {% endwith %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <div class="soutenance-item unavailable-slot">
+                                                            <p>Pas de planning pour cette heure</p>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            {% else %}
+                                                <div class="soutenance-item unavailable-slot">
+                                                    <p>Pas de planning pour ce jour</p>
+                                                </div>
+                                            {% endif %}
                                         </td>
                                     {% endfor %}
                                 </tr>
                             {% endfor %}
-                        </tbody>
+                        </tbody>                     
                     </table>
-                    
-
+{% comment %}                     
                     <!-- Ajout pour le débogage : affichez les données brutes -->
-                    <pre>{{ planning|pprint }}</pre>
+                    <pre>{{ planning|pprint }}</pre> {% endcomment %}
                     
                 </div>
             </div>

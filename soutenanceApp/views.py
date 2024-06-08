@@ -725,12 +725,12 @@ def renderPlanning(request):
         logger.debug(f"Enseignants: {enseignants}")
         logger.debug(f"Leaders: {leaders}")
 
+        # Utilisation de valeurs statiques prédéfinies
+        days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+        planning_hours = ["08:00", "10:00", "12:00", "14:00", "16:00"]
+        
         # Génération du planning
         planning = generate_planning(salles, occupations_salles, enseignants, leaders)
-
-        # Définition des jours de la semaine et des heures de planning
-        days = ["Dimance","Lundi", "Mardi", "Mercredi", "Jeudi","Samedi"]
-        planning_hours = [f"{hour:02}:00" for hour in range(8, 19)]
 
         # Logging des données passées au template
         logger.debug(f"Planning: {dict(planning)}")
@@ -740,7 +740,7 @@ def renderPlanning(request):
         # Rendu de la vue avec les données
         return render(request, 'planning.html', {
             'user': user,
-            'planning': dict(planning),  # Assurez-vous que le planning est un dict
+            'planning': dict(planning),
             'days': days,
             'planning_hours': planning_hours,
         })
@@ -779,75 +779,49 @@ def get_data():
 
     return salles, occupations_salles, enseignants, leaders
 
-locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
-
 def generate_planning(salles, occupations_salles, enseignants, leaders):
-    # Date de début et de fin
-    start_date = datetime(2023, 6, 1)
-    end_date = datetime(2023, 6, 7)
-    
-    # Durée de soutenance et écart entre soutenances
-    duree_soutenance = timedelta(minutes=60)
-    ecart_soutenance = timedelta(minutes=30)
-    
-    # Horaires de début et de fin des soutenances
-    jour_debut = time(8, 0)
-    jour_fin = time(18, 0)
-    current_date = start_date
+    # Utilisation de dates et heures statiques
+    days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+    planning_hours = ["08:00", "10:00", "12:00", "14:00", "16:00"]
 
-    # Initialisation du planning
     planning = defaultdict(lambda: defaultdict(list))
-    used_leaders = set()  # Pour garder une trace des leaders déjà utilisés
-
-    # Récupérer le nombre de leaders
+    used_leaders = set()
     total_leaders = len(leaders)
 
-    while current_date <= end_date and len(used_leaders) < total_leaders:
-        jour_semaine = current_date.strftime("%A")
-        logger.info(f"Processing date: {current_date} ({jour_semaine})")
-        
-        # Générer les créneaux pour la journée
-        creneaux = generate_creneaux(jour_debut, jour_fin, duree_soutenance, ecart_soutenance)
+    for day in days:
+        for hour in planning_hours:
+            for salle in salles:
+                if not is_salle_disponible(day, hour, occupations_salles, salle["num_bloc"], salle["num_salle"]):
+                    continue
 
-        if creneaux:
-            for creneau in creneaux:
-                for salle in salles:
-                    # Vérifier si la salle est disponible
-                    if not is_salle_disponible(current_date.date(), creneau["heureD"], creneau["heureF"], occupations_salles, salle["num_bloc"], salle["num_salle"]):
-                        continue
+                jury = random.sample(enseignants, 5)
+                enseignants_disponibles = all(is_enseignant_disponible(enseignant["email"], day, hour, enseignants) for enseignant in jury)
 
-                    # Sélectionner 5 enseignants disponibles
-                    jury = random.sample(enseignants, 5)
-                    enseignants_disponibles = all(is_enseignant_disponible(enseignant["email"], current_date.date(), creneau["heureD"], creneau["heureF"], enseignants) for enseignant in jury)
+                if enseignants_disponibles:
+                    available_leaders = [leader for leader in leaders if leader['email'] not in used_leaders]
+                    if not available_leaders:
+                        logger.info("Tous les leaders ont été utilisés")
+                        break
 
-                    if enseignants_disponibles:
-                        # Filtrer les leaders disponibles qui n'ont pas encore été utilisés
-                        available_leaders = [leader for leader in leaders if leader['email'] not in used_leaders]
-                        if not available_leaders:
-                            logger.info("Tous les leaders ont été utilisés")
-                            break  # Sortir de la boucle si tous les leaders ont été utilisés
-                        
-                        # Sélectionner un leader disponible
-                        leader = random.choice(available_leaders)
-                        used_leaders.add(leader['email'])  # Marquer le leader comme utilisé
-                        
-                        # Créer l'information de soutenance
-                        soutenance_info = {
-                            "salle": f"{salle['num_bloc']}-{salle['num_salle']}",
-                            "leader_groupe": leader['email'],
-                            "enseignants": [enseignant['email'] for enseignant in jury]
-                        }
-                        planning[jour_semaine][creneau["heureD"].strftime("%H:%M")].append(soutenance_info)
-                        logger.debug(f"Added soutenance: {soutenance_info} on {current_date} at {creneau['heureD']}")
-                        
-                        # Vérifier si la limite de leaders a été atteinte
-                        if len(used_leaders) >= total_leaders:
-                            logger.info("Limite des leaders atteinte")
-                            break  # Sortir de la boucle si la limite est atteinte
-                if len(used_leaders) >= total_leaders:
-                    break  # Sortir de la boucle si la limite est atteinte
-        current_date += timedelta(days=1)
-        
+                    leader = random.choice(available_leaders)
+                    used_leaders.add(leader['email'])
+
+                    soutenance_info = {
+                        "salle": f"{salle['num_bloc']}-{salle['num_salle']}",
+                        "leader_groupe": leader['email'],
+                        "enseignants": [enseignant['email'] for enseignant in jury]
+                    }
+                    planning[day][hour].append(soutenance_info)
+                    logger.debug(f"Added soutenance: {soutenance_info} on {day} at {hour}")
+
+                    if len(used_leaders) >= total_leaders:
+                        logger.info("Limite des leaders atteinte")
+                        break
+            if len(used_leaders) >= total_leaders:
+                break
+        if len(used_leaders) >= total_leaders:
+            break
+
     logger.debug("Final planning structure:")
     for day, hours in planning.items():
         for hour, soutenances in hours.items():
@@ -856,52 +830,29 @@ def generate_planning(salles, occupations_salles, enseignants, leaders):
     logger.info("Planning generation completed")
     return planning
 
-
-
-def generate_creneaux(jour_debut, jour_fin, duree_soutenance, ecart_soutenance):
-    creneaux = []
-    current_time = jour_debut
-
-    while (datetime.combine(datetime.today(), current_time) + duree_soutenance).time() <= jour_fin:
-        creneaux.append({
-            "heureD": current_time,
-            "heureF": (datetime.combine(datetime.today(), current_time) + duree_soutenance).time()
-        })
-        current_time = (datetime.combine(datetime.today(), current_time) + duree_soutenance + ecart_soutenance).time()
-
-    logger.debug(f"Créneaux générés : {creneaux}")
-    return creneaux
-
-def is_salle_disponible(date, heure_debut, heure_fin, occupations_salles, num_bloc, num_salle):
+def is_salle_disponible(day, hour, occupations_salles, num_bloc, num_salle):
     for occupation in occupations_salles:
         if (
-            occupation['date_occupation'] == date and
+            occupation['date_occupation'].strftime('%A') == day and
+            occupation['heure_debut'].strftime('%H:%M') <= hour <= occupation['heure_fin'].strftime('%H:%M') and
             occupation['idSalle__num_bloc'] == num_bloc and
-            occupation['idSalle__num_salle'] == num_salle and
-            not (
-                heure_fin <= occupation['heure_debut'] or
-                heure_debut >= occupation['heure_fin']
-            )
+            occupation['idSalle__num_salle'] == num_salle
         ):
-            logger.debug(f"Salle {num_bloc}-{num_salle} non disponible pour le créneau {heure_debut}-{heure_fin} le {date}")
+            logger.debug(f"Salle {num_bloc}-{num_salle} non disponible pour le créneau {hour} le {day}")
             return False
     return True
 
-def is_enseignant_disponible(email, date, heure_debut, heure_fin, enseignants):
+def is_enseignant_disponible(email, day, hour, enseignants):
     for enseignant in enseignants:
         if enseignant['email'] == email:
             for indispo in enseignant['indispos']:
                 if (
-                    indispo['date'] == date and
-                    not (
-                        heure_fin <= indispo['heure_debut'] or
-                        heure_debut >= indispo['heure_fin']
-                    )
+                    indispo['date'].strftime('%A') == day and
+                    indispo['heure_debut'].strftime('%H:%M') <= hour <= indispo['heure_fin'].strftime('%H:%M')
                 ):
-                    logger.debug(f"Enseignant {email} non disponible pour le créneau {heure_debut}-{heure_fin} le {date}")
+                    logger.debug(f"Enseignant {email} non disponible pour le créneau {hour} le {day}")
                     return False
     return True
-
 
 
 
