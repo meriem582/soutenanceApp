@@ -869,6 +869,7 @@ def is_enseignant_disponible(email, day, hour, enseignants):
 
 
 
+
 def generate_pdf(request):
     eUser = request.session['user_email']
     user = Utilisateur.objects.get(email=eUser)
