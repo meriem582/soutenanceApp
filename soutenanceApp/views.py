@@ -637,29 +637,6 @@ def MAJParametre(request,id):
 
 
 
-# def renderPlanning(request):
-#     eUser = request.session['user_email']
-#     user = Utilisateur.objects.get(email=eUser)
-
-#     try:
-#         salles, parametres, occupations_salles, enseignants = get_data()
-#         generate_and_save_planning(salles, parametres, occupations_salles, enseignants)
-#         planning = generate_planning()
-#     except Exception as e:
-#         logger.error("Error generating planning: %s", e)
-#         planning = {}
-
-#     planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
-#     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-
-#     context = {
-#         'user': user,
-#         'planning': planning,
-#         'planning_hours': planning_hours,
-#         'days': days,
-#     }
-
-#     return render(request, 'planning.html', context)
 
 
 
@@ -866,61 +843,72 @@ def is_enseignant_disponible(email, day, hour, enseignants):
 
 
 
-
-
-
-
 def generate_pdf(request):
-    eUser = request.session['user_email']
+    eUser = request.session.get('user_email')
     user = Utilisateur.objects.get(email=eUser)
 
     try:
-        salles, parametres, occupations_salles, enseignants = get_data()
-        planning = generate_planning()
+        # Récupérer les données nécessaires pour le planning
+        salles, occupations_salles, enseignants, leaders = get_data()
+
+        # Utiliser les mêmes valeurs que pour la génération du planning HTML
+        start_date = datetime.date(2024, 6, 25)
+        end_date = datetime.date(2024, 7, 2)
+        days = [(start_date + datetime.timedelta(days=i)).strftime('%Y-%m-%d') for i in range((end_date - start_date).days + 1)]
+        planning_hours = [f"{hour:02d}:00" for hour in range(9, 17)]
+        
+        planning = generate_planning(salles, occupations_salles, enseignants, leaders, days, planning_hours)
+        
+        # Préparer le contexte pour le rendu HTML
+        context = {
+            'user': user,
+            'planning': dict(planning),
+            'days': days,
+            'planning_hours': planning_hours,
+        }
+        
+        # Rendre le contenu HTML du planning
+        html_string = render_to_string('planning.html', context)
+        soup = BeautifulSoup(html_string, 'html.parser')
+        table_section = soup.find('table')
+        
+        if table_section:
+            # Style CSS pour le PDF
+            pdf_css = '''
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                table, th, td {
+                    border: 1px solid black;
+                    font-size: 10px;
+                }
+                th, td {
+                    padding: 5px;
+                    text-align: left;
+                    vertical-align: top;
+                    word-wrap: break-word;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+                @page {
+                    size: A4 landscape;
+                    margin: 1cm;
+                }
+            </style>
+            '''
+            html_content = f'<html><head>{pdf_css}</head><body>{str(table_section)}</body></html>'
+            
+            # Générer le PDF
+            pdf_file = HTML(string=html_content).write_pdf(stylesheets=[CSS(string=pdf_css)])
+            
+            response = HttpResponse(pdf_file, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
+            return response
+        else:
+            return HttpResponse("Table section not found in the HTML content.")
     except Exception as e:
-        logger.error("Error generating planning: %s", e)
-        planning = {}
-
-    planning_hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
-    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
-
-    context = {
-        'user': user,
-        'planning': planning,
-        'planning_hours': planning_hours,
-        'days': days,
-    }
-
-    html_string = render_to_string('planning.html', context)
-    soup = BeautifulSoup(html_string, 'html.parser')
-    table_section = soup.find('table')
-
-    if table_section:
-        pdf_css = '''
-        <style>
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            table, th, td {
-                border: 1px solid black;
-            }
-            th, td {
-                padding: 8px;
-                text-align: left;
-            }
-            .custom-table th {
-                background-color: #f2f2f2;
-            }
-        </style>
-        '''
-        html_content = f'<html><head>{pdf_css}</head><body>{str(table_section)}</body></html>'
-
-        pdf_file = HTML(string=html_content).write_pdf(stylesheets=[CSS(string=pdf_css)])
-
-        response = HttpResponse(pdf_file, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="planning.pdf"'
-        return response
-    else:
-        return HttpResponse("Table section not found in the HTML content.")
-
+        logger.error(f"Error generating PDF: {e}", exc_info=True)
+        return HttpResponse("Error generating PDF.")
