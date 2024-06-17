@@ -74,18 +74,18 @@
                     <table class="custom-table" id="planning-table">
                         <thead>
                             <tr>
-                                <th>Heures / Jours</th>
-                                {% for day in days %}
-                                    <th style="width: 20%;">{{ day }}</th>
+                                <th>Jours / Heures</th>
+                                {% for heure in planning_hours %}
+                                    <th>{{ heure }}</th>
                                 {% endfor %}
                             </tr>
                         </thead>
                         <tbody>
-                            {% for heure in planning_hours %}
+                            {% for day in days %}
                                 <tr>
-                                    <td>{{ heure }}</td>
-                                    {% for day in days %}
-                                        <td style="width: 20%;">
+                                    <td>{{ day }}</td>
+                                    {% for heure in planning_hours %}
+                                        <td>
                                             {% if day in planning %}
                                                 {% with soutenances=planning|get_item:day %}
                                                     {% if heure in soutenances %}
@@ -113,7 +113,6 @@
                             {% endfor %}
                         </tbody>                     
                     </table>
-                    
                     
                     <!-- Ajout pour le débogage : affichez les données brutes -->
                     {% comment %} <pre>{{ planning|pprint }}</pre> {% endcomment %}
